@@ -22,13 +22,6 @@
             font-size: 24px;
             color: #111111;
         }
-        .container {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-            max-width: 500px;
-            width: 100%;
-        }
 
         /* 입력창 배경 및 테두리 선 */
         input, select, button {
@@ -50,18 +43,6 @@
             cursor: pointer;
             font-size: 14px;
         }
-        button {
-            background-color: #007bff;
-            color: white;
-            font-weight: bold;
-            border: none;
-            cursor: pointer;
-            margin-top: 10px;
-            transition: background 0.2s;
-        }
-        button:hover {
-            background-color: #0056b3;
-        }
 
         /* [2. 메인 시트 캔버스 (1000px * 563px 고정)] */
         .capture-area {
@@ -70,10 +51,8 @@
             position: relative;
             box-sizing: border-box;
             color: black;
-            border: 1px solid #dddddd;
-            border-radius: 4px;
+            border: 1px solid #000000;
             box-shadow: 0 8px 16px rgba(0,0,0,0.1);
-            overflow: hidden;
         }
 
         /* 공통 스타일: 텍스트 박스 */
@@ -87,16 +66,22 @@
             resize: none;
         }
         
-        /* 공통 스타일: 이미지 박스 */
+        /* 공통 스타일: 이미지 박스 (점선 탈출을 위해 overflow 제거) */
         .image-box {
             border: 1px solid #000000;
             background-color: #ffffff;
             position: relative;
             cursor: pointer;
-            overflow: hidden;
             box-sizing: border-box;
         }
-        .image-box.placeholder::before {
+        /* 실제 이미지가 담기는 속 공간만 overflow: hidden 처리 */
+        .img-container {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            position: relative;
+        }
+        .image-box.placeholder .img-container::before {
             content: '클릭하여 이미지 업로드';
             position: absolute;
             top: 50%; left: 50%;
@@ -105,9 +90,10 @@
             color: #888;
             width: 100%;
             text-align: center;
+            z-index: 1;
         }
         .image-box input[type="file"] { display: none; }
-        .image-box img { width: 100%; height: 100%; object-fit: cover; position: absolute; top: 0; left: 0; display: none; }
+        .image-box img { width: 100%; height: 100%; object-fit: cover; position: absolute; top: 0; left: 0; display: none; z-index: 2; }
 
         /* ==================== 좌표 기반 배치 및 커스텀 스타일 ==================== */
         
@@ -212,46 +198,72 @@
 
         .main-profile-img { position: absolute; left: 355px; top: 35px; width: 280px; height: 342px; }
         .mini-img-group { position: absolute; left: 355px; top: 395px; width: 280px; display: flex; justify-content: space-between; }
-        .mini-img-box { width: 134px; height: 110px; }
         
-        .mini-badge { position: absolute; top: -5px; left: 8px; background-color: #fff; border: 1px dashed #000; border-radius: 10px; font-size: 9px; padding: 1px 6px; z-index: 3; font-weight: bold; }
-        .mini-badge-input { border: none; background: transparent; font-size: 9px; font-weight: bold; width: 75px; text-align: center; font-family: inherit; }
+        /* 미니 이미지 전체를 감싸는 개별 박스 고정 크기 */
+        .mini-box-container { width: 134px; height: 110px; position: relative; }
+        .mini-img-box { width: 100%; height: 100%; }
+        
+        /* [수정] 테두리 선 위로 완벽하게 올라오는 공통 점선 배지 디자인 스타일 */
+        .mini-badge { 
+            position: absolute; 
+            top: -10px; left: 10px; 
+            background-color: #ffffff; 
+            border: 1px dashed #000000; 
+            border-radius: 12px; 
+            font-size: 9px; 
+            padding: 2px 10px; 
+            z-index: 10; 
+            font-weight: bold; 
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .mini-badge-input { 
+            border: none; 
+            background: transparent; 
+            font-size: 9px; 
+            font-weight: bold; 
+            width: 75px; 
+            text-align: center; 
+            font-family: inherit;
+            padding: 0;
+            margin: 0;
+        }
 
-        .cloth-badge { position: absolute; top: 25px; left: 670px; background-color: #fff; border: 1px dashed #000; border-radius: 50%; width: 34px; height: 34px; text-align: center; line-height: 34px; font-size: 10px; font-weight: bold; z-index: 3; }
-        .cloth-img-box { position: absolute; left: 660px; top: 35px; width: 295px; height: 375px; z-index: 1; }
+        /* [수정] 우측 의상 컴포넌트 배지 완벽 레이어 오버랩 */
+        .cloth-container {
+            position: absolute; left: 660px; top: 35px; width: 295px; height: 375px;
+        }
+        .cloth-img-box { width: 100%; height: 100%; }
+        .cloth-badge { 
+            position: absolute; 
+            top: -15px; left: -15px; 
+            background-color: #ffffff; 
+            border: 1px dashed #000000; 
+            border-radius: 50%; 
+            width: 38px; height: 38px; 
+            text-align: center; line-height: 38px; 
+            font-size: 11px; font-weight: bold; 
+            z-index: 10; 
+        }
+
+        /* 우측 하단 의상 부가 설명란 */
         .cloth-desc-box { position: absolute; left: 660px; top: 425px; width: 295px; height: 80px; background-color: #F5F5F5; }
 
+        /* 하단 크레딧 */
         .credit-line { position: absolute; left: 45px; bottom: 12px; width: 910px; display: flex; justify-content: space-between; font-size: 9px; color: #999; font-weight: bold; }
 
         .bottom-action-panel { margin-top: 30px; margin-bottom: 50px; text-align: center; width: 1000px; }
         #downloadBtn { background-color: #007bff; color: white; font-weight: bold; padding: 14px 35px; border-radius: 30px; border: none; font-size: 16px; cursor: pointer; box-shadow: 0 4px 15px rgba(0, 123, 255, 0.4); }
 
-        /* ==================== 팝업창 스타일 시스템 ==================== */
-        .popup-overlay { 
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
-            background-color: rgba(92, 75, 81, 0.4); backdrop-filter: blur(3px); 
-            display: flex; justify-content: center; align-items: center; z-index: 9999; 
-        }
-        .popup-content { 
-            background-color: #ffffff; width: 90%; max-width: 420px; 
-            padding: 40px 25px 30px 25px; border-radius: 16px; 
-            text-align: center; border: 1px solid #FFE3E5; 
-            position: relative; box-sizing: border-box;
-        }
-        .popup-close-btn { 
-            position: absolute; top: 15px; right: 20px; 
-            background: none; border: none; font-size: 28px; 
-            cursor: pointer; color: #bbb; line-height: 1;
-            z-index: 10005; padding: 0;
-        }
+        /* 팝업 스타일 시스템 */
+        .popup-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(92,75,81,0.4); backdrop-filter: blur(3px); display: flex; justify-content: center; align-items: center; z-index: 9999; }
+        .popup-content { background-color: #fff; width: 90%; max-width: 420px; padding: 40px 25px 30px 25px; border-radius: 16px; text-align: center; border: 1px solid #FFE3E5; position: relative; box-sizing: border-box; }
+        .popup-close-btn { position: absolute; top: 15px; right: 20px; background: none; border: none; font-size: 28px; cursor: pointer; color: #bbb; line-height: 1; z-index: 10005; padding: 0; }
         .popup-close-btn:hover { color: #007bff; }
         .popup-badge { background-color: #007bff; color: #fff; padding: 4px 10px; border-radius: 20px; font-weight: bold; font-size: 11px; }
         .popup-body a { color: #007bff; text-decoration: none; font-weight: bold; }
-        .popup-sub-text {
-            font-size: 12px; color: #7A6B70; background-color: #FFF8F8;
-            padding: 12px; border-radius: 8px; margin-top: 15px; text-align: left;
-            line-height: 1.6; border: 1px dashed #FFD1D5;
-        }
+        .popup-sub-text { font-size: 12px; color: #7A6B70; background-color: #FFF8F8; padding: 12px; border-radius: 8px; margin-top: 15px; text-align: left; line-height: 1.6; border: 1px dashed #FFD1D5; }
     </style>
 </head>
 <body>
@@ -320,16 +332,30 @@
         </div>
 
         <div class="image-box placeholder main-profile-img" id="mainImgBox">
-            <input type="file" accept="image/*"><img src="">
+            <div class="img-container"><img src=""></div>
         </div>
 
         <div class="mini-img-group">
-            <div class="image-box placeholder mini-img-box" id="sdImgBox"><span class="mini-badge">SD</span><input type="file" accept="image/*"><img src=""></div>
-            <div class="image-box placeholder mini-img-box" id="subImgBox"><span class="mini-badge"><input type="text" class="mini-badge-input" value="동물화 : 종류"></span><input type="file" accept="image/*"><img src=""></div>
+            <div class="mini-box-container">
+                <span class="mini-badge">SD</span>
+                <div class="image-box placeholder mini-img-box" id="sdImgBox">
+                    <div class="img-container"><img src=""></div>
+                </div>
+            </div>
+            <div class="mini-box-container">
+                <span class="mini-badge"><input type="text" class="mini-badge-input" value="동물화 : 종류"></span>
+                <div class="image-box placeholder mini-img-box" id="subImgBox">
+                    <div class="img-container"><img src=""></div>
+                </div>
+            </div>
         </div>
 
-        <div class="cloth-badge">의상</div>
-        <div class="image-box placeholder cloth-img-box" id="clothImgBox"><input type="file" accept="image/*"><img src=""></div>
+        <div class="cloth-container">
+            <div class="cloth-badge">의상</div>
+            <div class="image-box placeholder cloth-img-box" id="clothImgBox">
+                <div class="img-container"><img src=""></div>
+            </div>
+        </div>
         <textarea class="input-box cloth-desc-box">+ 의상에 대한 부가적인 설명을 기입합니다.</textarea>
 
         <div class="credit-line"><div>DESIGNED BY XOXOME | @DARL1N9__</div><div>ILLUST BY 이름</div></div>
@@ -340,12 +366,10 @@
     </div>
 
     <script>
-        // 팝업 제어 함수
         function closePopup() { 
             document.getElementById('noticePopup').style.display = 'none'; 
         }
 
-        // 컬러 픽커 실시간 제어 함수
         function setupColorPicker(inputId, wrapperId) {
             const input = document.getElementById(inputId);
             const wrapper = document.getElementById(wrapperId);
@@ -374,11 +398,36 @@
         setupColorPicker('keyColor2', 'keyWrapper2');
         setupColorPicker('keyColor3', 'keyWrapper3');
 
-        // 이미지 로드 제어 함수
         function setupImageBox(boxId) {
             const box = document.getElementById(boxId);
             const input = box.querySelector('input[type="file"]');
             const img = box.querySelector('img');
+            
+            // 이미지 상자가 부모 레이아웃 분리로 직접 타겟팅되지 않을 때를 대비해 input 동적 삽입 보완
+            if(box && !input) {
+                const newInput = document.createElement('input');
+                newInput.type = 'file';
+                newInput.accept = 'image/*';
+                box.appendChild(newInput);
+                box.addEventListener('click', (e) => {
+                    if(e.target.tagName === 'INPUT' && e.target.type === 'text') return;
+                    newInput.click();
+                });
+                newInput.addEventListener('change', (e) => {
+                    const file = e.target.files[0];
+                    if (file) {
+                        const reader = new FileReader();
+                        reader.onload = (ev) => { 
+                            img.src = ev.target.result; 
+                            img.style.display = 'block'; 
+                            box.classList.remove('placeholder'); 
+                        };
+                        reader.readAsDataURL(file);
+                    }
+                });
+                return;
+            }
+
             if(box && input && img) {
                 box.addEventListener('click', (e) => {
                     if(e.target.tagName === 'INPUT' && e.target.type === 'text') return;
@@ -401,7 +450,6 @@
 
         setupImageBox('mainImgBox'); setupImageBox('clothImgBox'); setupImageBox('sdImgBox'); setupImageBox('subImgBox');
 
-        // 다운로드 캡처 제어 함수
         const downloadBtn = document.getElementById('downloadBtn');
         if(downloadBtn) {
             downloadBtn.addEventListener('click', () => {
