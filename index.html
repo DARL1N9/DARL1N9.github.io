@@ -111,7 +111,7 @@
 
         /* ==================== 좌표 기반 배치 및 커스텀 스타일 ==================== */
         
-        /* 좌측 상단 이름 영역: 원형 심볼 및 수정 가능한 이름 인풋 */
+        /* 좌측 상단 이름 영역 */
         .header-name-zone {
             position: absolute;
             left: 45px;
@@ -140,7 +140,7 @@
             width: 250px;
         }
 
-        /* SKIN / EYES / HAIR 컬러 그룹 및 픽커 스타일 */
+        /* SKIN / EYES / HAIR 컬러 그룹 */
         .color-group {
             position: absolute; 
             left: 45px; 
@@ -167,7 +167,7 @@
             font-size: 11px; font-weight: bold; pointer-events: none; z-index: 2; color: #444444;
         }
 
-        /* 좌측 키워드 3개: 각각 배경색 변경 가능하도록 픽커 추가 */
+        /* 좌측 키워드 3개 */
         .keyword-group {
             position: absolute;
             left: 45px;
@@ -191,222 +191,3 @@
             height: 100%;
             border: none;
             background: transparent;
-            text-align: center;
-            font-size: 10px;
-            font-weight: bold;
-            color: #ffffff;
-            cursor: pointer;
-            z-index: 2;
-        }
-        .keyword-bg-picker {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer;
-        }
-
-        /* 안내 문구 및 기타 요소 고정 좌표 */
-        .info-text { position: absolute; left: 45px; top: 198px; font-size: 9px; color: #666; }
-        .stat-input { position: absolute; left: 45px; top: 215px; width: 285px; height: 28px; border: 1px solid #000; text-align: center; font-weight: bold; }
-        .main-desc-box { position: absolute; left: 45px; top: 252px; width: 285px; height: 125px; background-color: #F5F5F5; }
-
-        .bottom-desc-group { position: absolute; left: 45px; top: 395px; width: 285px; height: 110px; display: flex; gap: 12px; }
-        .bottom-desc-box { flex: 1; height: 100%; border-radius: 16px; padding: 12px; }
-
-        .main-profile-img { position: absolute; left: 355px; top: 35px; width: 280px; height: 342px; }
-        .mini-img-group { position: absolute; left: 355px; top: 395px; width: 280px; display: flex; justify-content: space-between; }
-        .mini-img-box { width: 134px; height: 110px; }
-        
-        /* 배지 레이아웃 꼬임 방지 고정 */
-        .mini-badge { position: absolute; top: -5px; left: 8px; background-color: #fff; border: 1px dashed #000; border-radius: 10px; font-size: 9px; padding: 1px 6px; z-index: 3; font-weight: bold; }
-        .mini-badge-input { border: none; background: transparent; font-size: 9px; font-weight: bold; width: 75px; text-align: center; font-family: inherit; }
-
-        .cloth-badge { position: absolute; top: 25px; left: 670px; background-color: #fff; border: 1px dashed #000; border-radius: 50%; width: 34px; height: 34px; text-align: center; line-height: 34px; font-size: 10px; font-weight: bold; z-index: 3; }
-        .cloth-img-box { position: absolute; left: 660px; top: 35px; width: 295px; height: 375px; z-index: 1; }
-        .cloth-desc-box { position: absolute; left: 660px; top: 425px; width: 295px; height: 80px; background-color: #F5F5F5; }
-
-        .credit-line { position: absolute; left: 45px; bottom: 12px; width: 910px; display: flex; justify-content: space-between; font-size: 9px; color: #999; font-weight: bold; }
-
-        .bottom-action-panel { margin-top: 30px; margin-bottom: 50px; text-align: center; width: 1000px; }
-        #downloadBtn { background-color: #007bff; color: white; font-weight: bold; padding: 14px 35px; border-radius: 30px; border: none; font-size: 16px; cursor: pointer; box-shadow: 0 4px 15px rgba(0, 123, 255, 0.4); }
-
-        /* ==================== [수정] 팝업창 및 X 버튼 절대 레이어 제어 ==================== */
-        .popup-overlay { 
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
-            background-color: rgba(92, 75, 81, 0.4); backdrop-filter: blur(3px); 
-            display: flex; justify-content: center; align-items: center; z-index: 9999; 
-        }
-        .popup-content { 
-            background-color: #ffffff; width: 90%; max-width: 420px; 
-            padding: 40px 25px 30px 25px; border-radius: 16px; 
-            text-align: center; border: 1px solid #FFE3E5; 
-            position: relative; box-sizing: border-box;
-        }
-        /* [핵심 수정] 닫기 버튼이 무조건 최상단 우측에 깔끔히 고정되도록 재배치 */
-        .popup-close-btn { 
-            position: absolute; 
-            top: 15px; 
-            right: 20px; 
-            background: none; 
-            border: none; 
-            font-size: 28px; 
-            cursor: pointer; 
-            color: #bbb; 
-            line-height: 1;
-            z-index: 10005; /* 컴포넌트 뭉침 현상 방지 최상단 우선권 */
-            padding: 0;
-        }
-        .popup-close-btn:hover { color: #007bff; }
-        .popup-badge { background-color: #007bff; color: #fff; padding: 4px 10px; border-radius: 20px; font-weight: bold; font-size: 11px; }
-        .popup-body a { color: #007bff; text-decoration: none; font-weight: bold; }
-        .popup-sub-text {
-            font-size: 12px; color: #7A6B70; background-color: #FFF8F8;
-            padding: 12px; border-radius: 8px; margin-top: 15px; text-align: left;
-            line-height: 1.6; border: 1px dashed #FFD1D5;
-        }
-    </style>
-</head>
-<body>
-
-    <div id="noticePopup" class="popup-overlay">
-        <div class="popup-content">
-            <button class="popup-close-btn" onclick="closePopup()">×</button>
-            <div class="popup-body">
-                <span class="popup-badge">NOTICE</span>
-                <h2>🍩소솜 간단 자료틀 메이커🍩</h2>
-                <p>트위터 : <a href="https://x.com/DARL1N9__" target="_blank">@DARL1N9__</a></p>
-                <p class="popup-sub-text">출처를 삭제하지 않는 선에서 간단한 가공은 허용하고 있습니다. 처음 만들어 본 사이트라... 이래저래 자잘한 수정사항이 많을 수 있습니다. 잘 부탁드립니다^.^</p>
-            </div>
-        </div>
-    </div>
-
-    <h1>🍩소솜 간단 자료틀 메이커🍩</h1>
-
-    <div class="capture-area" id="captureArea">
-        <div class="header-name-zone">
-            <div class="name-circle-symbol">Ⓐ</div>
-            <input type="text" class="name-main-input" id="nameMainTxt" value="이름 Name" placeholder="이름을 입력하세요">
-        </div>
-
-        <div class="keyword-group">
-            <div class="keyword-box-wrapper" id="keyWrapper1">
-                <input type="text" class="keyword-box-input" value="#키워드">
-                <input type="color" class="keyword-bg-picker" id="keyColor1" value="#444444">
-            </div>
-            <div class="keyword-box-wrapper" id="keyWrapper2">
-                <input type="text" class="keyword-box-input" value="#키워드">
-                <input type="color" class="keyword-bg-picker" id="keyColor2" value="#444444">
-            </div>
-            <div class="keyword-box-wrapper" id="keyWrapper3">
-                <input type="text" class="keyword-box-input" value="#키워드">
-                <input type="color" class="keyword-bg-picker" id="keyColor3" value="#444444">
-            </div>
-        </div>
-
-        <div class="color-group">
-            <div class="color-item-wrapper" id="skinWrapper" style="background-color: #D6D6D6;">
-                <span class="color-label">SKIN</span>
-                <input type="color" class="color-input" id="skinColor" value="#D6D6D6">
-            </div>
-            <div class="color-item-wrapper" id="eyesWrapper" style="background-color: #D6D6D6;">
-                <span class="color-label">EYES</span>
-                <input type="color" class="color-input" id="eyesColor" value="#D6D6D6">
-            </div>
-            <div class="color-item-wrapper" id="hairWrapper" style="background-color: #D6D6D6;">
-                <span class="color-label">HAIR</span>
-                <input type="color" class="color-input" id="hairColor" value="#D6D6D6">
-            </div>
-        </div>
-
-        <div class="info-text">※ 모든 방향은 보는 사람(모니터) 기준입니다. ※</div>
-        <input type="text" class="stat-input" value="성별 | 나이 | 키 | 몸무게">
-        <textarea class="input-box main-desc-box">□ 캐릭터의 주요 특징을 간략 서술</textarea>
-
-        <div class="bottom-desc-group">
-            <textarea class="input-box bottom-desc-box" style="background-color: #F5F5F5;">캐해 참고</textarea>
-            <textarea class="input-box bottom-desc-box" style="background-color: #ffffff;">이건 안 됩니다...</textarea>
-        </div>
-
-        <div class="image-box placeholder main-profile-img" id="mainImgBox">
-            <input type="file" accept="image/*"><img src="">
-        </div>
-
-        <div class="mini-img-group">
-            <div class="image-box placeholder mini-img-box" id="sdImgBox"><span class="mini-badge">SD</span><input type="file" accept="image/*"><img src=""></div>
-            <div class="image-box placeholder mini-img-box" id="subImgBox"><span class="mini-badge"><input type="text" class="mini-badge-input" value="동물화 : 종류"></span><input type="file" accept="image/*"><img src=""></div>
-        </div>
-
-        <div class="cloth-badge">의상</div>
-        <div class="image-box placeholder cloth-img-box" id="clothImgBox"><input type="file" accept="image/*"><img src=""></div>
-        <textarea class="input-box cloth-desc-box">+ 의상에 대한 부가적인 설명을 기입합니다.</textarea>
-
-        <div class="credit-line"><div>DESIGNED BY XOXOME | @DARL1N9__</div><div>ILLUST BY 이름</div></div>
-    </div>
-
-    <div class="bottom-action-panel">
-        <button id="downloadBtn">컴퓨터에 이미지로 저장하기 (PNG)</button>
-    </div>
-
-    <script>
-        // 팝업 제어
-        function closePopup() { 
-            document.getElementById('noticePopup').style.display = 'none'; 
-        }
-
-        // 컬러 픽커 실시간 제어
-        function setupColorPicker(inputId, wrapperId) {
-            const input = document.getElementById(inputId);
-            const wrapper = document.getElementById(wrapperId);
-            const label = wrapper.querySelector('.color-label, .keyword-box-input');
-
-            input.addEventListener('input', (e) => {
-                const color = e.target.value;
-                wrapper.style.backgroundColor = color;
-                
-                if(label) {
-                    const r = parseInt(color.substr(1,2), 16);
-                    const g = parseInt(color.substr(3,2), 16);
-                    const b = parseInt(color.substr(5,2), 16);
-                    const brightness = (r * 299 + g * 587 + b * 114) / 1000;
-                    label.style.color = brightness < 128 ? '#ffffff' : '#444444';
-                }
-            });
-        }
-
-        setupColorPicker('skinColor', 'skinWrapper');
-        setupColorPicker('eyesColor', 'eyesWrapper');
-        setupColorPicker('hairColor', 'hairWrapper');
-        setupColorPicker('keyColor1', 'keyWrapper1');
-        setupColorPicker('keyColor2', 'keyWrapper2');
-        setupColorPicker('keyColor3', 'keyWrapper3');
-
-        // 이미지 로드 제어
-        function setupImageBox(boxId) {
-            const box = document.getElementById(boxId);
-            const input = box.querySelector('input[type="file"]');
-            const img = box.querySelector('img');
-            box.addEventListener('click', (e) => {
-                if(e.target.tagName === 'INPUT' && e.target.type === 'text') return;
-                input.click();
-            });
-            input.addEventListener('change', (e) => {
-                const file = e.target.files[0];
-                if (file) {
-                    const reader = new FileReader();
-                    reader.onload = (ev) => { img.src = ev.target.result; img.style.display = 'block'; box.classList.remove('placeholder'); };
-                    reader.readAsDataURL(file);
-                }
-            });
-        }
-
-        setupImageBox('mainImgBox'); setupImageBox('clothImgBox'); setupImageBox('sdImgBox'); setupImageBox('subImgBox');
-
-        // 다운로드 캡처 제어
-        document.getElementById('downloadBtn').addEventListener('click', () => {
-            html2canvas(document.getElementById('captureArea'), { useCORS: true, scale: 2 }).then(canvas => {
-                const link = document.createElement('a');
-                link.download = 'custom-페어틀.png';
-                link.href = canvas.toDataURL('image/png');
-                link.click();
-            });
-        });
-    </script>
-</body>
-</html>
