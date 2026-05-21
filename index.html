@@ -161,7 +161,7 @@
         /* 스탯 입력 및 안내문구 */
         .info-text { position: absolute; left: 45px; top: 198px; font-size: 9px; color: #666; font-family: 'Pretendard', sans-serif; }
         
-        /* [1번 기능 패치] 성별 라인 테두리 상자 모서리를 약간만 둥글게 교정 (border-radius: 6px) */
+        /* 성별 라인 테두리 상자 모서리를 약간만 둥글게 교정 (border-radius: 6px) */
         .stat-input { 
             position: absolute; left: 45px; top: 215px; width: 285px; height: 28px; border: 1px solid #000; background-color: #ffffff; text-align: center; font-weight: bold; box-sizing: border-box; padding: 4px 5px 0 5px; font-family: 'Pretendard', sans-serif; 
             font-size: 11px; line-height: 1.4; resize: none; overflow: hidden; word-break: break-all;
@@ -227,7 +227,7 @@
             position: absolute; top: -15px; left: -15px; background-color: #ffffff; border: 1px dashed #000000; border-radius: 50%; width: 38px; height: 38px; text-align: center; line-height: 38px; font-size: 11px; font-weight: bold; z-index: 10; font-family: 'Pretendard', sans-serif;
         }
         /* 의상 설명창 자동 개행 사양 매칭 */
-        .cloth-desc-box { position: absolute; left: 660px; top: 436px; width: 295px; height: 80px; background-color: #F5F5F5; word-break: break-all; line-height: 1.5; }
+        .cloth-desc-box { position: absolute; left: 660px; top: 436px; width: 295px; height: 80px; background-color: #F5F5F5; word-break: break-all; line-height: 1.5; border: 1px solid #000000; }
         
         /* 저작권 크레딧 구역 플렉스 및 물리 축 고정 */
         .credit-line { 
@@ -373,7 +373,7 @@
         
         <textarea class="stat-input">성별 | 나이 | 키 | 몸무게</textarea>
         
-        <textarea class="input-box main-desc-box">□ 캐릭터의 주요 특징을 간략 서술</textarea>
+        <textarea class="input-box main-desc-box">□ 캐릭터의 주요 특징을 간략 서술&#10;□ 캐릭터의 주요 특징을 간략 서술&#10;□ 캐릭터의 주요 특징을 간략 서술&#10;□ 캐릭터의 주요 특징을 간략 서술</textarea>
 
         <div class="bottom-desc-group">
             <textarea class="input-box bottom-desc-box" style="background-color: #ffffff;">캐해 참고</textarea>
@@ -424,10 +424,6 @@
         function closePopup() { 
             const popup = document.getElementById('noticePopup');
             if(popup) popup.style.display = 'none'; 
-        }
-
-        function closePreviewModal() {
-            document.getElementById('previewModal').style.display = 'none';
         }
 
         // [마스터 연동 패치] A 서클의 색상 변화에 반응하여 아래 키워드 3종 상자 배경까지 실시간 동기화
@@ -499,8 +495,8 @@
 
             let imgState = {
                 origWidth: 0, origHeight: 0, 
-                width: 0, height: 0,          
-                left: 0, top: 0,              
+                width: 0, height: 0,         
+                left: 0, top: 0,             
                 scale: 1.0
             };
 
@@ -650,22 +646,24 @@
                 subTxtInput.style.display = 'none';
             }
 
-            // 가상 복제본 내부 기타 입력 폼들의 가상 마진/패딩 제거 마감
+            // 가상 복제본 내부 기타 입력 폼들의 가상 마진/패딩 보존 가공
             const allInputs = clonedDoc.querySelectorAll('input, textarea');
             allInputs.forEach(input => {
                 input.style.fontFamily = 'Pretendard, sans-serif';
+                
+                // [1번, 2번, 3번 버그 원천 진압 패치] 특정 상자들이 통째로 사라지던 스크립트 예외 필터 처리 정밀 보강 완료
                 if (input.tagName === 'INPUT' && input.type === 'text') {
-                    // [버그 수정 필터링 예외 복구] 일치하지 않던 텍스트 상자 ID명을 명확히 교정하여 테두리 보존 매칭 완료
-                    if(!input.classList.contains('stat-input') && input.id !== 'creditIllustInput') {
+                    if(!input.classList.contains('stat-input') && input.id !== 'creditIllustInput' && !input.classList.contains('mini-badge-input')) {
                         input.style.padding = '0px';
                         input.style.margin = '0px';
                         input.style.border = 'none';
                     }
                 }
                 if (input.tagName === 'TEXTAREA') {
-                    // [2번 기능 패치] 흰색 배경을 가진 'bottom-desc-box'는 테두리가 지워지면 칸이 사라지므로 테두리 복구/보존 설정
-                    if (input.classList.contains('bottom-desc-box')) {
+                    // 테두리가 보존되어야 하는 클래스명 지정
+                    if (input.classList.contains('stat-input') || input.classList.contains('main-desc-box') || input.classList.contains('bottom-desc-box') || input.classList.contains('cloth-desc-box')) {
                         input.style.border = '1px solid #000000';
+                        input.style.backgroundColor = window.getComputedStyle(input).backgroundColor;
                     } else {
                         input.style.border = 'none';
                     }
