@@ -103,8 +103,6 @@
         }
 
         /* ==================== 좌표 기반 배치 및 커스텀 스타일 ==================== */
-        
-        /* 이름 폼 레이아웃 속성 지정 */
         .header-name-zone {
             position: absolute; left: 45px; top: 35px; width: 330px; height: 40px; pointer-events: none;
         }
@@ -175,7 +173,7 @@
         .bottom-desc-box { flex: 1; height: 100%; border-radius: 16px; padding: 12px; word-break: break-all; line-height: 1.5; }
 
         /* 이미지 컨테이너 공간 레이아웃 */
-        .main-profile-img { position: absolute; left: 355px; top: 35px; width: 280px; height: 342px; }
+        .main-profile-img { absolute; position: absolute; left: 355px; top: 35px; width: 280px; height: 342px; }
         
         /* 미니 이미지 2개 프레임 무리를 아래로 이동 */
         .mini-img-group { position: absolute; left: 355px; top: 406px; width: 280px; display: flex; justify-content: space-between; }
@@ -265,7 +263,7 @@
             word-break: break-all;
         }
 
-        /* 하단 액션 버튼 대시보드 구조 및 [신규] 슬롯 세팅 인터페이스 */
+        /* 하단 매니지먼트 슬롯 시스템 제어 패널 */
         .management-container {
             margin-top: 30px;
             display: flex;
@@ -317,7 +315,7 @@
         #downloadBtn { background-color: #BED197; box-shadow: 0 4px 15px rgba(190, 209, 151, 0.4); }
         #downloadBtn:hover { background-color: #CDDEA8; transform: translateY(-1px); }
 
-        /* 공지 팝업 & 이미지 미리보기 모달 레이아웃 */
+        /* 모달 팝업 레이아웃 기본 구조 */
         .popup-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(74, 83, 60, 0.3); backdrop-filter: blur(3px); display: flex; justify-content: center; align-items: center; z-index: 9999; }
         .popup-content { background-color: #fff; width: 90%; max-width: 420px; padding: 40px 25px 30px 25px; border-radius: 16px; text-align: center; border: 1px solid #EBF2DF; position: relative; box-sizing: border-box; }
         .popup-close-btn { position: absolute; top: 15px; right: 20px; background: none; border: none; font-size: 28px; cursor: pointer; color: #ccc; line-height: 1; z-index: 10005; padding: 0; }
@@ -454,7 +452,7 @@
 
     <div class="management-container">
         <div class="slot-control-bar">
-            <span style="font-size: 13px; font-weight: bold; color: #4A533C;">📂 임시저장 슬롯 시스템:</span>
+            <span style="font-size: 13px; font-weight: bold; color: #4A533C;">📂 임시저장 슬롯 매니저:</span>
             <select id="slotSelect" class="slot-selector">
                 <option value="slot_1">슬롯 1 (비어있음)</option>
                 <option value="slot_2">슬롯 2 (비어있음)</option>
@@ -533,6 +531,14 @@
         setupColorPicker('keyColor3', 'keyWrapper3', '.keyword-box-input');
         setupColorPicker('nameCircleColor', 'nameCircleWrapper', '.name-circle-input');
 
+        // 전역 이미지 공간 상태 추적 스태틱 객체 맵핑
+        const globalImgRegistry = {
+            mainImgBox: { src: '', origWidth: 0, origHeight: 0, width: 0, height: 0, left: 0, top: 0, scale: 1.0 },
+            clothImgBox: { src: '', origWidth: 0, origHeight: 0, width: 0, height: 0, left: 0, top: 0, scale: 1.0 },
+            sdImgBox: { src: '', origWidth: 0, origHeight: 0, width: 0, height: 0, left: 0, top: 0, scale: 1.0 },
+            subImgBox: { src: '', origWidth: 0, origHeight: 0, width: 0, height: 0, left: 0, top: 0, scale: 1.0 }
+        };
+
         // 이미지 물리 연산 인터랙션 제어 엔진
         function setupInteractiveImageBox(boxId) {
             const box = document.getElementById(boxId);
@@ -546,13 +552,7 @@
                 box.appendChild(input);
             }
             const img = box.querySelector('img');
-
-            let imgState = {
-                origWidth: 0, origHeight: 0, 
-                width: 0, height: 0,         
-                left: 0, top: 0,             
-                scale: 1.0
-            };
+            let imgState = globalImgRegistry[boxId];
 
             let isDragging = false;
             let startX = 0, startY = 0;
@@ -574,6 +574,7 @@
                     reader.onload = (ev) => { 
                         if(img) {
                             img.src = ev.target.result;
+                            imgState.src = ev.target.result; // 기하 구조 세이브 매칭
                             img.onload = function() {
                                 box.classList.remove('placeholder');
                                 img.style.display = 'block';
@@ -609,7 +610,6 @@
             box.addEventListener('mousedown', (e) => {
                 if(e.target.tagName === 'INPUT' && e.target.type === 'text') return;
                 mousedownTime = Date.now();
-                
                 if (box.classList.contains('placeholder')) return;
                 isDragging = true;
                 box.style.cursor = 'grabbing';
@@ -635,9 +635,6 @@
             box.addEventListener('wheel', (e) => {
                 if (box.classList.contains('placeholder')) return;
                 e.preventDefault();
-                
-                const boxWidth = box.clientWidth;
-                const boxHeight = box.clientHeight;
                 
                 const rect = box.getBoundingClientRect();
                 const mouseX = e.clientX - rect.left;
@@ -667,6 +664,8 @@
                     img.style.top = imgState.top + 'px';
                 }
             }
+            
+            box.applyExternalState = applyPhysicalTransform; // 가상 로더 매핑용 브릿지 선언
         }
 
         setupInteractiveImageBox('mainImgBox');
@@ -723,22 +722,21 @@
             });
         }
 
-        // ==================== [핵심 엔진] 로컬 임시저장 슬롯 시스템 스크립트 ====================
+        // ==================== [핵심 엔진] 텍스트·컬러·이미지 구도 통합 임시저장 아키텍처 ====================
         const SLOT_KEYS = ['slot_1', 'slot_2', 'slot_3'];
 
-        // 현재 캔버스 입력 폼 상태를 오브젝트로 구조화하여 브라우저에 임시저장
         function saveToSlot() {
             const select = document.getElementById('slotSelect');
             const activeSlot = select.value;
+            const charName = document.getElementById('nameMainTxt').value || '이름 없음';
             
-            // 저장할 데이터 묶음 오브젝트 인스턴스화
+            // 모든 폼 텍스트, 피커 색상, 사진 파일 데이터 통째로 구조화
             const dataToSave = {
-                characterName: document.getElementById('nameMainTxt').value,
+                characterName: charName,
                 letter: document.getElementById('nameLetterInput').value,
                 circleColor: document.getElementById('nameCircleColor').value,
                 subName: document.getElementById('nameSubTxt').value,
                 
-                // #키워드 3종 데이터
                 k1: document.querySelectorAll('.keyword-box-input')[0].value,
                 k1Color: document.getElementById('keyColor1').value,
                 k2: document.querySelectorAll('.keyword-box-input')[1].value,
@@ -746,29 +744,32 @@
                 k3: document.querySelectorAll('.keyword-box-input')[2].value,
                 k3Color: document.getElementById('keyColor3').value,
                 
-                // 컬러 칩 색상 데이터
                 skin: document.getElementById('skinColor').value,
                 eyes: document.getElementById('eyesColor').value,
                 hair: document.getElementById('hairColor').value,
                 
-                // 4대 텍스트 박스 본문 데이터
                 stats: document.getElementById('statInputForm').value,
                 mainDesc: document.getElementById('mainDescForm').value,
                 leftDesc: document.getElementById('leftDescForm').value,
                 rightDesc: document.getElementById('rightDescForm').value,
                 
-                // 서브 배지 및 크레딧 데이터 명의
                 animalBadge: document.getElementById('animalBadgeInput').value,
                 clothDesc: document.getElementById('clothDescForm').value,
-                creditIllust: document.getElementById('creditIllustInput').value
+                creditIllust: document.getElementById('creditIllustInput').value,
+                
+                // [신규 피드백 패치] 4대 이미지 칸의 소스 스트링 및 구도 픽셀 수치 백업 연동
+                images: JSON.parse(JSON.stringify(globalImgRegistry))
             };
 
-            localStorage.setItem(activeSlot, JSON.stringify(dataToSave));
-            alert(`[${dataToSave.characterName || '이름 없음'}] 데이터가 선택한 슬롯에 임시저장 되었습니다.`);
-            updateSlotLabels();
+            try {
+                localStorage.setItem(activeSlot, JSON.stringify(dataToSave));
+                alert(`[${charName}] 데이터와 업로드한 사진 구도가 슬롯에 완벽하게 저장되었습니다.`);
+                updateSlotLabels();
+            } catch(e) {
+                alert("이미지 용량이 너무 커서 브라우저 임시저장 한도를 초과했습니다. 고용량 원본 일러스트 대신 크기를 줄인 편집용 이미지 업로드를 권장합니다.");
+            }
         }
 
-        // 선택한 로컬 슬롯 저장소에서 텍스트 및 컬러 칩 복원 가동
         function loadFromSlot() {
             const activeSlot = document.getElementById('slotSelect').value;
             const savedRaw = localStorage.getItem(activeSlot);
@@ -780,13 +781,13 @@
 
             const data = JSON.parse(savedRaw);
 
-            // 기본 폼 값 순차적 맵핑 복원
+            // 기본 텍스트 폼 복구
             document.getElementById('nameMainTxt').value = data.characterName || '';
             document.getElementById('nameLetterInput').value = data.letter || 'A';
             document.getElementById('nameCircleColor').value = data.circleColor || '#000000';
             document.getElementById('nameSubTxt').value = data.subName || '';
 
-            // 키워드 복원
+            // 키워드 복구
             document.querySelectorAll('.keyword-box-input')[0].value = data.k1 || '';
             document.getElementById('keyColor1').value = data.k1Color || '#000000';
             document.querySelectorAll('.keyword-box-input')[1].value = data.k2 || '';
@@ -794,28 +795,65 @@
             document.querySelectorAll('.keyword-box-input')[2].value = data.k3 || '';
             document.getElementById('keyColor3').value = data.k3Color || '#000000';
 
-            // 컬러 칩 복원
+            // 컬러 칩 복구
             document.getElementById('skinColor').value = data.skin || '#D6D6D6';
             document.getElementById('eyesColor').value = data.eyes || '#D6D6D6';
             document.getElementById('hairColor').value = data.hair || '#D6D6D6';
 
-            // 메인 텍스트 영역 복원
+            // 메인 서술 폼 복구
             document.getElementById('statInputForm').value = data.stats || '';
             document.getElementById('mainDescForm').value = data.mainDesc || '';
             document.getElementById('leftDescForm').value = data.leftDesc || '';
             document.getElementById('rightDescForm').value = data.rightDesc || '';
 
-            // 의상 및 배지 명의 복원
             document.getElementById('animalBadgeInput').value = data.animalBadge || '';
             document.getElementById('clothDescForm').value = data.clothDesc || '';
             document.getElementById('creditIllustInput').value = data.creditIllust || '';
 
-            // 가상 마우스 트리거를 실행하여 실시간 컬러 칩 래퍼 배경색 동기화 시스템 작동
+            // [신규 피드백 패치] 4대 이미지 박스 사진 파일 및 가공 배치 각도 복원 로직 구현
+            if(data.images) {
+                Object.keys(data.images).forEach(boxId => {
+                    const savedImgState = data.images[boxId];
+                    const targetBox = document.getElementById(boxId);
+                    
+                    if(targetBox && savedImgState && savedImgState.src) {
+                        // 전역 추적 레지스트리 버퍼 동기화
+                        Object.assign(globalImgRegistry[boxId], savedImgState);
+                        
+                        const imgTag = targetBox.querySelector('img');
+                        if(imgTag) {
+                            imgTag.src = savedImgState.src;
+                            imgTag.style.display = 'block';
+                            targetBox.classList.remove('placeholder');
+                            
+                            // 해당 박스에 탑재된 수동 절대 좌표 계산 렌더러 호출
+                            setTimeout(() => {
+                                if(imgTag.style.width === '' || imgTag.style.width === '0px') {
+                                    imgTag.style.width = (savedImgState.width * savedImgState.scale) + 'px';
+                                    imgTag.style.height = (savedImgState.height * savedImgState.scale) + 'px';
+                                    imgTag.style.left = savedImgState.left + 'px';
+                                    imgTag.style.top = savedImgState.top + 'px';
+                                }
+                            }, 50);
+                        }
+                    } else if(targetBox) {
+                        // 이미지가 없는 빈 슬롯일 경우 공백 세팅 초기화
+                        targetBox.classList.add('placeholder');
+                        const imgTag = targetBox.querySelector('img');
+                        if(imgTag) {
+                            imgTag.src = '';
+                            imgTag.style.display = 'none';
+                        }
+                        globalImgRegistry[boxId] = { src: '', origWidth: 0, origHeight: 0, width: 0, height: 0, left: 0, top: 0, scale: 1.0 };
+                    }
+                });
+            }
+
+            // 가상 마우스 이벤트를 전역 전파하여 상자 및 폰트 컬러 동시 동기화
             triggerColorPickerUpdate();
-            alert(`[${data.characterName || '이름 없음'}] 자료 데이터 복원 세팅 완료!`);
+            alert(`[${data.characterName || '이름 없음'}] 모든 데이터와 일러스트 구도 복원 성공!`);
         }
 
-        // 로컬스토리지 내역에 맞게 셀렉트 박스 라벨 이름 자동 매칭 렌더링
         function updateSlotLabels() {
             SLOT_KEYS.forEach((key, index) => {
                 const option = document.querySelectorAll('#slotSelect option')[index];
@@ -829,7 +867,6 @@
             });
         }
 
-        // 강제 인풋 리스너 트리거 유틸리티 (배경색 즉시 동기화)
         function triggerColorPickerUpdate() {
             const pickerIds = ['nameCircleColor', 'skinColor', 'eyesColor', 'hairColor', 'keyColor1', 'keyColor2', 'keyColor3'];
             pickerIds.forEach(id => {
@@ -838,7 +875,6 @@
             });
         }
 
-        // 페이지 구동 시 즉시 로컬 데이터 슬롯 라벨 렌더링 동기화
         updateSlotLabels();
 
         // 미리보기 모달 작동 바인딩
