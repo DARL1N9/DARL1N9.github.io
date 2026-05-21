@@ -161,11 +161,11 @@
         /* 스탯 입력 및 안내문구 */
         .info-text { position: absolute; left: 45px; top: 198px; font-size: 9px; color: #666; font-family: 'Pretendard', sans-serif; }
         
-        /* [1번 기능 패치] 성별 라인 테두리 상자를 시안 양식과 일치하도록 둥글게 피팅 (border-radius: 14px) */
+        /* [1번 기능 패치] 성별 라인 테두리 상자 모서리를 약간만 둥글게 교정 (border-radius: 6px) */
         .stat-input { 
             position: absolute; left: 45px; top: 215px; width: 285px; height: 28px; border: 1px solid #000; background-color: #ffffff; text-align: center; font-weight: bold; box-sizing: border-box; padding: 4px 5px 0 5px; font-family: 'Pretendard', sans-serif; 
             font-size: 11px; line-height: 1.4; resize: none; overflow: hidden; word-break: break-all;
-            border-radius: 14px; 
+            border-radius: 6px; 
         }
         
         /* 특징창 내부 자동 개행 및 영문/숫자 단어 끊김 방지 */
@@ -499,8 +499,8 @@
 
             let imgState = {
                 origWidth: 0, origHeight: 0, 
-                width: 0, height: 0,         
-                left: 0, top: 0,             
+                width: 0, height: 0,          
+                left: 0, top: 0,              
                 scale: 1.0
             };
 
@@ -663,7 +663,12 @@
                     }
                 }
                 if (input.tagName === 'TEXTAREA') {
-                    input.style.border = 'none';
+                    // [2번 기능 패치] 흰색 배경을 가진 'bottom-desc-box'는 테두리가 지워지면 칸이 사라지므로 테두리 복구/보존 설정
+                    if (input.classList.contains('bottom-desc-box')) {
+                        input.style.border = '1px solid #000000';
+                    } else {
+                        input.style.border = 'none';
+                    }
                     input.style.overflow = 'hidden';
                 }
             });
