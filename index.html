@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>소솜 간단 페어틀 메이커</title>
+    <title>소솜 간단 페어틀 메이커 - DARL1N9__</title>
     <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
     <style>
-        /* [변경] 전체 배경을 화사하고 눈이 편한 파스텔 핑크 베이지 톤으로 */
+        /* [1. 기본 디자인 - 파스텔 모드] */
         body {
             font-family: 'Arial', sans-serif;
-            background-color: #FFF5F5;
-            color: #4A4A4A; /* 눈이 편하도록 완전 검은색 대신 짙은 브라운 그레이 */
+            background-color: #FFF5F5; /* 파스텔 핑크 베이지 */
+            color: #333;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -29,241 +29,302 @@
     color: #FFA3B1; /* 마우스 올렸을 때 살짝 더 연한 핑크로 변경 */
     text-decoration: underline; /* 마우스 올렸을 때만 밑줄 표시 */
 }
-        
         h1 {
-            margin-bottom: 30px;
-            font-size: 24px;
+            font-size: 20px;
             color: #5C4B51;
+            margin-bottom: 20px;
         }
-        .container {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-            max-width: 500px;
-            width: 100%;
-        }
-        /* [변경] 입력 폼 카드를 화사한 화이트 카드로 바꾸고 부드러운 그림자 추가 */
+        
+        /* [2. 컨트롤러 및 팝업 스타일] */
         .control-panel {
             background-color: #ffffff;
-            padding: 20px;
+            padding: 15px;
             border-radius: 12px;
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-            box-shadow: 0 8px 24px rgba(255, 142, 153, 0.15);
+            width: 100%;
+            max-width: 500px;
+            box-shadow: 0 4px 15px rgba(255, 142, 153, 0.1);
             border: 1px solid #FFE3E5;
+            margin-bottom: 20px;
+            text-align: center;
         }
-        label {
-            font-size: 14px;
-            font-weight: bold;
-            margin-bottom: 5px;
-            color: #7D6B72;
-        }
-        /* [변경] 입력창 테두리를 둥글고 부드러운 파스텔 라벤더 톤으로 */
-        input, select, button {
-            padding: 12px;
+        .control-panel label { font-size: 13px; font-weight: bold; color: #7D6B72; }
+        .control-panel input {
+            padding: 10px;
+            margin-top: 5px;
             border-radius: 8px;
-            font-size: 16px;
-            box-sizing: border-box;
+            border: 1.5px solid #E2D9F3; /* 파스텔 라벤더 */
+            width: 90%;
         }
-        input, select {
-            background-color: #FAFAFC;
-            color: #333;
-            border: 1.5px solid #E2D9F3;
-            transition: all 0.2s;
-        }
-        input:focus {
-            outline: none;
-            border-color: #FF8E99; /* 클릭 시 파스텔 핑크로 강조 */
-            background-color: #fff;
-        }
-        /* [변경] 버튼을 화사한 딸기우유색(파스텔 핑크)으로 변경 */
         button {
-            background-color: #FF8E99;
+            background-color: #FF8E99; /* 딸기우유색 */
             color: white;
             font-weight: bold;
+            padding: 12px;
+            border-radius: 8px;
             border: none;
             cursor: pointer;
-            margin-top: 10px;
-            transition: background 0.2s, transform 0.1s;
-            box-shadow: 0 4px 10px rgba(255, 142, 153, 0.3);
+            margin-top: 15px;
+            transition: background 0.2s;
+            box-shadow: 0 4px 10px rgba(255, 142, 153, 0.2);
         }
-        button:hover {
-            background-color: #FFA3B1; /* 마우스 올리면 살짝 더 화사해짐 */
-        }
-        button:active {
-            transform: scale(0.98);
-        }
-        /* [변경] 이미지 캔버스 기본 배경을 은은한 파스텔 그라데이션으로 변경 */
-        .preview-box {
-            width: 100%;
-            aspect-ratio: 16 / 9;
-            background: linear-gradient(135deg, #FFDEE9 0%, #B5FFFC 100%);
-            border: 1px solid #FFE3E5;
-            border-radius: 12px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            position: relative;
-            overflow: hidden;
-            box-shadow: 0 10px 25px rgba(255, 142, 153, 0.15);
-        }
-        /* 글자 가독성을 위해 캔버스 내부에 까는 은은한 반투명 그늘막 */
-        .preview-box::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: radial-gradient(circle, transparent 30%, rgba(0, 0, 0, 0.2) 100%);
-            pointer-events: none;
-        }
-        /* 페어틀 내부 텍스트는 이미지 합성 시 잘 보이도록 흰색+그림자 유지 */
-        .preview-title {
-            font-size: 32px;
-            font-weight: 900;
-            color: #ffffff;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            margin: 0;
-            text-align: center;
-            padding: 0 20px;
-            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
-            z-index: 2;
-        }
-        .preview-subtitle {
-            font-size: 14px;
-            color: #ffffff;
-            margin-top: 10px;
-            letter-spacing: 4px;
-            font-weight: bold;
-            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.4);
-            z-index: 2;
-        }
+        button:hover { background-color: #FFA3B1; }
 
-        /* ================= 팝업창 스타일 (파스텔 모드) ================= */
-        /* [변경] 뒷배경 흐림 효과 추가 및 너무 어둡지 않게 밸런스 조정 */
         .popup-overlay {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background-color: rgba(92, 75, 81, 0.4); /* 짙은 브라운 베이지 톤 투명도 */
-            backdrop-filter: blur(3px); /* 배경을 살짝 흐리게 처리해 집중도 업 */
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-color: rgba(92, 75, 81, 0.4);
+            backdrop-filter: blur(2px);
             display: flex; justify-content: center; align-items: center;
             z-index: 9999;
         }
-        /* [변경] 팝업창 바탕을 하얗고 모서리가 둥근 폭신한 느낌으로 변경 */
         .popup-content {
             background-color: #ffffff;
             color: #4A4A4A;
             width: 90%; max-width: 420px;
-            padding: 35px 25px 25px 25px;
+            padding: 30px 20px 20px 20px;
             border-radius: 16px;
-            box-shadow: 0 15px 35px rgba(92, 75, 81, 0.15);
             position: relative; text-align: center;
-            box-sizing: border-box;
             border: 1px solid #FFE3E5;
         }
         .popup-close-btn {
-            position: absolute; top: 12px; right: 18px;
+            position: absolute; top: 10px; right: 15px;
             background: none; border: none; color: #BBB;
-            font-size: 28px; cursor: pointer; line-height: 1;
-            transition: color 0.2s;
+            font-size: 28px; cursor: pointer;
         }
-        .popup-close-btn:hover {
-            color: #FF8E99;
-        }
-        /* [변경] 공지 뱃지를 파스텔 핑크로 */
-        .popup-badge {
-            background-color: #FF8E99;
-            color: #fff; font-size: 11px; font-weight: bold;
-            padding: 4px 10px; border-radius: 20px; letter-spacing: 1px;
-        }
-        .popup-body h2 { font-size: 20px; margin: 18px 0 10px 0; color: #5C4B51; }
-        .popup-body p { font-size: 14px; color: #666; line-height: 1.6; margin: 0 0 8px 0; }
-        /* [변경] 팝업 하단 안내 문구 박스를 아주 연한 핑크빛 도는 그레이로 포근하게 */
-        .popup-body .popup-sub-text {
-            font-size: 12px; color: #7A6B70;
+        .popup-badge { background-color: #FF8E99; color: #fff; font-size: 10px; padding: 3px 8px; border-radius: 15px; }
+        .popup-body h2 { font-size: 18px; margin: 15px 0 10px 0; color: #5C4B51; }
+        .popup-body p { font-size: 13px; color: #666; margin: 0 0 5px 0; }
+        .popup-sub-text {
+            font-size: 11px; color: #7A6B70;
             background-color: #FFF8F8;
-            padding: 12px; border-radius: 8px; margin-top: 15px; text-align: left;
-            line-height: 1.6;
-            border: 1px dashed #FFD1D5; /* 부드러운 점선 테두리 */
+            padding: 10px; border-radius: 6px; margin-top: 15px; text-align: left;
+            border: 1px dashed #FFD1D5;
         }
+
+        /* [3. 메인 틀 (시안 image_2.png 구현)] */
+        .capture-area {
+            width: 1000px; /* 시안 해상도 기준 */
+            height: 563px;
+            background-color: white;
+            border: 1px solid #E5E5E5;
+            position: relative;
+            padding: 20px;
+            box-sizing: border-box;
+            color: black;
+        }
+
+        /* 그리드 및 컴포넌트 위치 지정 */
+        .header { display: flex; align-items: center; justify-content: space-between; height: 50px; }
+        .grid-left { position: absolute; left: 20px; top: 100px; width: 330px; display: flex; flex-direction: column; gap: 15px; }
+        .grid-right { position: absolute; left: 660px; top: 20px; width: 320px; display: flex; flex-direction: column; gap: 15px; }
+
+        /* 공통 스타일: 텍스트 상자 */
+        .input-box { border: 1px solid black; background-color: #F0F0F0; font-size: 11px; padding: 10px; box-sizing: border-box; }
+        
+        /* 공통 스타일: 이미지 업로드 상자 */
+        .image-box {
+            border: 1.5px solid black;
+            background-color: white;
+            position: relative;
+            cursor: pointer;
+            overflow: hidden;
+        }
+        .image-box.placeholder::before {
+            content: '클릭하여 이미지 업로드';
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 10px;
+            color: #888;
+            text-align: center;
+        }
+        .image-box input[type="file"] { display: none; }
+        .image-box img { width: 100%; height: 100%; object-fit: cover; position: absolute; top: 0; left: 0; display: none; }
+
+        /* [컴포넌트 개별 스타일] */
+        .header-left { display: flex; align-items: center; }
+        .name-main { font-size: 24px; font-weight: bold; background-color: black; color: white; padding: 5px 15px; margin-right: 15px; }
+        .name-sub { font-size: 16px; color: #888; border: none; background: none; }
+
+        .keyword-row { display: flex; gap: 10px; }
+        .keyword-box { flex: 1; text-align: center; padding: 5px 0; font-size: 10px; font-weight: bold; }
+
+        .color-row { display: flex; gap: 10px; }
+        .color-item { flex: 1; border: 1px solid black; background-color: #F0F0F0; text-align: center; padding: 20px 0; font-size: 10px; }
+        
+        .stat-input {
+            width: 100%;
+            border: 1.5px solid black;
+            font-size: 12px;
+            padding: 5px 10px;
+            text-align: center;
+            box-sizing: border-box;
+            background-color: white;
+        }
+        
+        /* 대형 메인 이미지 */
+        .main-img-box {
+            position: absolute;
+            left: 360px;
+            top: 50px;
+            width: 280px;
+            height: 330px;
+        }
+
+        /* 하단 컴포넌트 */
+        .bottom-left-box { position: absolute; left: 20px; top: 460px; width: 330px; display: flex; gap: 10px; }
+        .bottom-img-row { position: absolute; left: 360px; top: 420px; width: 280px; display: flex; gap: 10px; justify-content: center;}
+
+        /* 대형 의상 이미지 및 설명 */
+        .cloth-img-box { width: 100%; height: 350px; }
+        .cloth-desc-box { width: 100%; border: 1.5px solid black; }
+
+        /* 크레딧 (디자인image_2.png 하단) */
+        .credit {
+            position: absolute;
+            left: 20px;
+            bottom: 10px;
+            width: 960px;
+            display: flex;
+            justify-content: space-between;
+            font-size: 8px;
+            color: #888;
+        }
+
+        /* [4. 가독성 설정] */
+        input:focus { outline: none; }
     </style>
 </head>
 <body>
 
-<div id="noticePopup" class="popup-overlay">
-    <div class="popup-content">
-        <button class="popup-close-btn" onclick="closePopup()">×</button>
-        <div class="popup-body">
-            <span class="popup-badge">NOTICE</span>
-            <h2>🍩소솜 간단 페어틀 메이커🍩</h2>
-            <p>트위터 : <a href="https://x.com/DARL1N9__" target="_blank" class="twitter-link">@DARL1N9__</a></p>
-            <p class="popup-sub-text">출처를 삭제하지 않는 선에서 간단한 가공은 허용하고 있습니다.
-                처음 만들어 본 사이트라... 이래저래 자잘한 수정사항이 많을 수 있습니다. 잘 부탁드립니다^.^</p>
-        
+    <div id="noticePopup" class="popup-overlay">
+        <div class="popup-content">
+            <button class="popup-close-btn" onclick="closePopup()">×</button>
+            <div class="popup-body">
+                <span class="popup-badge">NOTICE</span>
+                <h2>🍩소솜 간단 페어틀 메이커🍩</h2>
+                <p>트위터 : @DARL1N9__</p>
+                <p class="popup-sub-text">출처를 삭제하지 않는 선에서 간단한 가공은 허용하고 있습니다. 처음 만들어 본 사이트라... 이래저래 자잘한 수정사항이 많을 수 있습니다. 잘 부탁드립니다^.^</p>
+            </div>
         </div>
     </div>
-</div>
 
-    <h1>🎬 소솜 간단 페어틀 메이커</h1>
+    <h1>🎬 소솜 캐릭터 메이커</h1>
 
-    <div class="container">
-        <div class="control-panel">
-            <div style="display: flex; flex-direction: column;">
-                <label for="titleInput">메인 타이틀 텍스트</label>
-                <input type="text" id="titleInput" value="MY SHOWTIME" placeholder="텍스트를 입력하세요">
+    <div class="control-panel">
+        <label>소솜 간단 페어틀 메이커 (ver 1.0)</label><br>
+        <button id="downloadBtn">컴퓨터에 이미지로 저장하기 (PNG)</button>
+    </div>
+
+    <div class="capture-area" id="captureArea">
+        
+        <div class="header">
+            <div class="header-left">
+                <span class="name-main">A 이름</span>
+                <input type="text" class="name-sub" value="Name" placeholder="영어 이름">
             </div>
-            
-            <div style="display: flex; flex-direction: column;">
-                <label for="subInput">서브 타이틀</label>
-                <input type="text" id="subInput" value="A NETFLIX ORIGINAL" placeholder="서브 문구를 입력하세요">
-            </div>
-
-            <button id="downloadBtn">컴퓨터에 이미지로 저장하기</button>
         </div>
 
-        <div class="preview-box" id="captureArea">
-            <h2 class="preview-title" id="previewTitle">MY SHOWTIME</h2>
-            <div class="preview-subtitle" id="previewSubtitle">A NETFLIX ORIGINAL</div>
+        <div class="grid-left">
+            <div class="keyword-row">
+                <input type="text" class="input-box keyword-box" value="#키워드">
+                <input type="text" class="input-box keyword-box" value="#키워드">
+                <input type="text" class="input-box keyword-box" value="#키워드">
+            </div>
+            <div class="color-row">
+                <div class="color-item">SKIN</div>
+                <div class="color-item">EYES</div>
+                <div class="color-item">HAIR</div>
+            </div>
+            <input type="text" class="stat-input" value="성별 | 나이 | 키 | 몸무게">
+            <textarea class="input-box" rows="7" style="width: 100%;">□ 캐릭터의 주요 특징을 간략 서술</textarea>
         </div>
+
+        <div class="image-box placeholder main-img-box" id="mainImgBox">
+            <input type="file" accept="image/*">
+            <img>
+        </div>
+
+        <div class="grid-right">
+            <div class="image-box placeholder cloth-img-box" id="clothImgBox">
+                <input type="file" accept="image/*">
+                <img>
+            </div>
+            <textarea class="input-box cloth-desc-box" rows="5" style="width: 100%;">+ 의상에 대한 부가적인 설명을 기입합니다.</textarea>
+        </div>
+
+        <div class="bottom-left-box">
+            <textarea class="input-box" rows="4" style="flex:1;">캐해 참고</textarea>
+            <textarea class="input-box" rows="4" style="flex:1; background-color:white;">이건 안 됩니다...</textarea>
+        </div>
+        <div class="bottom-img-row">
+            <div class="image-box placeholder" id="sdImgBox" style="width: 100px; height: 100px;">
+                <input type="file" accept="image/*">
+                <img>
+            </div>
+            <div class="image-box placeholder" id="subImgBox" style="width: 100px; height: 100px;">
+                <input type="file" accept="image/*">
+                <img>
+            </div>
+        </div>
+
+        <div class="credit">
+            <div>DESIGNED BY XOXOME | @DARL1N9__</div>
+            <div>ILLUST BY 이름</div>
+        </div>
+
     </div>
 
     <script>
-        // 1. 사용자가 글자를 입력할 때마다 실시간으로 화면 바꾸기
-        const titleInput = document.getElementById('titleInput');
-        const subInput = document.getElementById('subInput');
-        
-        const previewTitle = document.getElementById('previewTitle');
-        const previewSubtitle = document.getElementById('previewSubtitle');
+        // 1. 팝업창 닫기 함수
+        function closePopup() {
+            document.getElementById('noticePopup').style.display = 'none';
+        }
 
-        titleInput.addEventListener('input', (e) => {
-            previewTitle.innerText = e.target.value;
-        });
+        // 2. [핵심] 이미지 업로드 기능 구현
+        function setupImageBox(boxId) {
+            const box = document.getElementById(boxId);
+            const input = box.querySelector('input[type="file"]');
+            const img = box.querySelector('img');
 
-        subInput.addEventListener('input', (e) => {
-            previewSubtitle.innerText = e.target.value;
-        });
+            // 상자 클릭 시 숨겨진 파일 선택창 열기
+            box.addEventListener('click', () => {
+                input.click();
+            });
 
-        // 2. [저장하기] 버튼을 누르면 해당 영역을 이미지 파일로 뽑아내기
+            // 파일 선택 시 처리
+            input.addEventListener('change', (e) => {
+                const file = e.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function(event) {
+                        img.src = event.target.result;
+                        img.style.display = 'block'; // 이미지 보여주기
+                        box.classList.remove('placeholder'); // 안내 문구 숨기기
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+        }
+
+        // 모든 이미지 상자에 기능 적용
+        setupImageBox('mainImgBox');
+        setupImageBox('clothImgBox');
+        setupImageBox('sdImgBox');
+        setupImageBox('subImgBox');
+
+        // 3. 이미지 저장 기능
         document.getElementById('downloadBtn').addEventListener('click', () => {
             const target = document.getElementById('captureArea');
-            
             html2canvas(target, {
                 useCORS: true, 
-                scale: 2       
+                scale: 2 // 고화질 출력
             }).then(canvas => {
                 const link = document.createElement('a');
-                link.download = 'my-custom-thumbnail.png'; 
+                link.download = 'sosom-character-sheet.png';
                 link.href = canvas.toDataURL('image/png');
                 link.click();
             });
         });
-
-        // 3. 팝업창 닫기 함수
-        function closePopup() {
-            const popup = document.getElementById('noticePopup');
-            popup.style.display = 'none';
-        }
     </script>
 </body>
 </html>
