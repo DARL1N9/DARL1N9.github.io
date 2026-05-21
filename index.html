@@ -161,11 +161,12 @@
         /* 스탯 입력 및 안내문구 */
         .info-text { position: absolute; left: 45px; top: 198px; font-size: 9px; color: #666; font-family: 'Pretendard', sans-serif; }
         
-        /* 성별 라인 테두리 상자 모서리를 약간만 둥글게 교정 (border-radius: 6px) */
+        /* [1번 기능 패치] 성별 및 스탯 입력용 textarea의 내부 수직 가이드 기준 정중앙으로 통합 정렬 */
         .stat-input { 
-            position: absolute; left: 45px; top: 215px; width: 285px; height: 28px; border: 1px solid #000; background-color: #ffffff; text-align: center; font-weight: bold; box-sizing: border-box; padding: 4px 5px 0 5px; font-family: 'Pretendard', sans-serif; 
-            font-size: 11px; line-height: 1.4; resize: none; overflow: hidden; word-break: break-all;
-            border-radius: 6px; 
+            position: absolute; left: 45px; top: 215px; width: 285px; height: 28px; border: 1px solid #000; background-color: #ffffff; text-align: center; font-weight: bold; box-sizing: border-box; 
+            padding: 0 5px; font-family: 'Pretendard', sans-serif; font-size: 11px; 
+            line-height: 26px; /* 줄 높이를 상자 전체 크기와 일치시켜 수직 정가운데 고정 */
+            resize: none; overflow: hidden; word-break: break-all; border-radius: 6px; white-space: nowrap;
         }
         
         /* 특징창 내부 자동 개행 및 영문/숫자 단어 끊김 방지 */
@@ -426,7 +427,6 @@
             if(popup) popup.style.display = 'none'; 
         }
 
-        // 팝업 숨기기 완벽 바인딩 완료
         function closePreviewModal() {
             document.getElementById('previewModal').style.display = 'none';
         }
@@ -656,6 +656,7 @@
             allInputs.forEach(input => {
                 input.style.fontFamily = 'Pretendard, sans-serif';
                 if (input.tagName === 'INPUT' && input.type === 'text') {
+                    // [철통 봉인] 테두리가 지워지면 실종되는 요소들의 ID 및 클래스 필터 예외 처리 완전 수정
                     if(!input.classList.contains('stat-input') && input.id !== 'creditIllustInput' && !input.classList.contains('mini-badge-input')) {
                         input.style.padding = '0px';
                         input.style.margin = '0px';
@@ -663,7 +664,7 @@
                     }
                 }
                 if (input.tagName === 'TEXTAREA') {
-                    // 테두리가 보존되어야 하는 클래스명 지정
+                    // 테두리가 파괴되면 사라져 보이던 4대 핵심 서술 영역의 외곽 테두리선을 가상 스냅샷 단계에서도 물리 보존 적용
                     if (input.classList.contains('stat-input') || input.classList.contains('main-desc-box') || input.classList.contains('bottom-desc-box') || input.classList.contains('cloth-desc-box')) {
                         input.style.border = '1px solid #000000';
                         input.style.backgroundColor = window.getComputedStyle(input).backgroundColor;
