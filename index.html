@@ -10,10 +10,10 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-10-21@1.0/MaruBuri-Regular.css">
     
     <style>
-        /* [1. 전체 레이아웃 스타일 - 화사한 화이트 테마] */
+        /* [1. 전체 레이아웃 스타일 - #BED197 계열 연두 베이지 파스텔 톤] */
         body {
             font-family: 'Pretendard', 'Arial', sans-serif;
-            background-color: #f5f6f7;
+            background-color: #F4F7EE; /* 새 테마에 맞춘 부드러운 연두빛 화이트 */
             color: #333333;
             display: flex;
             flex-direction: column;
@@ -24,7 +24,7 @@
         h1 {
             margin-bottom: 30px;
             font-size: 24px;
-            color: #111111;
+            color: #4A533C; /* 묵직한 카키 그레이로 타이틀 색상 톤 다운 */
         }
 
         /* 입력창 배경 및 테두리 선 */
@@ -40,7 +40,7 @@
         }
         input:focus, textarea:focus {
             outline: none;
-            border-color: #007bff;
+            border-color: #BED197; /* 포커스 테두리색 변경 */
         }
 
         /* [2. 메인 시트 캔버스 (1000px * 563px 고정)] */
@@ -51,7 +51,7 @@
             box-sizing: border-box;
             color: black;
             border: 1px solid #000000;
-            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+            box-shadow: 0 8px 16px rgba(74,83,60,0.06);
         }
 
         /* 공통 스타일: 텍스트 박스 */
@@ -251,17 +251,37 @@
         .credit-line { position: absolute; left: 45px; bottom: 12px; width: 910px; display: flex; justify-content: space-between; font-size: 9px; color: #999; font-weight: bold; align-items: center;}
         .credit-input { border: none; background: transparent; font-size: 9px; font-weight: bold; color: #999; text-align: right; width: 100px; padding: 0; font-family: inherit; }
 
+        /* [테마 변경] 하단 액션 패널 버튼 메인 테마색 매칭 */
         .bottom-action-panel { margin-top: 30px; margin-bottom: 50px; text-align: center; width: 1000px; }
-        #downloadBtn { background-color: #007bff; color: white; font-weight: bold; padding: 14px 35px; border-radius: 30px; border: none; font-size: 16px; cursor: pointer; box-shadow: 0 4px 15px rgba(0, 123, 255, 0.4); }
+        #downloadBtn { 
+            background-color: #BED197; /* 메인 연두 테마색 */
+            color: #ffffff; 
+            font-weight: bold; 
+            padding: 14px 35px; 
+            border-radius: 30px; 
+            border: none; 
+            font-size: 16px; 
+            cursor: pointer; 
+            transition: all 0.2s;
+            box-shadow: 0 4px 15px rgba(190, 209, 151, 0.4); 
+        }
+        #downloadBtn:hover {
+            background-color: #CDDEA8; /* 마우스 올렸을 때 살짝 더 화사해지는 연두색 */
+            transform: translateY(-1px);
+        }
 
-        /* 팝업 스타일 시스템 */
-        .popup-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(92, 75, 81, 0.4); backdrop-filter: blur(3px); display: flex; justify-content: center; align-items: center; z-index: 9999; }
-        .popup-content { background-color: #fff; width: 90%; max-width: 420px; padding: 40px 25px 30px 25px; border-radius: 16px; text-align: center; border: 1px solid #FFE3E5; position: relative; box-sizing: border-box; }
-        .popup-close-btn { position: absolute; top: 15px; right: 20px; background: none; border: none; font-size: 28px; cursor: pointer; color: #bbb; line-height: 1; z-index: 10005; padding: 0; }
-        .popup-close-btn:hover { color: #007bff; }
-        .popup-badge { background-color: #007bff; color: #fff; padding: 4px 10px; border-radius: 20px; font-weight: bold; font-size: 11px; }
-        .popup-body a { color: #007bff; text-decoration: none; font-weight: bold; }
-        .popup-sub-text { font-size: 12px; color: #7A6B70; background-color: #FFF8F8; padding: 12px; border-radius: 8px; margin-top: 15px; text-align: left; line-height: 1.6; border: 1px dashed #FFD1D5; }
+        /* 팝업 스타일 시스템 (#BED197 테마 매칭형) */
+        .popup-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(74, 83, 60, 0.3); backdrop-filter: blur(3px); display: flex; justify-content: center; align-items: center; z-index: 9999; }
+        .popup-content { background-color: #fff; width: 90%; max-width: 420px; padding: 40px 25px 30px 25px; border-radius: 16px; text-align: center; border: 1px solid #EBF2DF; position: relative; box-sizing: border-box; }
+        
+        .popup-close-btn { position: absolute; top: 15px; right: 20px; background: none; border: none; font-size: 28px; cursor: pointer; color: #ccc; line-height: 1; z-index: 10005; padding: 0; }
+        .popup-close-btn:hover { color: #BED197; }
+        
+        .popup-badge { background-color: #BED197; color: #fff; padding: 4px 10px; border-radius: 20px; font-weight: bold; font-size: 11px; }
+        .popup-body h2 { font-size: 20px; margin: 18px 0 10px 0; color: #4A533C; }
+        .popup-body a { color: #BED197; text-decoration: none; font-weight: bold; }
+        .popup-body a:hover { text-decoration: underline; }
+        .popup-sub-text { font-size: 12px; color: #69735A; background-color: #F8FAF5; padding: 12px; border-radius: 8px; margin-top: 15px; text-align: left; line-height: 1.6; border: 1px dashed #D9E5C3; }
     </style>
 </head>
 <body>
@@ -378,7 +398,7 @@
             if(popup) popup.style.display = 'none'; 
         }
 
-        // 컬러 픽커 제어 함수
+        // 컬러 픽커 제어 함수 (글씨 반전 최적화)
         function setupColorPicker(inputId, wrapperId, textElementQuery) {
             const input = document.getElementById(inputId);
             const wrapper = document.getElementById(wrapperId);
@@ -400,6 +420,7 @@
             }
         }
 
+        // 각 구역 컬러 픽커 작동
         setupColorPicker('skinColor', 'skinWrapper', '.color-label');
         setupColorPicker('eyesColor', 'eyesWrapper', '.color-label');
         setupColorPicker('hairColor', 'hairWrapper', '.color-label');
