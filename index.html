@@ -104,7 +104,7 @@
 
         /* ==================== 좌표 기반 배치 및 커스텀 스타일 ==================== */
         
-        /* [버그 영구 박멸] 캡처 도구가 텍스트 수직 라인을 오해하지 않도록 height와 line-height 칼정렬 매칭 */
+        /* [2번 기능 패치] 캡처 도구가 텍스트 수직 라인을 오해하지 않도록 위치 정교화 및 height 구조 칼정렬 */
         .header-name-zone {
             position: absolute; left: 45px; top: 35px; width: 330px; height: 40px; display: block; 
         }
@@ -118,10 +118,10 @@
             position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; z-index: 3;
         }
         .name-main-input {
-            position: absolute; left: 48px; top: 0; width: 110px; height: 40px; font-family: 'Pretendard', sans-serif; font-size: 24px; color: #000000; border: none; background: none; font-weight: 800; line-height: 40px; padding: 0; margin: 0;
+            position: absolute; left: 48px; top: 0; width: 110px; height: 40px; font-family: 'Pretendard', sans-serif; font-size: 24px; color: #000000; border: none; background: none; font-weight: 800; line-height: 40px; padding: 0; margin: 0; box-sizing: border-box;
         }
         .name-sub-input {
-            position: absolute; left: 165px; top: 0; width: 150px; height: 40px; font-family: 'Pretendard', sans-serif; font-size: 18px; color: #b0b0b0; border: none; background: none; font-weight: 700; line-height: 40px; padding: 0; margin: 0;
+            position: absolute; left: 165px; top: 0; width: 150px; height: 40px; font-family: 'Pretendard', sans-serif; font-size: 18px; color: #b0b0b0; border: none; background: none; font-weight: 700; line-height: 40px; padding: 0; margin: 0; box-sizing: border-box;
         }
 
         /* SKIN / EYES / HAIR 컬러 그룹 */
@@ -155,7 +155,7 @@
         /* 스탯 입력 및 안내문구 */
         .info-text { position: absolute; left: 45px; top: 198px; font-size: 9px; color: #666; font-family: 'Pretendard', sans-serif; }
         
-        /* [1번 기능 패치] 삐져나가지 않도록 폰트 크기를 아담한 11px로 줄이고 패딩 정밀 정돈 */
+        /* [1번 기능 패치] 글자 크기를 아담한 11px로 조율하고 박스 내부 수직 정렬 정돈 */
         .stat-input { 
             position: absolute; left: 45px; top: 215px; width: 285px; height: 28px; border: 1px solid #000; text-align: center; font-weight: bold; box-sizing: border-box; padding: 0 5px; font-family: 'Pretendard', sans-serif; 
             font-size: 11px; line-height: 26px;
@@ -181,7 +181,7 @@
             border-radius: 14px; 
             font-size: 11px; 
             padding: 0 14px; 
-            height: 24px; /* 높이 물리 지정 */
+            height: 24px; 
             z-index: 10; 
             font-weight: bold; 
             display: inline-flex; 
@@ -192,7 +192,7 @@
             box-sizing: border-box;
         }
         
-        /* [4번 기능 패치] 동물화 종류 인풋 창이 수직 팽창하여 붕 뜨지 않도록 height 라인 락 고정 */
+        /* [4번 기능 패치] 동물화 종류 인풋 창이 수직 연산에서 뒤틀리지 않도록 픽셀 패딩 제거 락 바인딩 */
         .mini-badge-input { 
             border: none; 
             background: transparent; 
@@ -215,9 +215,36 @@
         }
         .cloth-desc-box { position: absolute; left: 660px; top: 425px; width: 295px; height: 80px; background-color: #F5F5F5; }
         
-        /* [3번 기능 패치] ILLUST BY 명의 레이아웃 컨테이너 영역 붕 뜸 방지 강제 고정 */
-        .credit-line { position: absolute; left: 45px; top: 535px; width: 910px; height: 16px; display: flex; justify-content: space-between; font-size: 9px; color: #999; font-weight: bold; align-items: center; font-family: 'Pretendard', sans-serif; box-sizing: border-box;}
-        .credit-input { border: none; background: transparent; font-size: 9px; font-weight: bold; color: #999; text-align: right; width: 100px; height: 16px; line-height: 16px; padding: 0; margin: 0; font-family: 'Pretendard', sans-serif; box-sizing: border-box; }
+        /* [3번 기능 패치] 크레딧 라인 컨테이너 위치를 원본 템플릿 마진 가이드에 맞춰 위로 전면 상향 조정 */
+        .credit-line { 
+            position: absolute; 
+            left: 45px; 
+            top: 532px; /* 위치를 위로 정교하게 올림 (기존 535px -> 532px 격차 마감) */
+            width: 910px; 
+            height: 18px; 
+            display: flex; 
+            justify-content: space-between; 
+            font-size: 9px; 
+            color: #999999; 
+            font-weight: bold; 
+            align-items: center; 
+            font-family: 'Pretendard', sans-serif; 
+            box-sizing: border-box;
+        }
+        .credit-input { 
+            border: none; 
+            background: transparent; 
+            font-size: 9px; 
+            font-weight: bold; 
+            color: #999999; 
+            text-align: right; 
+            width: 120px; 
+            height: 18px; 
+            line-height: 18px; 
+            padding: 0; margin: 0; 
+            font-family: 'Pretendard', sans-serif; 
+            box-sizing: border-box; 
+        }
 
         /* 하단 제어 단추 레이아웃 */
         .bottom-action-panel { margin-top: 30px; margin-bottom: 50px; display: flex; gap: 15px; justify-content: center; width: 1000px; }
@@ -401,7 +428,7 @@
         setupColorPicker('keyColor3', 'keyWrapper3', '.keyword-box-input');
         setupColorPicker('nameCircleColor', 'nameCircleWrapper', '.name-circle-input');
 
-        // [버그 방어형] 이미지 물리 연산 인터랙션 제어 엔진
+        // 이미지 물리 연산 인터랙션 제어 엔진
         function setupInteractiveImageBox(boxId) {
             const box = document.getElementById(boxId);
             if(!box) return;
@@ -554,14 +581,15 @@
                     scale: 2, 
                     logging: false,
                     onclone: (clonedDoc) => {
-                        // 가상 캔버스의 모든 입력 폼 서체 및 높이값 강제 매칭 연산
                         const inputs = clonedDoc.querySelectorAll('input, textarea');
                         inputs.forEach(input => {
                             input.style.fontFamily = 'Pretendard, sans-serif';
-                            // 캡처 가상 돔에서의 인풋 수직 정렬 유실 버그 원천 차단 패치
+                            // [긴급 보완] 가상 돔 복제본 캡처 시 패딩 마스킹 유실로 인한 수직 뒤틀림 전면 방어
                             if (input.tagName === 'INPUT' && input.type === 'text') {
                                 input.style.paddingTop = '0px';
                                 input.style.paddingBottom = '0px';
+                                input.style.marginTop = '0px';
+                                input.style.marginBottom = '0px';
                             }
                         });
                     }
@@ -600,6 +628,8 @@
                         if (input.tagName === 'INPUT' && input.type === 'text') {
                             input.style.paddingTop = '0px';
                             input.style.paddingBottom = '0px';
+                            input.style.marginTop = '0px';
+                            input.style.marginBottom = '0px';
                         }
                     });
                 }
