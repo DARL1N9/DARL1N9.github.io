@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>나만의 커스텀 이미지 제작기</title>
-    <!-- 화면 캡처를 도와주는 외부 라이브러리 불러오기 -->
+    <title>소솜 간단 페어틀 메이커</title>
     <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
     <style>
+        /* [변경] 전체 배경을 화사하고 눈이 편한 파스텔 핑크 베이지 톤으로 */
         body {
             font-family: 'Arial', sans-serif;
-            background-color: #141414;
-            color: white;
+            background-color: #FFF5F5;
+            color: #4A4A4A; /* 눈이 편하도록 완전 검은색 대신 짙은 브라운 그레이 */
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -20,6 +20,7 @@
         h1 {
             margin-bottom: 30px;
             font-size: 24px;
+            color: #5C4B51;
         }
         .container {
             display: flex;
@@ -28,189 +29,172 @@
             max-width: 500px;
             width: 100%;
         }
-        /* 컨트롤러 양식 */
+        /* [변경] 입력 폼 카드를 화사한 화이트 카드로 바꾸고 부드러운 그림자 추가 */
         .control-panel {
-            background-color: #2f2f2f;
+            background-color: #ffffff;
             padding: 20px;
-            border-radius: 8px;
+            border-radius: 12px;
             display: flex;
             flex-direction: column;
             gap: 15px;
+            box-shadow: 0 8px 24px rgba(255, 142, 153, 0.15);
+            border: 1px solid #FFE3E5;
         }
         label {
             font-size: 14px;
             font-weight: bold;
             margin-bottom: 5px;
+            color: #7D6B72;
         }
+        /* [변경] 입력창 테두리를 둥글고 부드러운 파스텔 라벤더 톤으로 */
         input, select, button {
-            padding: 10px;
-            border-radius: 4px;
-            border: none;
+            padding: 12px;
+            border-radius: 8px;
             font-size: 16px;
+            box-sizing: border-box;
         }
         input, select {
-            background-color: #444;
-            color: white;
+            background-color: #FAFAFC;
+            color: #333;
+            border: 1.5px solid #E2D9F3;
+            transition: all 0.2s;
         }
+        input:focus {
+            outline: none;
+            border-color: #FF8E99; /* 클릭 시 파스텔 핑크로 강조 */
+            background-color: #fff;
+        }
+        /* [변경] 버튼을 화사한 딸기우유색(파스텔 핑크)으로 변경 */
         button {
-            background-color: #E50914;
+            background-color: #FF8E99;
             color: white;
             font-weight: bold;
+            border: none;
             cursor: pointer;
             margin-top: 10px;
-            transition: background 0.2s;
+            transition: background 0.2s, transform 0.1s;
+            box-shadow: 0 4px 10px rgba(255, 142, 153, 0.3);
         }
         button:hover {
-            background-color: #b80710;
+            background-color: #FFA3B1; /* 마우스 올리면 살짝 더 화사해짐 */
         }
-        /* 이미지 캔버스 공간 (캡처될 영역) */
+        button:active {
+            transform: scale(0.98);
+        }
+        /* [변경] 이미지 캔버스 기본 배경을 은은한 파스텔 그라데이션으로 변경 */
         .preview-box {
             width: 100%;
             aspect-ratio: 16 / 9;
-            background: linear-gradient(135deg, #000000 0%, #434343 100%);
-            border: 2px solid #333;
-            border-radius: 4px;
+            background: linear-gradient(135deg, #FFDEE9 0%, #B5FFFC 100%);
+            border: 1px solid #FFE3E5;
+            border-radius: 12px;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             position: relative;
             overflow: hidden;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+            box-shadow: 0 10px 25px rgba(255, 142, 153, 0.15);
         }
-        /* 넷플릭스풍 붉은 그라데이션 오버레이 효과 */
+        /* 글자 가독성을 위해 캔버스 내부에 까는 은은한 반투명 그늘막 */
         .preview-box::before {
             content: '';
             position: absolute;
             top: 0; left: 0; right: 0; bottom: 0;
-            background: radial-gradient(circle, transparent 40%, rgba(229, 9, 20, 0.3) 100%);
+            background: radial-gradient(circle, transparent 30%, rgba(0, 0, 0, 0.2) 100%);
             pointer-events: none;
         }
+        /* 페어틀 내부 텍스트는 이미지 합성 시 잘 보이도록 흰색+그림자 유지 */
         .preview-title {
             font-size: 32px;
             font-weight: 900;
-            color: #E50914;
+            color: #ffffff;
             text-transform: uppercase;
             letter-spacing: 2px;
             margin: 0;
             text-align: center;
             padding: 0 20px;
-            text-shadow: 0 0 10px rgba(229, 9, 20, 0.6);
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+            z-index: 2;
         }
         .preview-subtitle {
             font-size: 14px;
-            color: #ccc;
+            color: #ffffff;
             margin-top: 10px;
             letter-spacing: 4px;
             font-weight: bold;
+            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.4);
+            z-index: 2;
+        }
+
+        /* ================= 팝업창 스타일 (파스텔 모드) ================= */
+        /* [변경] 뒷배경 흐림 효과 추가 및 너무 어둡지 않게 밸런스 조정 */
+        .popup-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-color: rgba(92, 75, 81, 0.4); /* 짙은 브라운 베이지 톤 투명도 */
+            backdrop-filter: blur(3px); /* 배경을 살짝 흐리게 처리해 집중도 업 */
+            display: flex; justify-content: center; align-items: center;
+            z-index: 9999;
+        }
+        /* [변경] 팝업창 바탕을 하얗고 모서리가 둥근 폭신한 느낌으로 변경 */
+        .popup-content {
+            background-color: #ffffff;
+            color: #4A4A4A;
+            width: 90%; max-width: 420px;
+            padding: 35px 25px 25px 25px;
+            border-radius: 16px;
+            box-shadow: 0 15px 35px rgba(92, 75, 81, 0.15);
+            position: relative; text-align: center;
+            box-sizing: border-box;
+            border: 1px solid #FFE3E5;
+        }
+        .popup-close-btn {
+            position: absolute; top: 12px; right: 18px;
+            background: none; border: none; color: #BBB;
+            font-size: 28px; cursor: pointer; line-height: 1;
+            transition: color 0.2s;
+        }
+        .popup-close-btn:hover {
+            color: #FF8E99;
+        }
+        /* [변경] 공지 뱃지를 파스텔 핑크로 */
+        .popup-badge {
+            background-color: #FF8E99;
+            color: #fff; font-size: 11px; font-weight: bold;
+            padding: 4px 10px; border-radius: 20px; letter-spacing: 1px;
+        }
+        .popup-body h2 { font-size: 20px; margin: 18px 0 10px 0; color: #5C4B51; }
+        .popup-body p { font-size: 14px; color: #666; line-height: 1.6; margin: 0 0 8px 0; }
+        /* [변경] 팝업 하단 안내 문구 박스를 아주 연한 핑크빛 도는 그레이로 포근하게 */
+        .popup-body .popup-sub-text {
+            font-size: 12px; color: #7A6B70;
+            background-color: #FFF8F8;
+            padding: 12px; border-radius: 8px; margin-top: 15px; text-align: left;
+            line-height: 1.6;
+            border: 1px dashed #FFD1D5; /* 부드러운 점선 테두리 */
         }
     </style>
 </head>
 <body>
+
 <div id="noticePopup" class="popup-overlay">
     <div class="popup-content">
         <button class="popup-close-btn" onclick="closePopup()">×</button>
-        
         <div class="popup-body">
             <span class="popup-badge">NOTICE</span>
             <h2>🍩소솜 간단 페어틀 메이커🍩</h2>
             <p>트위터 : @DARL1N9__</p>
-            <p class="popup-sub-text">출처를 삭제하지 않는 선에서 간단한 가공은 허용하고 있습니다. 처음 만들어 본 사이트라... 이래저래 자잘한 수정사항이 많을 수 있습니다. 잘 부탁드립니다^.^</p>
+            <p class="popup-sub-text">출처를 삭제하지 않는 선에서 간단한 가공은 허용하고 있습니다.
+                처음 만들어 본 사이트라... 이래저래 자잘한 수정사항이 많을 수 있습니다. 잘 부탁드립니다^.^</p>
+        
         </div>
     </div>
 </div>
 
-<style>
-    /* 화면 전체를 어둡게 덮는 배경 레이어 */
-    .popup-overlay {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(0, 0, 0, 0.75); /* 뒷배경을 어둡게 처리 */
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        z-index: 9999; /* 화면 최상단에 위치하도록 설정 */
-    }
-
-    /* 실제 공지사항 팝업 박스 */
-    .popup-content {
-        background-color: #222; /* 어두운 테마에 어울리는 다크 그레이 */
-        color: #fff;
-        width: 90%;
-        max-width: 420px;
-        padding: 30px 25px 25px 25px;
-        border-radius: 12px;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-        position: relative;
-        text-align: center;
-        border: 1px solid #444;
-        box-sizing: border-box;
-    }
-
-    /* 우측 상단 X 버튼 */
-    .popup-close-btn {
-        position: absolute;
-        top: 10px;
-        right: 15px;
-        background: none;
-        border: none;
-        color: #aaa;
-        font-size: 28px;
-        cursor: pointer;
-        transition: color 0.2s;
-        line-height: 1;
-    }
-    .popup-close-btn:hover {
-        color: #E50914; /* 마우스 올리면 넷플릭스 레드로 변경 */
-    }
-
-    /* 내부 정렬 및 꾸미기 */
-    .popup-badge {
-        background-color: #E50914;
-        color: #fff;
-        font-size: 11px;
-        font-weight: bold;
-        padding: 3px 8px;
-        border-radius: 3px;
-        letter-spacing: 1px;
-    }
-    .popup-body h2 {
-        font-size: 20px;
-        margin: 15px 0 10px 0;
-    }
-    .popup-body p {
-        font-size: 14px;
-        color: #ddd;
-        line-height: 1.5;
-        margin: 0 0 10px 0;
-    }
-    .popup-body .popup-sub-text {
-        font-size: 12px;
-        color: #aaa;
-        background-color: #111;
-        padding: 10px;
-        border-radius: 6px;
-        margin-top: 15px;
-        text-align: left;
-    }
-</style>
-
-<script>
-    // X 버튼을 누르면 실행되는 함수
-    function closePopup() {
-        const popup = document.getElementById('noticePopup');
-        // 팝업창 자체를 화면에서 보이지 않게 감춥니다.
-        popup.style.display = 'none';
-    }
-</script>
-    
-    <h1>🎬 NET-STYLE 이미지 생성기</h1>
+    <h1>🎬 소솜 간단 페어틀 메이커</h1>
 
     <div class="container">
-        <!-- 설정 입력창 -->
         <div class="control-panel">
             <div style="display: flex; flex-direction: column;">
                 <label for="titleInput">메인 타이틀 텍스트</label>
@@ -225,7 +209,6 @@
             <button id="downloadBtn">컴퓨터에 이미지로 저장하기</button>
         </div>
 
-        <!-- 실시간 미리보기 및 캡처 영역 -->
         <div class="preview-box" id="captureArea">
             <h2 class="preview-title" id="previewTitle">MY SHOWTIME</h2>
             <div class="preview-subtitle" id="previewSubtitle">A NETFLIX ORIGINAL</div>
@@ -252,17 +235,22 @@
         document.getElementById('downloadBtn').addEventListener('click', () => {
             const target = document.getElementById('captureArea');
             
-            // html2canvas 도구를 이용해 캡처 진행
             html2canvas(target, {
-                useCORS: true, // 외부 이미지나 폰트가 꼬이지 않도록 설정
-                scale: 2       // 더 선명한 고화질로 저장하기 위해 해상도 2배 업
+                useCORS: true, 
+                scale: 2       
             }).then(canvas => {
                 const link = document.createElement('a');
-                link.download = 'my-custom-thumbnail.png'; // 저장될 파일 이름
+                link.download = 'my-custom-thumbnail.png'; 
                 link.href = canvas.toDataURL('image/png');
                 link.click();
             });
         });
+
+        // 3. 팝업창 닫기 함수
+        function closePopup() {
+            const popup = document.getElementById('noticePopup');
+            popup.style.display = 'none';
+        }
     </script>
 </body>
 </html>
