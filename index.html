@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>소솜 간단 페어틀 메이커</title>
+    <title>소솜 간단 페어틀 메이커 - 컬러 픽커 버전</title>
     <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
     <style>
-        /* 기본 파스텔 배경 설정 */
+        /* [1. 전체 레이아웃 스타일] */
         body {
             font-family: 'Arial', sans-serif;
             background-color: #FFF5F5;
@@ -17,7 +17,7 @@
             padding: 30px 20px;
             margin: 0;
         }
-/* 트위터 링크 스타일 꾸미기 */
+        /* 트위터 링크 스타일 꾸미기 */
 .twitter-link {
     color: #FF8E99; /* 파스텔 핑크색으로 통일 */
     text-decoration: none; /* 기본 밑줄 제거 */
@@ -29,313 +29,97 @@
     color: #FFA3B1; /* 마우스 올렸을 때 살짝 더 연한 핑크로 변경 */
     text-decoration: underline; /* 마우스 올렸을 때만 밑줄 표시 */
 }
-        h1 {
-            font-size: 24px;
-            color: #5C4B51;
-            margin-bottom: 25px;
-            margin-top: 10px;
-        }
+        h1 { font-size: 24px; color: #5C4B51; margin-bottom: 25px; }
 
-        /* [핵심 수정] 원본 이미지와 100% 동일한 비율의 고정 캔버스 (1000px * 563px) */
+        /* [2. 메인 시트 캔버스 (1000px * 563px 고정)] */
         .capture-area {
-            width: 1000px;
-            height: 563px;
+            width: 1000px; height: 563px;
             background-color: #ffffff;
             position: relative;
             box-sizing: border-box;
-            color: black;
+            border: 1px solid #000000;
             box-shadow: 0 10px 30px rgba(92, 75, 81, 0.1);
             overflow: hidden;
-            /* 테두리를 시안처럼 얇고 깔끔하게 지정 */
-            border: 1px solid #000000; 
         }
 
-        /* [핵심 수정] 저장 버튼을 하단으로 격리 및 예쁘게 스타일링 */
-        .bottom-action-panel {
-            margin-top: 30px;
-            margin-bottom: 50px;
-            text-align: center;
-            width: 1000px;
-        }
-
-        #downloadBtn {
-            background-color: #FF8E99;
-            color: white;
-            font-weight: bold;
-            padding: 14px 35px;
-            border-radius: 30px;
-            border: none;
-            font-size: 16px;
-            cursor: pointer;
-            transition: all 0.2s;
-            box-shadow: 0 4px 15px rgba(255, 142, 153, 0.4);
-        }
-        #downloadBtn:hover {
-            background-color: #FFA3B1;
-            transform: translateY(-2px);
-        }
-        #downloadBtn:active {
-            transform: translateY(0);
-        }
-
-        /* 공통 입력상자 (텍스트 입력창 및 본문 텍스트박스) */
+        /* 공통 스타일: 텍스트 박스 */
         .input-box {
-            border: 1px solid #000000;
-            background-color: #F0F0F0;
-            font-size: 12px;
-            font-family: inherit;
-            padding: 8px;
-            box-sizing: border-box;
-            resize: none;
+            border: 1px solid #000000; background-color: #F0F0F0;
+            font-size: 12px; padding: 8px; box-sizing: border-box; resize: none;
         }
-        
-        /* 공통 이미지 업로드 상자 */
+
+        /* 공통 스타일: 이미지 박스 */
         .image-box {
-            border: 1px solid #000000;
-            background-color: #ffffff;
-            position: relative;
-            cursor: pointer;
-            overflow: hidden;
-            box-sizing: border-box;
+            border: 1px solid #000000; background-color: #ffffff;
+            position: relative; cursor: pointer; overflow: hidden;
         }
         .image-box.placeholder::before {
-            content: '클릭하여 이미지 업로드';
-            position: absolute;
-            top: 50%; left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 11px;
-            color: #888;
-            width: 100%;
-            text-align: center;
+            content: '이미지 업로드'; position: absolute;
+            top: 50%; left: 50%; transform: translate(-50%, -50%);
+            font-size: 11px; color: #888; width: 100%; text-align: center;
         }
         .image-box input[type="file"] { display: none; }
         .image-box img { width: 100%; height: 100%; object-fit: cover; position: absolute; top: 0; left: 0; display: none; }
 
-        /* ==================== 시안에 맞춘 컴포넌트 절대 좌표 배치 ==================== */
-        
-        /* 좌측 상단 이름 영역 */
-        .header-name-zone {
-            position: absolute;
-            left: 45px;
-            top: 35px;
-            display: flex;
-            align-items: center;
-        }
-        .name-main {
-            font-size: 24px;
-            font-weight: 900;
-            background-color: #000000;
-            color: #ffffff;
-            padding: 4px 14px;
-            margin-right: 12px;
-            letter-spacing: 1px;
-        }
-        .name-sub {
-            font-size: 18px;
-            color: #888888;
-            border: none;
-            background: none;
-            font-weight: bold;
-            width: 150px;
-        }
-
-        /* 좌측 키워드 3개 */
-        .keyword-group {
-            position: absolute;
-            left: 45px;
-            top: 98px;
-            width: 285px;
-            display: flex;
-            gap: 7px;
-        }
-        .keyword-box {
-            width: 90px;
-            height: 26px;
-            text-align: center;
-            font-weight: bold;
-            padding: 0;
-        }
-
-        /* SKIN / EYES / HAIR 컬러 칩 */
+        /* ==================== [핵심] 컬러 픽커 스타일 ==================== */
         .color-group {
-            position: absolute;
-            left: 45px;
-            top: 132px;
-            width: 285px;
-            display: flex;
-            gap: 7px;
+            position: absolute; left: 45px; top: 132px;
+            width: 285px; display: flex; gap: 7px;
         }
-        .color-item {
-            width: 90px;
-            height: 60px;
-            border: 1px solid #000000;
-            background-color: #D6D6D6;
-            text-align: center;
-            line-height: 60px;
-            font-size: 11px;
-            font-weight: bold;
-            color: #444;
+        
+        .color-item-wrapper {
+            position: relative; width: 90px; height: 60px;
+            border: 1px solid #000000; cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
         }
 
-        /* 안내 문구 (모니터 기준입니다) */
-        .info-text {
-            position: absolute;
-            left: 45px;
-            top: 198px;
-            font-size: 9px;
-            color: #666;
+        /* 실제 컬러 인풋창 (투명하게 숨겨서 박스 전체가 클릭되게 함) */
+        .color-input {
+            position: absolute; top: 0; left: 0;
+            width: 100%; height: 100%; opacity: 0; cursor: pointer;
         }
 
-        /* 성별 | 나이 | 키 | 몸무게 */
-        .stat-input {
-            position: absolute;
-            left: 45px;
-            top: 215px;
-            width: 285px;
-            height: 28px;
-            border: 1px solid #000000;
-            background-color: #ffffff;
-            font-size: 12px;
-            text-align: center;
-            font-weight: bold;
+        /* 화면에 보이는 컬러 텍스트 라벨 */
+        .color-label {
+            font-size: 11px; font-weight: bold; pointer-events: none;
+            z-index: 2; color: #444; /* 기본 검은 글씨 */
         }
 
-        /* 좌측 캐릭터 특징 본문 서술란 */
-        .main-desc-box {
-            position: absolute;
-            left: 45px;
-            top: 252px;
-            width: 285px;
-            height: 125px;
-            line-height: 1.6;
-            background-color: #F5F5F5;
-        }
+        /* ==================== 좌표 기반 배치 ==================== */
+        .header-name-zone { position: absolute; left: 45px; top: 35px; display: flex; align-items: center; }
+        .name-main { font-size: 24px; font-weight: 900; background-color: #000; color: #fff; padding: 4px 14px; margin-right: 12px; }
+        .name-sub { font-size: 18px; color: #888; border: none; background: none; font-weight: bold; width: 150px; }
 
-        /* 좌측 하단 캐해 참고 / 이건 안 됩니다 박스 */
-        .bottom-desc-group {
-            position: absolute;
-            left: 45px;
-            top: 395px;
-            width: 285px;
-            height: 110px;
-            display: flex;
-            gap: 12px;
-        }
-        .bottom-desc-box {
-            flex: 1;
-            height: 100%;
-            border-radius: 16px; /* 시안 특유의 둥근 테두리 구현 */
-            padding: 12px;
-        }
+        .keyword-group { position: absolute; left: 45px; top: 98px; width: 285px; display: flex; gap: 7px; }
+        .keyword-box { width: 90px; height: 26px; text-align: center; font-weight: bold; padding: 0; }
 
-        /* 중앙 메인 전신/흉상 이미지 크기 고정 */
-        .main-profile-img {
-            position: absolute;
-            left: 355px;
-            top: 35px;
-            width: 280px;
-            height: 342px;
-        }
+        .info-text { position: absolute; left: 45px; top: 198px; font-size: 9px; color: #666; }
+        .stat-input { position: absolute; left: 45px; top: 215px; width: 285px; height: 28px; border: 1px solid #000; text-align: center; font-weight: bold; }
+        .main-desc-box { position: absolute; left: 45px; top: 252px; width: 285px; height: 125px; background-color: #F5F5F5; }
 
-        /* 중앙 하단 미니 이미지 2개 (SD / 동물화) */
-        .mini-img-group {
-            position: absolute;
-            left: 355px;
-            top: 395px;
-            width: 280px;
-            display: flex;
-            justify-content: space-between;
-        }
-        .mini-img-box {
-            width: 134px;
-            height: 110px;
-        }
-        /* 미니 이미지 라벨 뱃지 */
-        .mini-badge {
-            position: absolute;
-            top: -5px; left: 8px;
-            background-color: #ffffff;
-            border: 1px dashed #000000;
-            border-radius: 10px;
-            font-size: 9px;
-            padding: 1px 6px;
-            z-index: 3;
-            font-weight: bold;
-        }
+        .bottom-desc-group { position: absolute; left: 45px; top: 395px; width: 285px; height: 110px; display: flex; gap: 12px; }
+        .bottom-desc-box { flex: 1; height: 100%; border-radius: 16px; padding: 12px; }
 
-        /* 우측 대형 의상 이미지 크기 고정 */
-        .cloth-img-box {
-            position: absolute;
-            left: 660px;
-            top: 35px;
-            width: 295px;
-            height: 375px;
-        }
-        .cloth-badge {
-            position: absolute;
-            top: 25px; left: 670px;
-            background-color: #ffffff;
-            border: 1px dashed #000000;
-            border-radius: 50%;
-            width: 34px; height: 34px;
-            text-align: center; line-height: 34px;
-            font-size: 10px; font-weight: bold;
-            z-index: 3;
-        }
+        .main-profile-img { position: absolute; left: 355px; top: 35px; width: 280px; height: 342px; }
+        .mini-img-group { position: absolute; left: 355px; top: 395px; width: 280px; display: flex; justify-content: space-between; }
+        .mini-img-box { width: 134px; height: 110px; }
+        .mini-badge { position: absolute; top: -5px; left: 8px; background-color: #fff; border: 1px dashed #000; border-radius: 10px; font-size: 9px; padding: 1px 6px; z-index: 3; font-weight: bold; }
 
-        /* 우측 하단 의상 부가 설명란 */
-        .cloth-desc-box {
-            position: absolute;
-            left: 660px;
-            top: 425px;
-            width: 295px;
-            height: 80px;
-            background-color: #F5F5F5;
-        }
+        .cloth-badge { position: absolute; top: 25px; left: 670px; background-color: #fff; border: 1px dashed #000; border-radius: 50%; width: 34px; height: 34px; text-align: center; line-height: 34px; font-size: 10px; font-weight: bold; z-index: 3; }
+        .cloth-img-box { position: absolute; left: 660px; top: 35px; width: 295px; height: 375px; }
+        .cloth-desc-box { position: absolute; left: 660px; top: 425px; width: 295px; height: 80px; background-color: #F5F5F5; }
 
-        /* 하단 카피라이트 및 크레딧 */
-        .credit-line {
-            position: absolute;
-            left: 45px;
-            bottom: 12px;
-            width: 910px;
-            display: flex;
-            justify-content: space-between;
-            font-size: 9px;
-            color: #999999;
-            letter-spacing: 0.5px;
-            font-weight: bold;
-        }
+        .credit-line { position: absolute; left: 45px; bottom: 12px; width: 910px; display: flex; justify-content: space-between; font-size: 9px; color: #999; font-weight: bold; }
 
-        /* ================= 팝업창 스타일 ================= */
-        .popup-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background-color: rgba(92, 75, 81, 0.4);
-            backdrop-filter: blur(3px);
-            display: flex; justify-content: center; align-items: center;
-            z-index: 9999;
-        }
-        .popup-content {
-            background-color: #ffffff; color: #4A4A4A;
-            width: 90%; max-width: 420px; padding: 35px 25px 25px 25px;
-            border-radius: 16px; position: relative; text-align: center;
-            box-sizing: border-box; border: 1px solid #FFE3E5;
-        }
-        .popup-close-btn {
-            position: absolute; top: 12px; right: 18px;
-            background: none; border: none; color: #BBB; font-size: 28px; cursor: pointer;
-        }
-        .popup-close-btn:hover { color: #FF8E99; }
-        .popup-badge { background-color: #FF8E99; color: #fff; font-size: 11px; font-weight: bold; padding: 4px 10px; border-radius: 20px; }
-        .popup-body h2 { font-size: 20px; margin: 18px 0 10px 0; color: #5C4B51; }
-        .popup-body p { font-size: 14px; color: #666; line-height: 1.6; margin: 0 0 8px 0; }
-        .popup-body p a { color: #FF8E99; text-decoration: none; font-weight: bold; }
-        .popup-body p a:hover { text-decoration: underline; }
-        .popup-sub-text {
-            font-size: 12px; color: #7A6B70; background-color: #FFF8F8;
-            padding: 12px; border-radius: 8px; margin-top: 15px; text-align: left;
-            line-height: 1.6; border: 1px dashed #FFD1D5;
-        }
+        .bottom-action-panel { margin-top: 30px; margin-bottom: 50px; text-align: center; width: 1000px; }
+        #downloadBtn { background-color: #FF8E99; color: white; font-weight: bold; padding: 14px 35px; border-radius: 30px; border: none; font-size: 16px; cursor: pointer; box-shadow: 0 4px 15px rgba(255, 142, 153, 0.4); }
+
+        /* 팝업 스타일 */
+        .popup-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(92,75,81,0.4); backdrop-filter: blur(3px); display: flex; justify-content: center; align-items: center; z-index: 9999; }
+        .popup-content { background-color: #fff; width: 90%; max-width: 420px; padding: 35px 25px; border-radius: 16px; text-align: center; border: 1px solid #FFE3E5; }
+        .popup-close-btn { position: absolute; top: 12px; right: 18px; background: none; border: none; font-size: 28px; cursor: pointer; color: #bbb; }
+        .popup-badge { background-color: #FF8E99; color: #fff; padding: 4px 10px; border-radius: 20px; font-weight: bold; font-size: 11px; }
+        .popup-body a { color: #FF8E99; text-decoration: none; font-weight: bold; }
     </style>
 </head>
 <body>
@@ -347,7 +131,9 @@
                 <span class="popup-badge">NOTICE</span>
                 <h2>🍩소솜 간단 페어틀 메이커🍩</h2>
                 <p>트위터 : <a href="https://x.com/DARL1N9__" target="_blank">@DARL1N9__</a></p>
-                <p class="popup-sub-text">출처를 삭제하지 않는 선에서 간단한 가공은 허용하고 있습니다. 처음 만들어 본 사이트라... 이래저래 자잘한 수정사항이 많을 수 있습니다. 잘 부탁드립니다^.^</p>
+                <p style="font-size: 12px; line-height:1.6; background:#FFF8F8; padding:10px; margin-top:15px; border:1px dashed #FFD1D5; text-align:left;">
+                    이제 SKIN, EYES, HAIR 칸을 클릭하여 실제 캐릭터의 색상을 선택할 수 있습니다!
+                </p>
             </div>
         </div>
     </div>
@@ -355,10 +141,9 @@
     <h1>🎬 소솜 캐릭터 메이커</h1>
 
     <div class="capture-area" id="captureArea">
-        
         <div class="header-name-zone">
             <span class="name-main">A 이름</span>
-            <input type="text" class="name-sub" value="Name" placeholder="Name">
+            <input type="text" class="name-sub" value="Name">
         </div>
 
         <div class="keyword-group">
@@ -368,52 +153,43 @@
         </div>
 
         <div class="color-group">
-            <div class="color-item">SKIN</div>
-            <div class="color-item">EYES</div>
-            <div class="color-item">HAIR</div>
+            <div class="color-item-wrapper" id="skinWrapper" style="background-color: #D6D6D6;">
+                <span class="color-label">SKIN</span>
+                <input type="color" class="color-input" id="skinColor" value="#D6D6D6">
+            </div>
+            <div class="color-item-wrapper" id="eyesWrapper" style="background-color: #D6D6D6;">
+                <span class="color-label">EYES</span>
+                <input type="color" class="color-input" id="eyesColor" value="#D6D6D6">
+            </div>
+            <div class="color-item-wrapper" id="hairWrapper" style="background-color: #D6D6D6;">
+                <span class="color-label">HAIR</span>
+                <input type="color" class="color-input" id="hairColor" value="#D6D6D6">
+            </div>
         </div>
 
         <div class="info-text">※ 모든 방향은 보는 사람(모니터) 기준입니다. ※</div>
-        
         <input type="text" class="stat-input" value="성별 | 나이 | 키 | 몸무게">
-        
         <textarea class="input-box main-desc-box">□ 캐릭터의 주요 특징을 간략 서술</textarea>
 
         <div class="bottom-desc-group">
-            <textarea class="input-box bottom-desc-box" style="background-color: #F5F5F5;">캐해 참고&#10;캐해 참고&#10;캐해 참고&#10;캐해 참고</textarea>
+            <textarea class="input-box bottom-desc-box" style="background-color: #F5F5F5;">캐해 참고</textarea>
             <textarea class="input-box bottom-desc-box" style="background-color: #ffffff;">이건 안 됩니다...</textarea>
         </div>
 
         <div class="image-box placeholder main-profile-img" id="mainImgBox">
-            <input type="file" accept="image/*">
-            <img>
+            <input type="file" accept="image/*"><img src="">
         </div>
 
         <div class="mini-img-group">
-            <div class="image-box placeholder mini-img-box" id="sdImgBox">
-                <span class="mini-badge">SD</span>
-                <input type="file" accept="image/*">
-                <img>
-            </div>
-            <div class="image-box placeholder mini-img-box" id="subImgBox">
-                <span class="mini-badge">동물화 : 종류</span>
-                <input type="file" accept="image/*">
-                <img>
-            </div>
+            <div class="image-box placeholder mini-img-box" id="sdImgBox"><span class="mini-badge">SD</span><input type="file" accept="image/*"><img src=""></div>
+            <div class="image-box placeholder mini-img-box" id="subImgBox"><span class="mini-badge">동물화 : 종류</span><input type="file" accept="image/*"><img src=""></div>
         </div>
 
         <div class="cloth-badge">의상</div>
-        <div class="image-box placeholder cloth-img-box" id="clothImgBox">
-            <input type="file" accept="image/*">
-            <img>
-        </div>
-        <textarea class="input-box cloth-desc-box">+ 의상에 대한 부가적인 설명을 기입합니다.&#10;의상에 대한 부가적인 설명을 기입합니다.</textarea>
+        <div class="image-box placeholder cloth-img-box" id="clothImgBox"><input type="file" accept="image/*"><img src=""></div>
+        <textarea class="input-box cloth-desc-box">+ 의상에 대한 부가적인 설명을 기입합니다.</textarea>
 
-        <div class="credit-line">
-            <div>DESIGNED BY XOXOME | @DARL1N9__</div>
-            <div>ILLUST BY 이름</div>
-        </div>
-
+        <div class="credit-line"><div>DESIGNED BY XOXOME | @DARL1N9__</div><div>ILLUST BY 이름</div></div>
     </div>
 
     <div class="bottom-action-panel">
@@ -421,50 +197,51 @@
     </div>
 
     <script>
-        // 팝업창 닫기
-        function closePopup() {
-            document.getElementById('noticePopup').style.display = 'none';
+        function closePopup() { document.getElementById('noticePopup').style.display = 'none'; }
+
+        // [핵심] 컬러 픽커 실시간 연동 로직
+        function setupColorPicker(inputId, wrapperId) {
+            const input = document.getElementById(inputId);
+            const wrapper = document.getElementById(wrapperId);
+            const label = wrapper.querySelector('.color-label');
+
+            input.addEventListener('input', (e) => {
+                const color = e.target.value;
+                wrapper.style.backgroundColor = color;
+                
+                // [꿀팁] 배경이 너무 어두우면 글씨를 흰색으로, 밝으면 검은색으로 자동 변경
+                const r = parseInt(color.substr(1,2), 16);
+                const g = parseInt(color.substr(3,2), 16);
+                const b = parseInt(color.substr(5,2), 16);
+                const brightness = (r * 299 + g * 587 + b * 114) / 1000;
+                label.style.color = brightness < 128 ? '#ffffff' : '#444444';
+            });
         }
 
-        // 이미지 파일 업로드 유틸리티 함수
+        setupColorPicker('skinColor', 'skinWrapper');
+        setupColorPicker('eyesColor', 'eyesWrapper');
+        setupColorPicker('hairColor', 'hairWrapper');
+
+        // 기존 이미지 업로드 유틸리티
         function setupImageBox(boxId) {
             const box = document.getElementById(boxId);
             const input = box.querySelector('input[type="file"]');
             const img = box.querySelector('img');
-
-            box.addEventListener('click', () => {
-                input.click();
-            });
-
+            box.addEventListener('click', () => input.click());
             input.addEventListener('change', (e) => {
                 const file = e.target.files[0];
                 if (file) {
                     const reader = new FileReader();
-                    reader.onload = function(event) {
-                        img.src = event.target.result;
-                        img.style.display = 'block';
-                        box.classList.remove('placeholder');
-                    };
+                    reader.onload = (ev) => { img.src = ev.target.result; img.style.display = 'block'; box.classList.remove('placeholder'); };
                     reader.readAsDataURL(file);
                 }
             });
         }
 
-        // 각 구역에 업로드 기능 매핑
-        setupImageBox('mainImgBox');
-        setupImageBox('clothImgBox');
-        setupImageBox('sdImgBox');
-        setupImageBox('subImgBox');
+        setupImageBox('mainImgBox'); setupImageBox('clothImgBox'); setupImageBox('sdImgBox'); setupImageBox('subImgBox');
 
-        // 이미지 저장 캡처 기능
         document.getElementById('downloadBtn').addEventListener('click', () => {
-            const target = document.getElementById('captureArea');
-            
-            // 캡처 시점에 일시적으로 테두리를 숨기거나 조정하여 고화질 보정 가능
-            html2canvas(target, {
-                useCORS: true, 
-                scale: 2 // 다운로드 시 2배 선명하게 출력
-            }).then(canvas => {
+            html2canvas(document.getElementById('captureArea'), { useCORS: true, scale: 2 }).then(canvas => {
                 const link = document.createElement('a');
                 link.download = 'sosom-character-sheet.png';
                 link.href = canvas.toDataURL('image/png');
@@ -474,3 +251,11 @@
     </script>
 </body>
 </html>
+
+---
+
+### ✨ 추가된 디테일:
+1. **투명 인풋:** 헥스 코드를 입력하는 창은 투명하게 숨겨서, 사용자가 회색 박스 자체를 클릭하는 느낌이 들도록 처리했습니다.
+2. **글자색 자동 반전:** 선택한 색상이 너무 어두우면 **SKIN / EYES / HAIR** 라는 글자가 자동으로 흰색으로 변하게 해서 가독성을 높였습니다.
+
+이제 캐릭터의 고유 색상까지 완벽하게 기록할 수 있는 툴이 되었네요! 한번 적용해서 테스트해 보세요. 🥰
