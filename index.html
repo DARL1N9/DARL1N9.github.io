@@ -9,7 +9,7 @@
     <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" />
     
     <style>
-        /* [1. 전체 레이아웃 스타일 - #BED197 연두 파스텔 테마] */
+        /* [1. 전체 레이아웃 스타일 - #BED197 계열 연두 베이지 파스텔 톤] */
         body {
             font-family: 'Pretendard', 'Arial', sans-serif;
             background-color: #F4F7EE; 
@@ -39,7 +39,7 @@
         }
         input:focus, textarea:focus {
             outline: none;
-            border-color: #BED197;
+            border-color: #BED197; 
         }
 
         /* [2. 메인 시트 캔버스 (1000px * 563px 고정)] */
@@ -108,7 +108,7 @@
 
         /* ==================== 좌표 기반 배치 및 커스텀 스타일 ==================== */
         
-        /* [저장 뒤틀림 방지] 이름 구역 절대 좌표 고정 */
+        /* [저장 뒤틀림 철저 방어] 이름 영역 정렬 안정화 배치 */
         .header-name-zone {
             position: absolute;
             left: 45px;
@@ -148,11 +148,11 @@
             position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; z-index: 3;
         }
         
-        /* 한글 이름 입력창 - Pretendard 검은색 굵게 핏 세팅 */
+        /* [Pretendard 통합] 한글 이름 인풋 스타일 세팅 - 굵고 강렬한 블랙 고딕 */
         .name-main-input {
             position: absolute;
             left: 48px;
-            top: 0;
+            top: -2px;
             width: 110px;
             height: 40px;
             font-family: 'Pretendard', sans-serif; 
@@ -165,7 +165,7 @@
             padding: 0; margin: 0;
         }
         
-        /* 영어 Name 입력창 - Pretendard 회색 핏 세팅 */
+        /* [Pretendard 통합] 영어 Name 인풋 스타일 세팅 - 시안과 동일한 크기의 부드러운 소프트 그레이 고딕 */
         .name-sub-input {
             position: absolute;
             left: 165px;
@@ -174,7 +174,7 @@
             height: 36px;
             font-family: 'Pretendard', sans-serif; 
             font-size: 18px;
-            color: #888888;
+            color: #b0b0b0;
             border: none;
             background: none;
             font-weight: 700;
@@ -269,7 +269,7 @@
             transform: translateY(-1px);
         }
 
-        /* 팝업 스타일 시스템 */
+        /* 팝업 스타일 시스템 (#BED197 테마 매칭형) */
         .popup-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(74, 83, 60, 0.3); backdrop-filter: blur(3px); display: flex; justify-content: center; align-items: center; z-index: 9999; }
         .popup-content { background-color: #fff; width: 90%; max-width: 420px; padding: 40px 25px 30px 25px; border-radius: 16px; text-align: center; border: 1px solid #EBF2DF; position: relative; box-sizing: border-box; }
         .popup-close-btn { position: absolute; top: 15px; right: 20px; background: none; border: none; font-size: 28px; cursor: pointer; color: #ccc; line-height: 1; z-index: 10005; padding: 0; }
@@ -314,4 +314,247 @@
 
         <div class="keyword-group">
             <div class="keyword-box-wrapper" id="keyWrapper1">
-                <input type
+                <input type="text" class="keyword-box-input" value="#키워드">
+                <input type="color" class="keyword-bg-picker" id="keyColor1" value="#000000">
+            </div>
+            <div class="keyword-box-wrapper" id="keyWrapper2">
+                <input type="text" class="keyword-box-input" value="#키워드">
+                <input type="color" class="keyword-bg-picker" id="keyColor2" value="#000000">
+            </div>
+            <div class="keyword-box-wrapper" id="keyWrapper3">
+                <input type="text" class="keyword-box-input" value="#키워드">
+                <input type="color" class="keyword-bg-picker" id="keyColor3" value="#000000">
+            </div>
+        </div>
+
+        <div class="color-group">
+            <div class="color-item-wrapper" id="skinWrapper" style="background-color: #D6D6D6;">
+                <span class="color-label">SKIN</span>
+                <input type="color" class="color-input" id="skinColor" value="#D6D6D6">
+            </div>
+            <div class="color-item-wrapper" id="eyesWrapper" style="background-color: #D6D6D6;">
+                <span class="color-label">EYES</span>
+                <input type="color" class="color-input" id="eyesColor" value="#D6D6D6">
+            </div>
+            <div class="color-item-wrapper" id="hairWrapper" style="background-color: #D6D6D6;">
+                <span class="color-label">HAIR</span>
+                <input type="color" class="color-input" id="hairColor" value="#D6D6D6">
+            </div>
+        </div>
+
+        <div class="info-text">※ 모든 방향은 보는 사람(모니터) 기준입니다. ※</div>
+        <input type="text" class="stat-input" value="성별 | 나이 | 키 | 몸무게">
+        
+        <textarea class="input-box main-desc-box">□ 캐릭터의 주요 특징을 간략 서술</textarea>
+
+        <div class="bottom-desc-group">
+            <textarea class="input-box bottom-desc-box" style="background-color: #F5F5F5;">캐해 참고</textarea>
+            <textarea class="input-box bottom-desc-box" style="background-color: #ffffff;">이건 안 됩니다...</textarea>
+        </div>
+
+        <div class="image-box placeholder main-profile-img" id="mainImgBox">
+            <div class="img-container"><img src="" alt=""></div>
+        </div>
+
+        <div class="mini-img-group">
+            <div class="mini-box-container">
+                <span class="mini-badge">SD</span>
+                <div class="image-box placeholder mini-img-box" id="sdImgBox">
+                    <div class="img-container"><img src="" alt=""></div>
+                </div>
+            </div>
+            <div class="mini-box-container">
+                <span class="mini-badge"><input type="text" class="mini-badge-input" value="동물화 : 종류"></span>
+                <div class="image-box placeholder mini-img-box" id="subImgBox">
+                    <div class="img-container"><img src="" alt=""></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="cloth-container">
+            <div class="cloth-badge">의상</div>
+            <div class="image-box placeholder cloth-img-box" id="clothImgBox">
+                <div class="img-container"><img src="" alt=""></div>
+            </div>
+        </div>
+        <textarea class="input-box cloth-desc-box">+ 의상에 대한 부가적인 설명을 기입합니다.</textarea>
+
+        <div class="credit-line">
+            <div>DESIGNED BY XOXOME | @DARL1N9__</div>
+            <div>ILLUST BY <input type="text" class="credit-input" value="이름"></div>
+        </div>
+    </div>
+
+    <div class="bottom-action-panel">
+        <button id="downloadBtn">컴퓨터에 이미지로 저장하기 (PNG)</button>
+    </div>
+
+    <script>
+        // 팝업 닫기 기능 완벽화
+        function closePopup() { 
+            const popup = document.getElementById('noticePopup');
+            if(popup) popup.style.display = 'none'; 
+        }
+
+        // 컬러 픽커 제어 함수 (글씨 반전 최적화)
+        function setupColorPicker(inputId, wrapperId, textElementQuery) {
+            const input = document.getElementById(inputId);
+            const wrapper = document.getElementById(wrapperId);
+
+            if(input && wrapper) {
+                input.addEventListener('input', (e) => {
+                    const color = e.target.value;
+                    wrapper.style.backgroundColor = color;
+                    
+                    const label = wrapper.querySelector(textElementQuery);
+                    if(label) {
+                        const r = parseInt(color.substr(1,2), 16);
+                        const g = parseInt(color.substr(3,2), 16);
+                        const b = parseInt(color.substr(5,2), 16);
+                        const brightness = (r * 299 + g * 587 + b * 114) / 1000;
+                        label.style.color = brightness < 128 ? '#ffffff' : '#444444';
+                    }
+                });
+            }
+        }
+
+        // 각 구역 컬러 픽커 작동
+        setupColorPicker('skinColor', 'skinWrapper', '.color-label');
+        setupColorPicker('eyesColor', 'eyesWrapper', '.color-label');
+        setupColorPicker('hairColor', 'hairWrapper', '.color-label');
+        setupColorPicker('keyColor1', 'keyWrapper1', '.keyword-box-input');
+        setupColorPicker('keyColor2', 'keyWrapper2', '.keyword-box-input');
+        setupColorPicker('keyColor3', 'keyWrapper3', '.keyword-box-input');
+        setupColorPicker('nameCircleColor', 'nameCircleWrapper', '.name-circle-input');
+
+        // 드래그 및 휠 줌 스케일 보정 함수
+        function setupInteractiveImageBox(boxId) {
+            const box = document.getElementById(boxId);
+            if(!box) return;
+
+            let input = box.querySelector('input[type="file"]');
+            if(!input) {
+                input = document.createElement('input');
+                input.type = 'file';
+                input.accept = 'image/*';
+                box.appendChild(input);
+            }
+            const img = box.querySelector('img');
+
+            let isDragging = false;
+            let startX = 0, startY = 0;
+            let currentX = 0, currentY = 0;
+            let currentScale = 1.0;
+
+            box.addEventListener('click', (e) => {
+                if (box.classList.contains('placeholder')) {
+                    input.click();
+                }
+            });
+
+            input.addEventListener('change', (e) => {
+                const file = e.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = (ev) => { 
+                        if(img) {
+                            img.src = ev.target.result; 
+                            img.style.display = 'block'; 
+                            box.classList.remove('placeholder');
+                            currentX = 0; currentY = 0; currentScale = 1.0;
+                            updateImageTransform();
+                        }
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+
+            box.addEventListener('mousedown', (e) => {
+                if (box.classList.contains('placeholder')) return;
+                isDragging = true;
+                box.style.cursor = 'grabbing';
+                startX = e.clientX - currentX;
+                startY = e.clientY - currentY;
+                e.preventDefault();
+            });
+
+            window.addEventListener('mousemove', (e) => {
+                if (!isDragging) return;
+                currentX = e.clientX - startX;
+                currentY = e.clientY - startY;
+                updateImageTransform();
+            });
+
+            window.addEventListener('mouseup', () => {
+                if (isDragging) {
+                    isDragging = false;
+                    box.style.cursor = 'move';
+                }
+            });
+
+            box.addEventListener('wheel', (e) => {
+                if (box.classList.contains('placeholder')) return;
+                e.preventDefault();
+                const zoomFactor = 0.05;
+                if (e.deltaY < 0) {
+                    currentScale += zoomFactor;
+                } else {
+                    currentScale = Math.max(0.1, currentScale - zoomFactor);
+                }
+                updateImageTransform();
+            });
+
+            function updateImageTransform() {
+                if(img) {
+                    img.style.transform = `translate(${currentX}px, ${currentY}px) scale(${currentScale})`;
+                }
+            }
+        }
+
+        setupInteractiveImageBox('mainImgBox');
+        setupInteractiveImageBox('clothImgBox');
+        setupInteractiveImageBox('sdImgBox');
+        setupInteractiveImageBox('subImgBox');
+
+        // 이미지 저장 및 캡처 제어 (잘린 코드 완벽하게 마감 조치 완료)
+        const downloadBtn = document.getElementById('downloadBtn');
+        if(downloadBtn) {
+            downloadBtn.addEventListener('click', () => {
+                const target = document.getElementById('captureArea');
+                if (!target) return;
+
+                if(window.document.fonts && window.document.fonts.ready) {
+                    window.document.fonts.ready.then(() => {
+                        executeCapture(target);
+                    });
+                } else {
+                    executeCapture(target);
+                }
+            });
+        }
+
+        function executeCapture(target) {
+            html2canvas(target, {
+                useCORS: true,
+                allowTaint: true,
+                scale: 2,
+                logging: false,
+                onclone: (clonedDoc) => {
+                    const inputs = clonedDoc.querySelectorAll('input, textarea');
+                    inputs.forEach(input => {
+                        input.style.fontFamily = 'Pretendard, sans-serif';
+                        input.style.lineHeight = window.getComputedStyle(input).lineHeight;
+                    });
+                }
+            }).then(canvas => {
+                const link = document.createElement('a');
+                link.download = 'custom-자료틀.png';
+                link.href = canvas.toDataURL('image/png');
+                link.click();
+            }).catch(err => {
+                console.error("캡처 중 오류 발생:", err);
+            });
+        }
+    </script>
+</body>
+</html>
