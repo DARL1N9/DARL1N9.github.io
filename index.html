@@ -94,7 +94,7 @@
         }
         .image-box input[type="file"] { display: none; }
         
-        /* [철통 방어 패치] 이미지 원본 비율 유지 및 휠 스케일 기준점 정중앙 고정 */
+        /* 이미지 원본 비율 유지 및 휠 스케일 기준점 정중앙 고정 */
         .image-box img { 
             position: absolute; 
             top: 0; left: 0;
@@ -109,27 +109,25 @@
 
         /* ==================== 좌표 기반 배치 및 커스텀 스타일 ==================== */
         
-        /* [정렬 버그 완벽 수정] 다운로드 캡처 시에도 글자가 위로 튀지 않도록 인라인 블록 정렬 라인 박음질 */
+        /* [철통 방어] html2canvas 가로 정렬 오류를 방지하기 위한 절대적 크기 및 레이아웃 구조 세팅 */
         .header-name-zone {
             position: absolute;
             left: 45px;
             top: 35px;
-            display: flex;
-            align-items: center;
+            width: 290px;
             height: 40px;
+            display: block; /* 가상 복제본 깨짐 방지를 위해 flex 해제 */
         }
         .name-circle-wrapper {
-            position: relative;
+            position: absolute;
+            left: 0;
+            top: 2px;
             width: 36px; height: 36px;
             border-radius: 50%;
             background-color: #A13B3B; 
-            margin-right: 12px;
             box-sizing: border-box;
             border: 1px solid #000000;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
+            text-align: center;
         }
         .name-circle-input {
             width: 100%;
@@ -141,22 +139,29 @@
             color: #ffffff;
             text-align: center;
             padding: 0; margin: 0;
+            line-height: 34px; /* 텍스트 수직 솟구침 현상 완벽 제어 */
             z-index: 2;
             cursor: pointer;
-            font-family: inherit;
+            font-family: 'Pretendard', sans-serif;
+            position: relative;
         }
         .name-circle-color-picker {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; z-index: 3;
         }
         .name-main-input {
+            position: absolute;
+            left: 48px;
+            top: 0;
+            width: 240px;
+            height: 40px;
             font-family: 'MaruBuri', sans-serif; 
             font-size: 20px;
             color: #222222;
             border: none;
             background: none;
             font-weight: bold;
-            width: 250px;
-            height: 100%;
+            line-height: 40px;
+            padding: 0; margin: 0;
         }
 
         /* SKIN / EYES / HAIR 컬러 그룹 */
@@ -182,6 +187,7 @@
         }
         .keyword-box-input {
             width: 100%; height: 100%; border: none; background: transparent; text-align: center; font-size: 10px; font-weight: bold; color: #ffffff; cursor: pointer; z-index: 2; font-family: inherit;
+            padding: 0; margin: 0; line-height: 24px;
         }
         .keyword-bg-picker {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer;
@@ -191,309 +197,9 @@
         .info-text { position: absolute; left: 45px; top: 198px; font-size: 9px; color: #666; }
         .stat-input { 
             position: absolute; left: 45px; top: 215px; width: 285px; height: 28px; border: 1px solid #000; text-align: center; font-weight: bold; box-sizing: border-box; padding: 0 5px;
-            font-family: inherit;
+            font-family: inherit; line-height: 26px;
         }
         
         .main-desc-box { position: absolute; left: 45px; top: 252px; width: 285px; height: 125px; background-color: #F5F5F5; }
 
-        .bottom-desc-group { position: absolute; left: 45px; top: 395px; width: 285px; height: 110px; display: flex; gap: 12px; }
-        .bottom-desc-box { flex: 1; height: 100%; border-radius: 16px; padding: 12px; }
-
-        /* 이미지 컨테이너 공간 레이아웃 */
-        .main-profile-img { position: absolute; left: 355px; top: 35px; width: 280px; height: 342px; }
-        .mini-img-group { position: absolute; left: 355px; top: 395px; width: 280px; display: flex; justify-content: space-between; }
-        
-        .mini-box-container { width: 134px; height: 110px; position: relative; }
-        .mini-img-box { width: 100%; height: 100%; }
-        
-        .mini-badge { 
-            position: absolute; top: -10px; left: 10px; background-color: #ffffff; border: 1px dashed #000000; border-radius: 12px; font-size: 9px; padding: 2px 10px; z-index: 10; font-weight: bold; display: inline-flex; align-items: center; justify-content: center;
-        }
-        .mini-badge-input { 
-            border: none; background: transparent; font-size: 9px; font-weight: bold; width: 75px; text-align: center; font-family: inherit; padding: 0; margin: 0;
-        }
-
-        /* 우측 의상 프레임 */
-        .cloth-container { position: absolute; left: 660px; top: 35px; width: 295px; height: 375px; }
-        .cloth-img-box { width: 100%; height: 100%; }
-        .cloth-badge { 
-            position: absolute; top: -15px; left: -15px; background-color: #ffffff; border: 1px dashed #000000; border-radius: 50%; width: 38px; height: 38px; text-align: center; line-height: 38px; font-size: 11px; font-weight: bold; z-index: 10; 
-        }
-
-        .cloth-desc-box { position: absolute; left: 660px; top: 425px; width: 295px; height: 80px; background-color: #F5F5F5; }
-        
-        /* 크레딧 영역 및 수정 가능한 이름 폼 연동 */
-        .credit-line { position: absolute; left: 45px; bottom: 12px; width: 910px; display: flex; justify-content: space-between; font-size: 9px; color: #999; font-weight: bold; align-items: center;}
-        .credit-input { border: none; background: transparent; font-size: 9px; font-weight: bold; color: #999; text-align: right; width: 100px; padding: 0; font-family: inherit; }
-
-        .bottom-action-panel { margin-top: 30px; margin-bottom: 50px; text-align: center; width: 1000px; }
-        #downloadBtn { background-color: #007bff; color: white; font-weight: bold; padding: 14px 35px; border-radius: 30px; border: none; font-size: 16px; cursor: pointer; box-shadow: 0 4px 15px rgba(0, 123, 255, 0.4); }
-
-        /* 팝업 스타일 시스템 */
-        .popup-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(92, 75, 81, 0.4); backdrop-filter: blur(3px); display: flex; justify-content: center; align-items: center; z-index: 9999; }
-        .popup-content { background-color: #fff; width: 90%; max-width: 420px; padding: 40px 25px 30px 25px; border-radius: 16px; text-align: center; border: 1px solid #FFE3E5; position: relative; box-sizing: border-box; }
-        .popup-close-btn { position: absolute; top: 15px; right: 20px; background: none; border: none; font-size: 28px; cursor: pointer; color: #bbb; line-height: 1; z-index: 10005; padding: 0; }
-        .popup-close-btn:hover { color: #007bff; }
-        .popup-badge { background-color: #007bff; color: #fff; padding: 4px 10px; border-radius: 20px; font-weight: bold; font-size: 11px; }
-        .popup-body a { color: #007bff; text-decoration: none; font-weight: bold; }
-        .popup-sub-text { font-size: 12px; color: #7A6B70; background-color: #FFF8F8; padding: 12px; border-radius: 8px; margin-top: 15px; text-align: left; line-height: 1.6; border: 1px dashed #FFD1D5; }
-    </style>
-</head>
-<body>
-
-    <div id="noticePopup" class="popup-overlay">
-        <div class="popup-content">
-            <button class="popup-close-btn" onclick="closePopup()">×</button>
-            <div class="popup-body">
-                <span class="popup-badge">NOTICE</span>
-                <h2>🍩소솜 간단 자료틀 메이커🍩</h2>
-                <p style="margin-top: 15px; margin-bottom: 5px;">
-                    트위터 : <a href="https://x.com/DARL1N9__" target="_blank">@DARL1N9__</a>
-                </p>
-                <div class="popup-sub-text">
-                    출처를 삭제하지 않는 선에서 간단한 가공은 허용하고 있습니다. 처음 만들어 본 사이트라... 이래저래 자잘한 수정사항이 많을 수 있습니다. 잘 부탁드립니다^.^
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <h1>🍩소솜 간단 자료틀 메이커🍩</h1>
-
-    <div class="capture-area" id="captureArea">
-        
-        <div class="header-name-zone">
-            <div class="name-circle-wrapper" id="nameCircleWrapper">
-                <input type="text" class="name-circle-input" id="nameLetterInput" value="A">
-                <input type="color" class="name-circle-color-picker" id="nameCircleColor" value="#A13B3B">
-            </div>
-            <input type="text" class="name-main-input" id="nameMainTxt" value="장녀 Jangnyeo" placeholder="이름을 입력하세요">
-        </div>
-
-        <div class="keyword-group">
-            <div class="keyword-box-wrapper" id="keyWrapper1">
-                <input type="text" class="keyword-box-input" value="#어쩌고">
-                <input type="color" class="keyword-bg-picker" id="keyColor1" value="#444444">
-            </div>
-            <div class="keyword-box-wrapper" id="keyWrapper2">
-                <input type="text" class="keyword-box-input" value="#저쩌고">
-                <input type="color" class="keyword-bg-picker" id="keyColor2" value="#444444">
-            </div>
-            <div class="keyword-box-wrapper" id="keyWrapper3">
-                <input type="text" class="keyword-box-input" value="#이러쿵">
-                <input type="color" class="keyword-bg-picker" id="keyColor3" value="#444444">
-            </div>
-        </div>
-
-        <div class="color-group">
-            <div class="color-item-wrapper" id="skinWrapper" style="background-color: #FFF0F0;">
-                <span class="color-label">SKIN</span>
-                <input type="color" class="color-input" id="skinColor" value="#FFF0F0">
-            </div>
-            <div class="color-item-wrapper" id="eyesWrapper" style="background-color: #D6EFFF;">
-                <span class="color-label">EYES</span>
-                <input type="color" class="color-input" id="eyesColor" value="#D6EFFF">
-            </div>
-            <div class="color-item-wrapper" id="hairWrapper" style="background-color: #FFD6E0;">
-                <span class="color-label">HAIR</span>
-                <input type="color" class="color-input" id="hairColor" value="#FFD6E0">
-            </div>
-        </div>
-
-        <div class="info-text">※ 모든 방향은 보는 사람(모니터) 기준입니다. ※</div>
-        <input type="text" class="stat-input" value="여 | 1000살 | 164cm | 비밀">
-        
-        <textarea class="input-box main-desc-box">□ 캐릭터의 주요 특징을 간략 서술</textarea>
-
-        <div class="bottom-desc-group">
-            <textarea class="input-box bottom-desc-box" style="background-color: #F5F5F5;">캐해 참고</textarea>
-            <textarea class="input-box bottom-desc-box" style="background-color: #ffffff;">이건 안 됩니다...</textarea>
-        </div>
-
-        <div class="image-box placeholder main-profile-img" id="mainImgBox">
-            <div class="img-container"><img src=""></div>
-        </div>
-
-        <div class="mini-img-group">
-            <div class="mini-box-container">
-                <span class="mini-badge">SD</span>
-                <div class="image-box placeholder mini-img-box" id="sdImgBox">
-                    <div class="img-container"><img src=""></div>
-                </div>
-            </div>
-            <div class="mini-box-container">
-                <span class="mini-badge"><input type="text" class="mini-badge-input" value="동물화 : 종류"></span>
-                <div class="image-box placeholder mini-img-box" id="subImgBox">
-                    <div class="img-container"><img src=""></div>
-                </div>
-            </div>
-        </div>
-
-        <div class="cloth-container">
-            <div class="cloth-badge">의상</div>
-            <div class="image-box placeholder cloth-img-box" id="clothImgBox">
-                <div class="img-container"><img src=""></div>
-            </div>
-        </div>
-        <textarea class="input-box cloth-desc-box">+ 의상에 대한 부가적인 설명을 기입합니다.</textarea>
-
-        <div class="credit-line">
-            <div>DESIGNED BY XOXOME | @DARL1N9__</div>
-            <div>ILLUST BY <input type="text" class="credit-input" value="이름"></div>
-        </div>
-    </div>
-
-    <div class="bottom-action-panel">
-        <button id="downloadBtn">컴퓨터에 이미지로 저장하기 (PNG)</button>
-    </div>
-
-    <script>
-        function closePopup() { 
-            document.getElementById('noticePopup').style.display = 'none'; 
-        }
-
-        // 컬러 픽커 제어 함수 (글씨 반전 최적화)
-        function setupColorPicker(inputId, wrapperId, textElementQuery) {
-            const input = document.getElementById(inputId);
-            const wrapper = document.getElementById(wrapperId);
-
-            if(input && wrapper) {
-                input.addEventListener('input', (e) => {
-                    const color = e.target.value;
-                    wrapper.style.backgroundColor = color;
-                    
-                    const label = wrapper.querySelector(textElementQuery);
-                    if(label) {
-                        const r = parseInt(color.substr(1,2), 16);
-                        const g = parseInt(color.substr(3,2), 16);
-                        const b = parseInt(color.substr(5,2), 16);
-                        const brightness = (r * 299 + g * 587 + b * 114) / 1000;
-                        label.style.color = brightness < 128 ? '#ffffff' : '#444444';
-                    }
-                });
-            }
-        }
-
-        // 각 구역 컬러 픽커 작동
-        setupColorPicker('skinColor', 'skinWrapper', '.color-label');
-        setupColorPicker('eyesColor', 'eyesWrapper', '.color-label');
-        setupColorPicker('hairColor', 'hairWrapper', '.color-label');
-        setupColorPicker('keyColor1', 'keyWrapper1', '.keyword-box-input');
-        setupColorPicker('keyColor2', 'keyWrapper2', '.keyword-box-input');
-        setupColorPicker('keyColor3', 'keyWrapper3', '.keyword-box-input');
-        setupColorPicker('nameCircleColor', 'nameCircleWrapper', '.name-circle-input');
-
-        // 드래그 및 휠 스케일 줌 로직 제어 함수 (찌그러짐 방지 로직 적용)
-        function setupInteractiveImageBox(boxId) {
-            const box = document.getElementById(boxId);
-            let input = box.querySelector('input[type="file"]');
-            if(!input) {
-                input = document.createElement('input');
-                input.type = 'file';
-                input.accept = 'image/*';
-                box.appendChild(input);
-            }
-            const img = box.querySelector('img');
-
-            let isDragging = false;
-            let startX = 0, startY = 0;
-            let currentX = 0, currentY = 0;
-            let currentScale = 1.0;
-
-            box.addEventListener('click', (e) => {
-                if (box.classList.contains('placeholder')) {
-                    input.click();
-                }
-            });
-
-            input.addEventListener('change', (e) => {
-                const file = e.target.files[0];
-                if (file) {
-                    const reader = new FileReader();
-                    reader.onload = (ev) => { 
-                        img.src = ev.target.result; 
-                        img.style.display = 'block'; 
-                        box.classList.remove('placeholder');
-                        
-                        // 비율 유지 초기 세팅 리셋
-                        currentX = 0; currentY = 0; currentScale = 1.0;
-                        updateImageTransform();
-                    };
-                    reader.readAsDataURL(file);
-                }
-            });
-
-            box.addEventListener('mousedown', (e) => {
-                if (box.classList.contains('placeholder')) return;
-                isDragging = true;
-                box.style.cursor = 'grabbing';
-                startX = e.clientX - currentX;
-                startY = e.clientY - currentY;
-                e.preventDefault();
-            });
-
-            window.addEventListener('mousemove', (e) => {
-                if (!isDragging) return;
-                currentX = e.clientX - startX;
-                currentY = e.clientY - startY;
-                updateImageTransform();
-            });
-
-            window.addEventListener('mouseup', () => {
-                if (isDragging) {
-                    isDragging = false;
-                    box.style.cursor = 'move';
-                }
-            });
-
-            box.addEventListener('wheel', (e) => {
-                if (box.classList.contains('placeholder')) return;
-                e.preventDefault();
-                const zoomFactor = 0.05;
-                if (e.deltaY < 0) {
-                    currentScale += zoomFactor;
-                } else {
-                    currentScale = Math.max(0.1, currentScale - zoomFactor);
-                }
-                updateImageTransform();
-            });
-
-            function updateImageTransform() {
-                img.style.transform = `translate(${currentX}px, ${currentY}px) scale(${currentScale})`;
-            }
-        }
-
-        setupInteractiveImageBox('mainImgBox');
-        setupInteractiveImageBox('clothImgBox');
-        setupInteractiveImageBox('sdImgBox');
-        setupInteractiveImageBox('subImgBox');
-
-        // [최종 패치 보완] 폰트 로딩 대기 상태 동기화 및 이미지 구도 배율 연동 캡처 제어
-        document.getElementById('downloadBtn').addEventListener('click', () => {
-            const target = document.getElementById('captureArea');
-            if (!target) return;
-
-            // 브라우저 폰트 동기화가 완벽하게 끝날 때까지 캡처 지연 실행 락 트리거
-            document.fonts.ready.then(() => {
-                html2canvas(target, {
-                    useCORS: true,         // 웹폰트 외부 서버 주소 유실 에러 원천 방어
-                    allowTaint: true,
-                    scale: 2,              // 2배 선명하게 파일 추출 고정
-                    logging: false,
-                    onclone: (clonedDoc) => {
-                        // 캡처 가상 캔버스 내부 인풋창들의 폰트 패밀리 동적 유실 디버깅 바인딩
-                        const inputs = clonedDoc.querySelectorAll('input, textarea');
-                        inputs.forEach(input => {
-                            input.style.fontFamily = window.getComputedStyle(input).fontFamily;
-                        });
-                    }
-                }).then(canvas => {
-                    const link = document.createElement('a');
-                    link.download = 'custom-자료틀.png';
-                    link.href = canvas.toDataURL('image/png');
-                    link.click();
-                });
-            });
-        });
-    </script>
-</body>
-</html>
+        .bottom-desc-group { position: absolute; left: 45px; top: 395px;
