@@ -56,12 +56,12 @@
         /* 공통 스타일: 텍스트 박스 */
         .input-box {
             border: 1px solid #000000;
-            background-color: #F0F0F0;
             font-size: 12px;
             font-family: 'Pretendard', sans-serif;
             padding: 8px;
             box-sizing: border-box;
             resize: none;
+            overflow: hidden; /* 스크롤바 숨김 및 자동 개행 최적화 */
         }
         
         /* 공통 스타일: 이미지 박스 */
@@ -150,7 +150,7 @@
         .keyword-box-wrapper {
             position: relative; width: 90px; height: 26px; border: 1px solid #000000; background-color: #000000; display: flex; align-items: center; justify-content: center; cursor: pointer; box-sizing: border-box;
         }
-        /* [줄바꿈 패치] 키워드 글씨가 길어져도 삐져나가지 않고 테두리 안에서 자동 줄바꿈 고정 */
+        /* 키워드 글씨가 길어져도 삐져나가지 않고 테두리 안에서 자동 줄바꿈 고정 */
         .keyword-box-input {
             width: 100%; height: 24px; border: none; background: transparent; text-align: center; font-size: 10px; font-weight: bold; color: #ffffff; cursor: pointer; z-index: 2; font-family: 'Pretendard', sans-serif; padding: 0 2px; margin: 0; line-height: 1.2; display: flex; align-items: center; justify-content: center; word-break: break-all;
         }
@@ -161,18 +161,19 @@
         /* 스탯 입력 및 안내문구 */
         .info-text { position: absolute; left: 45px; top: 198px; font-size: 9px; color: #666; font-family: 'Pretendard', sans-serif; }
         
-        /* [1번 버그 패치] input 구조를 자동 개행 폼(textarea)으로 변환하고 내/외부 여백 정밀 동기화 */
+        /* [1번 기능 패치] 성별 라인 테두리 상자를 시안 양식과 일치하도록 둥글게 피팅 (border-radius: 14px) */
         .stat-input { 
             position: absolute; left: 45px; top: 215px; width: 285px; height: 28px; border: 1px solid #000; background-color: #ffffff; text-align: center; font-weight: bold; box-sizing: border-box; padding: 4px 5px 0 5px; font-family: 'Pretendard', sans-serif; 
             font-size: 11px; line-height: 1.4; resize: none; overflow: hidden; word-break: break-all;
+            border-radius: 14px; 
         }
         
-        /* [줄바꿈 패치] 특징창 내부 자동 개행 및 영문/숫자 단어 끊김 방지 */
+        /* 특징창 내부 자동 개행 및 영문/숫자 단어 끊김 방지 */
         .main-desc-box { position: absolute; left: 45px; top: 252px; width: 285px; height: 125px; background-color: #F5F5F5; word-break: break-all; line-height: 1.5; }
         
         /* 하단 캐해 참고 파트 그룹의 세로 좌표값을 하향 평형 매칭 */
         .bottom-desc-group { position: absolute; left: 45px; top: 406px; width: 285px; height: 110px; display: flex; gap: 12px; }
-        /* [줄바꿈 패치] 캐해 참고창 내부 자동 줄바꿈 연동 마감 */
+        /* 캐해 참고창 내부 자동 줄바꿈 연동 마감 */
         .bottom-desc-box { flex: 1; height: 100%; border-radius: 16px; padding: 12px; word-break: break-all; line-height: 1.5; }
 
         /* 이미지 컨테이너 공간 레이아웃 */
@@ -203,7 +204,7 @@
             box-shadow: 0 2px 4px rgba(0,0,0,0.05);
             box-sizing: border-box;
         }
-        /* [줄바꿈 패치] 동물화 배지 입력란 글씨가 길어져도 자동 개행 */
+        /* 동물화 배지 입력란 글씨가 길어져도 자동 개행 */
         .mini-badge-input { 
             border: none; 
             background: transparent; 
@@ -225,10 +226,10 @@
         .cloth-badge { 
             position: absolute; top: -15px; left: -15px; background-color: #ffffff; border: 1px dashed #000000; border-radius: 50%; width: 38px; height: 38px; text-align: center; line-height: 38px; font-size: 11px; font-weight: bold; z-index: 10; font-family: 'Pretendard', sans-serif;
         }
-        /* [줄바꿈 패치] 의상 설명창 자동 개행 사양 매칭 */
+        /* 의상 설명창 자동 개행 사양 매칭 */
         .cloth-desc-box { position: absolute; left: 660px; top: 436px; width: 295px; height: 80px; background-color: #F5F5F5; word-break: break-all; line-height: 1.5; }
         
-        /* [2번 버그 패치] 저작권 크레딧 구역의 가변 정렬 무너짐 현상을 방지하기 위해 플렉스 정밀 고정 및 물리 축 고정 */
+        /* 저작권 크레딧 구역 플렉스 및 물리 축 고정 */
         .credit-line { 
             position: absolute; 
             left: 45px; 
@@ -244,22 +245,12 @@
             font-family: 'Pretendard', sans-serif; 
             box-sizing: border-box;
         }
-        /* 크레딧 내부 오른쪽 명의 영역 구조 정밀 박음질 */
+        /* 크레딧 내부 오른쪽 단일 통합형 텍스트 박스 구역 */
         .credit-right-zone {
             display: inline-flex;
             align-items: center;
             justify-content: flex-end;
-            width: 250px;
-            height: 18px;
-            line-height: 18px;
-        }
-        .credit-label-fixed {
-            color: #999999;
-            font-size: 9px;
-            font-weight: bold;
-            margin-right: 4px;
-            flex-shrink: 0;
-            display: inline-block;
+            width: 300px;
             height: 18px;
             line-height: 18px;
         }
@@ -270,7 +261,7 @@
             font-weight: bold; 
             color: #999999; 
             text-align: right; 
-            width: 150px; 
+            width: 100%; 
             height: 18px; 
             line-height: 18px; 
             padding: 0; margin: 0; 
@@ -385,7 +376,7 @@
         <textarea class="input-box main-desc-box">□ 캐릭터의 주요 특징을 간략 서술</textarea>
 
         <div class="bottom-desc-group">
-            <textarea class="input-box bottom-desc-box" style="background-color: #F5F5F5;">캐해 참고</textarea>
+            <textarea class="input-box bottom-desc-box" style="background-color: #ffffff;">캐해 참고</textarea>
             <textarea class="input-box bottom-desc-box" style="background-color: #ffffff;">이건 안 됩니다...</textarea>
         </div>
 
@@ -419,7 +410,7 @@
         <div class="credit-line">
             <div>DESIGNED BY XOXOME | @DARL1N9__</div>
             <div class="credit-right-zone">
-                <div>ILLUST BY <input type="text" class="credit-input" value="이름"></div>
+                <input type="text" class="credit-input" id="creditIllustInput" value="ILLUST BY 이름">
             </div>
         </div>
     </div>
@@ -664,12 +655,16 @@
             allInputs.forEach(input => {
                 input.style.fontFamily = 'Pretendard, sans-serif';
                 if (input.tagName === 'INPUT' && input.type === 'text') {
-                    // [버그 방어] 스탯 입력창과 크레딧 입력창은 테두리선을 보존하도록 필터링 예외 처리
+                    // [버그 수정 필터링 예외 복구] 일치하지 않던 텍스트 상자 ID명을 명확히 교정하여 테두리 보존 매칭 완료
                     if(!input.classList.contains('stat-input') && input.id !== 'creditIllustInput') {
                         input.style.padding = '0px';
                         input.style.margin = '0px';
                         input.style.border = 'none';
                     }
+                }
+                if (input.tagName === 'TEXTAREA') {
+                    input.style.border = 'none';
+                    input.style.overflow = 'hidden';
                 }
             });
         }
