@@ -156,26 +156,19 @@
             padding: 0;
         }
 
-        /* SKIN / EYES / HAIR 컬러 칩 */
-        .color-group {
-            position: absolute;
-            left: 45px;
-            top: 132px;
-            width: 285px;
-            display: flex;
-            gap: 7px;
-        }
-        .color-item {
-            width: 90px;
-            height: 60px;
-            border: 1px solid #000000;
-            background-color: #D6D6D6;
-            text-align: center;
-            line-height: 60px;
-            font-size: 11px;
-            font-weight: bold;
-            color: #444;
-        }
+    <div class="color-group">
+            <div class="color-item-wrapper" id="skinWrapper" style="background-color: #D6D6D6;">
+                <span class="color-label">SKIN</span>
+                <input type="color" class="color-input" id="skinColor" value="#D6D6D6">
+            </div>
+            <div class="color-item-wrapper" id="eyesWrapper" style="background-color: #D6D6D6;">
+                <span class="color-label">EYES</span>
+                <input type="color" class="color-input" id="eyesColor" value="#D6D6D6">
+            </div>
+            <div class="color-item-wrapper" id="hairWrapper" style="background-color: #D6D6D6;">
+                <span class="color-label">HAIR</span>
+                <input type="color" class="color-input" id="hairColor" value="#D6D6D6">
+            </div>
 
         /* 안내 문구 (모니터 기준입니다) */
         .info-text {
