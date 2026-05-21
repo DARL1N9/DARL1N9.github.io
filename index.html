@@ -26,7 +26,7 @@
             color: #4A533C; 
         }
 
-        /* 입력창 배경 및 테두리 선 */
+        /* 입력창 기본 테두리 선 선언 */
         input, select, button {
             padding: 10px;
             border-radius: 4px;
@@ -93,7 +93,7 @@
         }
         .image-box input[type="file"] { display: none; }
         
-        /* 이미지 원본 비율 유지 및 휠 스케일 기준점 정중앙 고정 */
+        /* 이미지 원본 비율 유지 가두리 프레임 설정 */
         .image-box img { 
             position: absolute; 
             display: none; 
@@ -103,23 +103,25 @@
         }
 
         /* ==================== 좌표 기반 배치 및 커스텀 스타일 ==================== */
+        
+        /* [버그 영구 박멸] 캡처 도구가 텍스트 수직 라인을 오해하지 않도록 height와 line-height 칼정렬 매칭 */
         .header-name-zone {
-            position: absolute; left: 45px; top: 35px; width: 290px; height: 40px; display: block; 
+            position: absolute; left: 45px; top: 35px; width: 330px; height: 40px; display: block; 
         }
         .name-circle-wrapper {
             position: absolute; left: 0; top: 2px; width: 36px; height: 36px; border-radius: 50%; background-color: #000000; box-sizing: border-box; border: 1px solid #000000; text-align: center;
         }
         .name-circle-input {
-            width: 100%; height: 100%; border: none; background: transparent; font-size: 18px; font-weight: 900; color: #ffffff; text-align: center; padding: 0; margin: 0; line-height: 34px; z-index: 2; cursor: pointer; font-family: 'Pretendard', sans-serif; position: relative;
+            width: 100%; height: 34px; border: none; background: transparent; font-size: 18px; font-weight: 900; color: #ffffff; text-align: center; padding: 0; margin: 0; line-height: 34px; z-index: 2; cursor: pointer; font-family: 'Pretendard', sans-serif; position: relative;
         }
         .name-circle-color-picker {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; z-index: 3;
         }
         .name-main-input {
-            position: absolute; left: 48px; top: -2px; width: 110px; height: 40px; font-family: 'Pretendard', sans-serif; font-size: 24px; color: #000000; border: none; background: none; font-weight: 800; line-height: 40px; padding: 0; margin: 0;
+            position: absolute; left: 48px; top: 0; width: 110px; height: 40px; font-family: 'Pretendard', sans-serif; font-size: 24px; color: #000000; border: none; background: none; font-weight: 800; line-height: 40px; padding: 0; margin: 0;
         }
         .name-sub-input {
-            position: absolute; left: 165px; top: 4px; width: 125px; height: 36px; font-family: 'Pretendard', sans-serif; font-size: 18px; color: #b0b0b0; border: none; background: none; font-weight: 700; line-height: 36px; padding: 0; margin: 0;
+            position: absolute; left: 165px; top: 0; width: 150px; height: 40px; font-family: 'Pretendard', sans-serif; font-size: 18px; color: #b0b0b0; border: none; background: none; font-weight: 700; line-height: 40px; padding: 0; margin: 0;
         }
 
         /* SKIN / EYES / HAIR 컬러 그룹 */
@@ -144,7 +146,7 @@
             position: relative; width: 90px; height: 26px; border: 1px solid #000000; background-color: #000000; display: flex; align-items: center; justify-content: center; cursor: pointer; box-sizing: border-box;
         }
         .keyword-box-input {
-            width: 100%; height: 100%; border: none; background: transparent; text-align: center; font-size: 10px; font-weight: bold; color: #ffffff; cursor: pointer; z-index: 2; font-family: 'Pretendard', sans-serif; padding: 0; margin: 0; line-height: 24px;
+            width: 100%; height: 24px; border: none; background: transparent; text-align: center; font-size: 10px; font-weight: bold; color: #ffffff; cursor: pointer; z-index: 2; font-family: 'Pretendard', sans-serif; padding: 0; margin: 0; line-height: 24px;
         }
         .keyword-bg-picker {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer;
@@ -152,8 +154,11 @@
 
         /* 스탯 입력 및 안내문구 */
         .info-text { position: absolute; left: 45px; top: 198px; font-size: 9px; color: #666; font-family: 'Pretendard', sans-serif; }
+        
+        /* [1번 기능 패치] 삐져나가지 않도록 폰트 크기를 아담한 11px로 줄이고 패딩 정밀 정돈 */
         .stat-input { 
-            position: absolute; left: 45px; top: 215px; width: 285px; height: 28px; border: 1px solid #000; text-align: center; font-weight: bold; box-sizing: border-box; padding: 0 5px; font-family: 'Pretendard', sans-serif; line-height: 26px;
+            position: absolute; left: 45px; top: 215px; width: 285px; height: 28px; border: 1px solid #000; text-align: center; font-weight: bold; box-sizing: border-box; padding: 0 5px; font-family: 'Pretendard', sans-serif; 
+            font-size: 11px; line-height: 26px;
         }
         
         .main-desc-box { position: absolute; left: 45px; top: 252px; width: 285px; height: 125px; background-color: #F5F5F5; }
@@ -167,15 +172,16 @@
         .mini-box-container { width: 134px; height: 110px; position: relative; }
         .mini-img-box { width: 100%; height: 100%; }
         
-        /* [크기 조절 패치] SD 및 동물화 점선 배지 크기 및 안쪽 여백 대폭 확장 */
+        /* SD 및 동물화 배지 크기 가이드 프레임 */
         .mini-badge { 
             position: absolute; 
-            top: -12px; left: 10px; /* 위치 살짝 조절하여 균형 매칭 */
+            top: -12px; left: 10px; 
             background-color: #ffffff; 
             border: 1px dashed #000000; 
-            border-radius: 14px; /* 라운드 크기 상향 */
-            font-size: 11px; /* 폰트 크기 업 (9px -> 11px) */
-            padding: 3px 14px; /* 안쪽 여백 확장 */
+            border-radius: 14px; 
+            font-size: 11px; 
+            padding: 0 14px; 
+            height: 24px; /* 높이 물리 지정 */
             z-index: 10; 
             font-weight: bold; 
             display: inline-flex; 
@@ -183,18 +189,22 @@
             justify-content: center; 
             font-family: 'Pretendard', sans-serif;
             box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            box-sizing: border-box;
         }
         
-        /* 동물화 내부 글자 인풋창 너비 확장 (단어 잘림 방지) */
+        /* [4번 기능 패치] 동물화 종류 인풋 창이 수직 팽창하여 붕 뜨지 않도록 height 라인 락 고정 */
         .mini-badge-input { 
             border: none; 
             background: transparent; 
-            font-size: 11px; /* 부모 크기에 맞춰 인풋 폰트도 확대 */
+            font-size: 11px; 
             font-weight: bold; 
-            width: 85px; /* 타이핑 영역 너비 상향 (75px -> 85px) */
+            width: 85px; 
+            height: 22px;
+            line-height: 22px;
             text-align: center; 
             font-family: 'Pretendard', sans-serif; 
             padding: 0; margin: 0;
+            box-sizing: border-box;
         }
 
         /* 우측 의상 프레임 */
@@ -205,8 +215,9 @@
         }
         .cloth-desc-box { position: absolute; left: 660px; top: 425px; width: 295px; height: 80px; background-color: #F5F5F5; }
         
-        .credit-line { position: absolute; left: 45px; bottom: 12px; width: 910px; display: flex; justify-content: space-between; font-size: 9px; color: #999; font-weight: bold; align-items: center; font-family: 'Pretendard', sans-serif;}
-        .credit-input { border: none; background: transparent; font-size: 9px; font-weight: bold; color: #999; text-align: right; width: 100px; padding: 0; font-family: 'Pretendard', sans-serif; }
+        /* [3번 기능 패치] ILLUST BY 명의 레이아웃 컨테이너 영역 붕 뜸 방지 강제 고정 */
+        .credit-line { position: absolute; left: 45px; top: 535px; width: 910px; height: 16px; display: flex; justify-content: space-between; font-size: 9px; color: #999; font-weight: bold; align-items: center; font-family: 'Pretendard', sans-serif; box-sizing: border-box;}
+        .credit-input { border: none; background: transparent; font-size: 9px; font-weight: bold; color: #999; text-align: right; width: 100px; height: 16px; line-height: 16px; padding: 0; margin: 0; font-family: 'Pretendard', sans-serif; box-sizing: border-box; }
 
         /* 하단 제어 단추 레이아웃 */
         .bottom-action-panel { margin-top: 30px; margin-bottom: 50px; display: flex; gap: 15px; justify-content: center; width: 1000px; }
@@ -543,10 +554,15 @@
                     scale: 2, 
                     logging: false,
                     onclone: (clonedDoc) => {
+                        // 가상 캔버스의 모든 입력 폼 서체 및 높이값 강제 매칭 연산
                         const inputs = clonedDoc.querySelectorAll('input, textarea');
                         inputs.forEach(input => {
                             input.style.fontFamily = 'Pretendard, sans-serif';
-                            input.style.lineHeight = window.getComputedStyle(input).lineHeight;
+                            // 캡처 가상 돔에서의 인풋 수직 정렬 유실 버그 원천 차단 패치
+                            if (input.tagName === 'INPUT' && input.type === 'text') {
+                                input.style.paddingTop = '0px';
+                                input.style.paddingBottom = '0px';
+                            }
                         });
                     }
                 }).then(canvas => {
@@ -581,7 +597,10 @@
                     const inputs = clonedDoc.querySelectorAll('input, textarea');
                     inputs.forEach(input => {
                         input.style.fontFamily = 'Pretendard, sans-serif';
-                        input.style.lineHeight = window.getComputedStyle(input).lineHeight;
+                        if (input.tagName === 'INPUT' && input.type === 'text') {
+                            input.style.paddingTop = '0px';
+                            input.style.paddingBottom = '0px';
+                        }
                     });
                 }
             }).then(canvas => {
