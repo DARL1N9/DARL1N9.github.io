@@ -93,7 +93,7 @@
         }
         .image-box input[type="file"] { display: none; }
         
-        /* [버그 전면 수정] html2canvas 저장 시 잘림 현상을 막기 위해 absolute 고정 및 transform 제거 */
+        /* 이미지 원본 비율 유지 및 휠 스케일 기준점 정중앙 고정 */
         .image-box img { 
             position: absolute; 
             display: none; 
@@ -167,11 +167,34 @@
         .mini-box-container { width: 134px; height: 110px; position: relative; }
         .mini-img-box { width: 100%; height: 100%; }
         
+        /* [크기 조절 패치] SD 및 동물화 점선 배지 크기 및 안쪽 여백 대폭 확장 */
         .mini-badge { 
-            position: absolute; top: -10px; left: 10px; background-color: #ffffff; border: 1px dashed #000000; border-radius: 12px; font-size: 9px; padding: 2px 10px; z-index: 10; font-weight: bold; display: inline-flex; align-items: center; justify-content: center; font-family: 'Pretendard', sans-serif;
+            position: absolute; 
+            top: -12px; left: 10px; /* 위치 살짝 조절하여 균형 매칭 */
+            background-color: #ffffff; 
+            border: 1px dashed #000000; 
+            border-radius: 14px; /* 라운드 크기 상향 */
+            font-size: 11px; /* 폰트 크기 업 (9px -> 11px) */
+            padding: 3px 14px; /* 안쪽 여백 확장 */
+            z-index: 10; 
+            font-weight: bold; 
+            display: inline-flex; 
+            align-items: center; 
+            justify-content: center; 
+            font-family: 'Pretendard', sans-serif;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
         }
+        
+        /* 동물화 내부 글자 인풋창 너비 확장 (단어 잘림 방지) */
         .mini-badge-input { 
-            border: none; background: transparent; font-size: 9px; font-weight: bold; width: 75px; text-align: center; font-family: 'Pretendard', sans-serif; padding: 0; margin: 0;
+            border: none; 
+            background: transparent; 
+            font-size: 11px; /* 부모 크기에 맞춰 인풋 폰트도 확대 */
+            font-weight: bold; 
+            width: 85px; /* 타이핑 영역 너비 상향 (75px -> 85px) */
+            text-align: center; 
+            font-family: 'Pretendard', sans-serif; 
+            padding: 0; margin: 0;
         }
 
         /* 우측 의상 프레임 */
@@ -381,11 +404,10 @@
             }
             const img = box.querySelector('img');
 
-            // 이미지 상태를 기억할 독자적인 기하학 변수 객체 슬롯 매칭
             let imgState = {
-                origWidth: 0, origHeight: 0, // 이미지 고유 비율 정보
-                width: 0, height: 0,         // 화면 배율 가공 정보
-                left: 0, top: 0,             // 실시간 물리 좌표
+                origWidth: 0, origHeight: 0, 
+                width: 0, height: 0,         
+                left: 0, top: 0,             
                 scale: 1.0
             };
 
@@ -413,7 +435,6 @@
                                 box.classList.remove('placeholder');
                                 img.style.display = 'block';
                                 
-                                // 상자 크기와 이미지 원본 크기 비교 연산 (Cover 스케일 수동 구현)
                                 const boxWidth = box.clientWidth;
                                 const boxHeight = box.clientHeight;
                                 imgState.origWidth = img.naturalWidth;
@@ -430,7 +451,6 @@
                                     imgState.height = boxWidth / imgRatio;
                                 }
                                 
-                                // 정중앙 초기 배치
                                 imgState.scale = 1.0;
                                 imgState.left = (boxWidth - imgState.width) / 2;
                                 imgState.top = (boxHeight - imgState.height) / 2;
@@ -476,7 +496,6 @@
                 const boxWidth = box.clientWidth;
                 const boxHeight = box.clientHeight;
                 
-                // 마우스 커서 기준으로 확대 축소가 일어나도록 정밀 제어
                 const rect = box.getBoundingClientRect();
                 const mouseX = e.clientX - rect.left;
                 const mouseY = e.clientY - rect.top;
@@ -490,7 +509,6 @@
                     imgState.scale = Math.max(0.1, imgState.scale - zoomFactor);
                 }
                 
-                // 중심 점 보정 스케일 아키텍처 연산
                 const ratio = imgState.scale / prevScale;
                 imgState.left = mouseX - (mouseX - imgState.left) * ratio;
                 imgState.top = mouseY - (mouseY - imgState.top) * ratio;
@@ -498,7 +516,6 @@
                 applyPhysicalTransform();
             });
 
-            // html2canvas가 100% 인식하도록 width, height, left, top 물리 속성으로 직접 대입
             function applyPhysicalTransform() {
                 if(img) {
                     img.style.width = (imgState.width * imgState.scale) + 'px';
