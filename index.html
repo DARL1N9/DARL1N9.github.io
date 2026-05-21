@@ -426,6 +426,11 @@
             if(popup) popup.style.display = 'none'; 
         }
 
+        // 팝업 숨기기 완벽 바인딩 완료
+        function closePreviewModal() {
+            document.getElementById('previewModal').style.display = 'none';
+        }
+
         // [마스터 연동 패치] A 서클의 색상 변화에 반응하여 아래 키워드 3종 상자 배경까지 실시간 동기화
         const circlePicker = document.getElementById('nameCircleColor');
         if(circlePicker) {
@@ -646,12 +651,10 @@
                 subTxtInput.style.display = 'none';
             }
 
-            // 가상 복제본 내부 기타 입력 폼들의 가상 마진/패딩 보존 가공
+            // 가상 복제본 내부 기타 입력 폼들의 가상 마진/패딩 제거 마감
             const allInputs = clonedDoc.querySelectorAll('input, textarea');
             allInputs.forEach(input => {
                 input.style.fontFamily = 'Pretendard, sans-serif';
-                
-                // [1번, 2번, 3번 버그 원천 진압 패치] 특정 상자들이 통째로 사라지던 스크립트 예외 필터 처리 정밀 보강 완료
                 if (input.tagName === 'INPUT' && input.type === 'text') {
                     if(!input.classList.contains('stat-input') && input.id !== 'creditIllustInput' && !input.classList.contains('mini-badge-input')) {
                         input.style.padding = '0px';
