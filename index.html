@@ -150,7 +150,6 @@
         .keyword-box-wrapper {
             position: relative; width: 90px; height: 26px; border: 1px solid #000000; background-color: #000000; display: flex; align-items: center; justify-content: center; cursor: pointer; box-sizing: border-box;
         }
-        /* 키워드 글씨가 길어져도 삐져나가지 않고 테두리 안에서 자동 줄바꿈 고정 */
         .keyword-box-input {
             width: 100%; height: 24px; border: none; background: transparent; text-align: center; font-size: 10px; font-weight: bold; color: #ffffff; cursor: pointer; z-index: 2; font-family: 'Pretendard', sans-serif; padding: 0 2px; margin: 0; line-height: 1.2; display: flex; align-items: center; justify-content: center; word-break: break-all;
         }
@@ -161,11 +160,10 @@
         /* 스탯 입력 및 안내문구 */
         .info-text { position: absolute; left: 45px; top: 198px; font-size: 9px; color: #666; font-family: 'Pretendard', sans-serif; }
         
-        /* [1번 기능 패치] 성별 및 스탯 입력용 textarea의 내부 수직 가이드 기준 정중앙으로 통합 정렬 */
         .stat-input { 
             position: absolute; left: 45px; top: 215px; width: 285px; height: 28px; border: 1px solid #000; background-color: #ffffff; text-align: center; font-weight: bold; box-sizing: border-box; 
             padding: 0 5px; font-family: 'Pretendard', sans-serif; font-size: 11px; 
-            line-height: 26px; /* 줄 높이를 상자 전체 크기와 일치시켜 수직 정가운데 고정 */
+            line-height: 26px; 
             resize: none; overflow: hidden; word-break: break-all; border-radius: 6px; white-space: nowrap;
         }
         
@@ -174,7 +172,6 @@
         
         /* 하단 캐해 참고 파트 그룹의 세로 좌표값을 하향 평형 매칭 */
         .bottom-desc-group { position: absolute; left: 45px; top: 406px; width: 285px; height: 110px; display: flex; gap: 12px; }
-        /* 캐해 참고창 내부 자동 줄바꿈 연동 마감 */
         .bottom-desc-box { flex: 1; height: 100%; border-radius: 16px; padding: 12px; word-break: break-all; line-height: 1.5; }
 
         /* 이미지 컨테이너 공간 레이아웃 */
@@ -205,7 +202,6 @@
             box-shadow: 0 2px 4px rgba(0,0,0,0.05);
             box-sizing: border-box;
         }
-        /* 동물화 배지 입력란 글씨가 길어져도 자동 개행 */
         .mini-badge-input { 
             border: none; 
             background: transparent; 
@@ -227,7 +223,6 @@
         .cloth-badge { 
             position: absolute; top: -15px; left: -15px; background-color: #ffffff; border: 1px dashed #000000; border-radius: 50%; width: 38px; height: 38px; text-align: center; line-height: 38px; font-size: 11px; font-weight: bold; z-index: 10; font-family: 'Pretendard', sans-serif;
         }
-        /* 의상 설명창 자동 개행 사양 매칭 */
         .cloth-desc-box { position: absolute; left: 660px; top: 436px; width: 295px; height: 80px; background-color: #F5F5F5; word-break: break-all; line-height: 1.5; border: 1px solid #000000; }
         
         /* 저작권 크레딧 구역 플렉스 및 물리 축 고정 */
@@ -246,7 +241,6 @@
             font-family: 'Pretendard', sans-serif; 
             box-sizing: border-box;
         }
-        /* 크레딧 내부 오른쪽 단일 통합형 텍스트 박스 구역 */
         .credit-right-zone {
             display: inline-flex;
             align-items: center;
@@ -271,8 +265,50 @@
             word-break: break-all;
         }
 
-        /* 하단 제어 단추 레이아웃 */
-        .bottom-action-panel { margin-top: 30px; margin-bottom: 50px; display: flex; gap: 15px; justify-content: center; width: 1000px; }
+        /* 하단 액션 버튼 대시보드 구조 및 [신규] 슬롯 세팅 인터페이스 */
+        .management-container {
+            margin-top: 30px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            align-items: center;
+            width: 1000px;
+        }
+        .slot-control-bar {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            background-color: #ffffff;
+            padding: 10px 20px;
+            border-radius: 20px;
+            border: 1px solid #EBF2DF;
+            box-shadow: 0 4px 10px rgba(74,83,60,0.03);
+        }
+        .slot-selector {
+            padding: 6px 12px;
+            font-size: 14px;
+            border-radius: 6px;
+            font-family: 'Pretendard', sans-serif;
+            font-weight: bold;
+            border: 1px solid #cccccc;
+            cursor: pointer;
+        }
+        .slot-btn {
+            padding: 8px 16px;
+            font-size: 13px;
+            font-weight: bold;
+            border-radius: 6px;
+            cursor: pointer;
+            border: none;
+            font-family: 'Pretendard', sans-serif;
+            transition: all 0.2s;
+        }
+        .btn-save-slot { background-color: #7A8B5C; color: #ffffff; }
+        .btn-save-slot:hover { background-color: #69784E; }
+        .btn-load-slot { background-color: #4A533C; color: #ffffff; }
+        .btn-load-slot:hover { background-color: #383F2E; }
+
+        .bottom-action-panel { display: flex; gap: 15px; justify-content: center; }
         .panel-btn { 
             color: #ffffff; font-weight: bold; padding: 14px 35px; border-radius: 30px; border: none; font-size: 16px; cursor: pointer; transition: all 0.2s; font-family: 'Pretendard', sans-serif;
         }
@@ -372,13 +408,13 @@
 
         <div class="info-text">※ 모든 방향은 보는 사람(모니터) 기준입니다. ※</div>
         
-        <textarea class="stat-input">성별 | 나이 | 키 | 몸무게</textarea>
+        <textarea class="stat-input" id="statInputForm">성별 | 나이 | 키 | 몸무게</textarea>
         
-        <textarea class="input-box main-desc-box">□ 캐릭터의 주요 특징을 간략 서술&#10;□ 캐릭터의 주요 특징을 간략 서술&#10;□ 캐릭터의 주요 특징을 간략 서술&#10;□ 캐릭터의 주요 특징을 간략 서술</textarea>
+        <textarea class="input-box main-desc-box" id="mainDescForm">□ 캐릭터의 주요 특징을 간략 서술&#10;□ 캐릭터의 주요 특징을 간략 서술&#10;□ 캐릭터의 주요 특징을 간략 서술&#10;□ 캐릭터의 주요 특징을 간략 서술</textarea>
 
         <div class="bottom-desc-group">
-            <textarea class="input-box bottom-desc-box" style="background-color: #ffffff;">캐해 참고</textarea>
-            <textarea class="input-box bottom-desc-box" style="background-color: #ffffff;">이건 안 됩니다...</textarea>
+            <textarea class="input-box bottom-desc-box" id="leftDescForm" style="background-color: #ffffff;">캐해 참고</textarea>
+            <textarea class="input-box bottom-desc-box" id="rightDescForm" style="background-color: #ffffff;">이건 안 됩니다...</textarea>
         </div>
 
         <div class="image-box placeholder main-profile-img" id="mainImgBox">
@@ -393,7 +429,7 @@
                 </div>
             </div>
             <div class="mini-box-container">
-                <span class="mini-badge"><input type="text" class="mini-badge-input" value="동물화 : 종류"></span>
+                <span class="mini-badge"><input type="text" class="mini-badge-input" id="animalBadgeInput" value="동물화 : 종류"></span>
                 <div class="image-box placeholder mini-img-box" id="subImgBox">
                     <div class="img-container"><img src="" alt=""></div>
                 </div>
@@ -406,7 +442,7 @@
                 <div class="img-container"><img src="" alt=""></div>
             </div>
         </div>
-        <textarea class="input-box cloth-desc-box">+ 의상에 대한 부가적인 설명을 기입합니다.</textarea>
+        <textarea class="input-box cloth-desc-box" id="clothDescForm">+ 의상에 대한 부가적인 설명을 기입합니다.</textarea>
 
         <div class="credit-line">
             <div>DESIGNED BY XOXOME | @DARL1N9__</div>
@@ -416,9 +452,22 @@
         </div>
     </div>
 
-    <div class="bottom-action-panel">
-        <button id="previewBtn" class="panel-btn">저장 이미지 미리보기</button>
-        <button id="downloadBtn" class="panel-btn">컴퓨터에 이미지로 저장하기 (PNG)</button>
+    <div class="management-container">
+        <div class="slot-control-bar">
+            <span style="font-size: 13px; font-weight: bold; color: #4A533C;">📂 임시저장 슬롯 시스템:</span>
+            <select id="slotSelect" class="slot-selector">
+                <option value="slot_1">슬롯 1 (비어있음)</option>
+                <option value="slot_2">슬롯 2 (비어있음)</option>
+                <option value="slot_3">슬롯 3 (비어있음)</option>
+            </select>
+            <button class="slot-btn btn-save-slot" onclick="saveToSlot()">현재 상태 슬롯에 임시저장</button>
+            <button class="slot-btn btn-load-slot" onclick="loadFromSlot()">선택한 슬롯 불러오기</button>
+        </div>
+
+        <div class="bottom-action-panel">
+            <button id="previewBtn" class="panel-btn">저장 이미지 미리보기</button>
+            <button id="downloadBtn" class="panel-btn">컴퓨터에 이미지로 저장하기 (PNG)</button>
+        </div>
     </div>
 
     <script>
@@ -656,7 +705,6 @@
             allInputs.forEach(input => {
                 input.style.fontFamily = 'Pretendard, sans-serif';
                 if (input.tagName === 'INPUT' && input.type === 'text') {
-                    // [철통 봉인] 테두리가 지워지면 실종되는 요소들의 ID 및 클래스 필터 예외 처리 완전 수정
                     if(!input.classList.contains('stat-input') && input.id !== 'creditIllustInput' && !input.classList.contains('mini-badge-input')) {
                         input.style.padding = '0px';
                         input.style.margin = '0px';
@@ -664,7 +712,6 @@
                     }
                 }
                 if (input.tagName === 'TEXTAREA') {
-                    // 테두리가 파괴되면 사라져 보이던 4대 핵심 서술 영역의 외곽 테두리선을 가상 스냅샷 단계에서도 물리 보존 적용
                     if (input.classList.contains('stat-input') || input.classList.contains('main-desc-box') || input.classList.contains('bottom-desc-box') || input.classList.contains('cloth-desc-box')) {
                         input.style.border = '1px solid #000000';
                         input.style.backgroundColor = window.getComputedStyle(input).backgroundColor;
@@ -675,6 +722,124 @@
                 }
             });
         }
+
+        // ==================== [핵심 엔진] 로컬 임시저장 슬롯 시스템 스크립트 ====================
+        const SLOT_KEYS = ['slot_1', 'slot_2', 'slot_3'];
+
+        // 현재 캔버스 입력 폼 상태를 오브젝트로 구조화하여 브라우저에 임시저장
+        function saveToSlot() {
+            const select = document.getElementById('slotSelect');
+            const activeSlot = select.value;
+            
+            // 저장할 데이터 묶음 오브젝트 인스턴스화
+            const dataToSave = {
+                characterName: document.getElementById('nameMainTxt').value,
+                letter: document.getElementById('nameLetterInput').value,
+                circleColor: document.getElementById('nameCircleColor').value,
+                subName: document.getElementById('nameSubTxt').value,
+                
+                // #키워드 3종 데이터
+                k1: document.querySelectorAll('.keyword-box-input')[0].value,
+                k1Color: document.getElementById('keyColor1').value,
+                k2: document.querySelectorAll('.keyword-box-input')[1].value,
+                k2Color: document.getElementById('keyColor2').value,
+                k3: document.querySelectorAll('.keyword-box-input')[2].value,
+                k3Color: document.getElementById('keyColor3').value,
+                
+                // 컬러 칩 색상 데이터
+                skin: document.getElementById('skinColor').value,
+                eyes: document.getElementById('eyesColor').value,
+                hair: document.getElementById('hairColor').value,
+                
+                // 4대 텍스트 박스 본문 데이터
+                stats: document.getElementById('statInputForm').value,
+                mainDesc: document.getElementById('mainDescForm').value,
+                leftDesc: document.getElementById('leftDescForm').value,
+                rightDesc: document.getElementById('rightDescForm').value,
+                
+                // 서브 배지 및 크레딧 데이터 명의
+                animalBadge: document.getElementById('animalBadgeInput').value,
+                clothDesc: document.getElementById('clothDescForm').value,
+                creditIllust: document.getElementById('creditIllustInput').value
+            };
+
+            localStorage.setItem(activeSlot, JSON.stringify(dataToSave));
+            alert(`[${dataToSave.characterName || '이름 없음'}] 데이터가 선택한 슬롯에 임시저장 되었습니다.`);
+            updateSlotLabels();
+        }
+
+        // 선택한 로컬 슬롯 저장소에서 텍스트 및 컬러 칩 복원 가동
+        function loadFromSlot() {
+            const activeSlot = document.getElementById('slotSelect').value;
+            const savedRaw = localStorage.getItem(activeSlot);
+
+            if(!savedRaw) {
+                alert("해당 슬롯은 비어있습니다. 먼저 임시저장을 진행해 주세요.");
+                return;
+            }
+
+            const data = JSON.parse(savedRaw);
+
+            // 기본 폼 값 순차적 맵핑 복원
+            document.getElementById('nameMainTxt').value = data.characterName || '';
+            document.getElementById('nameLetterInput').value = data.letter || 'A';
+            document.getElementById('nameCircleColor').value = data.circleColor || '#000000';
+            document.getElementById('nameSubTxt').value = data.subName || '';
+
+            // 키워드 복원
+            document.querySelectorAll('.keyword-box-input')[0].value = data.k1 || '';
+            document.getElementById('keyColor1').value = data.k1Color || '#000000';
+            document.querySelectorAll('.keyword-box-input')[1].value = data.k2 || '';
+            document.getElementById('keyColor2').value = data.k2Color || '#000000';
+            document.querySelectorAll('.keyword-box-input')[2].value = data.k3 || '';
+            document.getElementById('keyColor3').value = data.k3Color || '#000000';
+
+            // 컬러 칩 복원
+            document.getElementById('skinColor').value = data.skin || '#D6D6D6';
+            document.getElementById('eyesColor').value = data.eyes || '#D6D6D6';
+            document.getElementById('hairColor').value = data.hair || '#D6D6D6';
+
+            // 메인 텍스트 영역 복원
+            document.getElementById('statInputForm').value = data.stats || '';
+            document.getElementById('mainDescForm').value = data.mainDesc || '';
+            document.getElementById('leftDescForm').value = data.leftDesc || '';
+            document.getElementById('rightDescForm').value = data.rightDesc || '';
+
+            // 의상 및 배지 명의 복원
+            document.getElementById('animalBadgeInput').value = data.animalBadge || '';
+            document.getElementById('clothDescForm').value = data.clothDesc || '';
+            document.getElementById('creditIllustInput').value = data.creditIllust || '';
+
+            // 가상 마우스 트리거를 실행하여 실시간 컬러 칩 래퍼 배경색 동기화 시스템 작동
+            triggerColorPickerUpdate();
+            alert(`[${data.characterName || '이름 없음'}] 자료 데이터 복원 세팅 완료!`);
+        }
+
+        // 로컬스토리지 내역에 맞게 셀렉트 박스 라벨 이름 자동 매칭 렌더링
+        function updateSlotLabels() {
+            SLOT_KEYS.forEach((key, index) => {
+                const option = document.querySelectorAll('#slotSelect option')[index];
+                const dataRaw = localStorage.getItem(key);
+                if (dataRaw) {
+                    const data = JSON.parse(dataRaw);
+                    option.innerText = `슬롯 ${index + 1} (${data.characterName || '이름 없음'})`;
+                } else {
+                    option.innerText = `슬롯 ${index + 1} (비어있음)`;
+                }
+            });
+        }
+
+        // 강제 인풋 리스너 트리거 유틸리티 (배경색 즉시 동기화)
+        function triggerColorPickerUpdate() {
+            const pickerIds = ['nameCircleColor', 'skinColor', 'eyesColor', 'hairColor', 'keyColor1', 'keyColor2', 'keyColor3'];
+            pickerIds.forEach(id => {
+                const el = document.getElementById(id);
+                if(el) el.dispatchEvent(new Event('input'));
+            });
+        }
+
+        // 페이지 구동 시 즉시 로컬 데이터 슬롯 라벨 렌더링 동기화
+        updateSlotLabels();
 
         // 미리보기 모달 작동 바인딩
         document.getElementById('previewBtn').addEventListener('click', () => {
