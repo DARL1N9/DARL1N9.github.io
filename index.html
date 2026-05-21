@@ -109,7 +109,7 @@
 
         /* ==================== 좌표 기반 배치 및 커스텀 스타일 ==================== */
         
-        /* [정렬 보정 패치] 캡처 복제본이 깨지지 않도록 절대 크기 및 독립 레이아웃 고정 */
+        /* 이름 영역 배치 스타일 고정 */
         .header-name-zone {
             position: absolute;
             left: 45px;
@@ -149,7 +149,7 @@
             position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; z-index: 3;
         }
         
-        /* [신규 스타일 분리] 메인 이름(한글) 입력창 - 굵은 검은색 명조체 적용 */
+        /* 메인 이름(한글) 입력창 - 굵은 검은색 명조체 적용 */
         .name-main-input {
             position: absolute;
             left: 48px;
@@ -166,7 +166,7 @@
             padding: 0; margin: 0;
         }
         
-        /* [신규 스타일 분리] 서브 이름(영어 Name) 입력창 - 연한 회색 고딕체 적용 */
+        /* 서브 이름(영어 Name) 입력창 - 연한 회색 고딕체 적용 */
         .name-sub-input {
             position: absolute;
             left: 165px;
@@ -336,20 +336,20 @@
         </div>
 
         <div class="image-box placeholder main-profile-img" id="mainImgBox">
-            <div class="img-container"><img src=""></div>
+            <div class="img-container"><img src="" alt=""></div>
         </div>
 
         <div class="mini-img-group">
             <div class="mini-box-container">
                 <span class="mini-badge">SD</span>
                 <div class="image-box placeholder mini-img-box" id="sdImgBox">
-                    <div class="img-container"><img src=""></div>
+                    <div class="img-container"><img src="" alt=""></div>
                 </div>
             </div>
             <div class="mini-box-container">
                 <span class="mini-badge"><input type="text" class="mini-badge-input" value="동물화 : 종류"></span>
                 <div class="image-box placeholder mini-img-box" id="subImgBox">
-                    <div class="img-container"><img src=""></div>
+                    <div class="img-container"><img src="" alt=""></div>
                 </div>
             </div>
         </div>
@@ -357,7 +357,7 @@
         <div class="cloth-container">
             <div class="cloth-badge">의상</div>
             <div class="image-box placeholder cloth-img-box" id="clothImgBox">
-                <div class="img-container"><img src=""></div>
+                <div class="img-container"><img src="" alt=""></div>
             </div>
         </div>
         <textarea class="input-box cloth-desc-box">+ 의상에 대한 부가적인 설명을 기입합니다.</textarea>
@@ -378,7 +378,7 @@
             if(popup) popup.style.display = 'none'; 
         }
 
-        // 컬러 픽커 제어 함수 (글씨 반전 최적화)
+        // 컬러 픽커 제어 함수
         function setupColorPicker(inputId, wrapperId, textElementQuery) {
             const input = document.getElementById(inputId);
             const wrapper = document.getElementById(wrapperId);
@@ -400,7 +400,6 @@
             }
         }
 
-        // 각 구역 컬러 픽커 작동
         setupColorPicker('skinColor', 'skinWrapper', '.color-label');
         setupColorPicker('eyesColor', 'eyesWrapper', '.color-label');
         setupColorPicker('hairColor', 'hairWrapper', '.color-label');
@@ -488,4 +487,55 @@
 
             function updateImageTransform() {
                 if(img) {
-                    img.style.transform = `translate(${current
+                    img.style.transform = `translate(${currentX}px, ${currentY}px) scale(${currentScale})`;
+                }
+            }
+        }
+
+        setupInteractiveImageBox('mainImgBox');
+        setupInteractiveImageBox('clothImgBox');
+        setupInteractiveImageBox('sdImgBox');
+        setupInteractiveImageBox('subImgBox');
+
+        // 이미지 저장 및 크래시 방어 캡처 제어
+        const downloadBtn = document.getElementById('downloadBtn');
+        if(downloadBtn) {
+            downloadBtn.addEventListener('click', () => {
+                const target = document.getElementById('captureArea');
+                if (!target) return;
+
+                if(window.document.fonts && window.document.fonts.ready) {
+                    window.document.fonts.ready.then(() => {
+                        executeCapture(target);
+                    });
+                } else {
+                    executeCapture(target);
+                }
+            });
+        }
+
+        function executeCapture(target) {
+            html2canvas(target, {
+                useCORS: true,
+                allowTaint: true,
+                scale: 2,
+                logging: false,
+                onclone: (clonedDoc) => {
+                    const inputs = clonedDoc.querySelectorAll('input, textarea');
+                    inputs.forEach(input => {
+                        input.style.fontFamily = window.getComputedStyle(input).fontFamily;
+                        input.style.lineHeight = window.getComputedStyle(input).lineHeight;
+                    });
+                }
+            }).then(canvas => {
+                const link = document.createElement('a');
+                link.download = 'custom-자료틀.png';
+                link.href = canvas.toDataURL('image/png');
+                link.click();
+            }).catch(err => {
+                console.error("캡처 중 오류 발생:", err);
+            });
+        }
+    </script>
+</body>
+</html>
