@@ -3,16 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>소솜 간단 자료틀 메이커 - 파스텔 그린 버전</title>
+    <title>소솜 간단 자료틀 메이커 - 커스텀 버전</title>
     <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
     
     <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" />
     
     <style>
-        /* [1. 기본 웹 레이아웃 스타일 - #BED197 밝은 녹색 테마 연동] */
+        /* [1. 전체 레이아웃 스타일 - #BED197 계열 연두 베이지 파스텔 톤] */
         body {
             font-family: 'Pretendard', 'Arial', sans-serif;
-            background-color: #F4F7EE; /* 화사하고 부드러운 파스텔 연두빛 배경 */
+            background-color: #F4F7EE; 
             color: #333333;
             display: flex;
             flex-direction: column;
@@ -23,7 +23,7 @@
         h1 {
             margin-bottom: 30px;
             font-size: 24px;
-            color: #4A533C; /* 카키 카운터 포인트 */
+            color: #4A533C; 
         }
 
         /* 입력창 배경 및 테두리 선 */
@@ -39,51 +39,61 @@
         }
         input:focus, textarea:focus {
             outline: none;
-            border-color: #BED197;
+            border-color: #BED197; 
         }
 
-        /* [2. 메인 시트 캔버스 (1000px * 563px 고정 및 원본 이미지 배경 이식)] */
+        /* [2. 메인 시트 캔버스 (1000px * 563px 고정)] */
         .capture-area {
             width: 1000px; height: 563px;
-            background-image: url('[배포용] 얘 그려주세요 틀.jpg'); /* 원본 이미지 배경 유지 */
-            background-size: cover;
-            background-position: center;
+            background-color: #ffffff;
             position: relative;
             box-sizing: border-box;
-            overflow: visible; 
-            box-shadow: 0 8px 24px rgba(74,83,60,0.06);
+            color: black;
+            border: 1px solid #000000;
+            box-shadow: 0 8px 16px rgba(74,83,60,0.06);
         }
 
-        /* 공통 스타일: 이미지 업로드 상자 */
+        /* 공통 스타일: 텍스트 박스 */
+        .input-box {
+            border: 1px solid #000000;
+            background-color: #F0F0F0;
+            font-size: 12px;
+            font-family: 'Pretendard', sans-serif;
+            padding: 8px;
+            box-sizing: border-box;
+            resize: none;
+        }
+        
+        /* 공통 스타일: 이미지 박스 */
         .image-box {
-            position: absolute;
+            border: 1px solid #000000;
+            background-color: #ffffff;
+            position: relative;
             cursor: move;
             box-sizing: border-box;
-            background-color: rgba(0, 0, 0, 0.02); 
-            transition: background 0.2s;
-        }
-        .image-box:hover {
-            background-color: rgba(190, 209, 151, 0.08); 
         }
         .img-container {
-            width: 100%; height: 100%;
+            width: 100%;
+            height: 100%;
             overflow: hidden;
             position: relative;
             pointer-events: none;
         }
         .image-box.placeholder .img-container::before {
-            content: '클릭하여 업로드\A(드래그: 이동 / 휠: 줌)';
+            content: '클릭하여 이미지 업로드 \A (마우스 드래그: 이동 / 휠: 확대)';
             white-space: pre-wrap;
             position: absolute;
             top: 50%; left: 50%;
             transform: translate(-50%, -50%);
-            font-size: 10px;
-            color: #777777;
+            font-size: 11px;
+            color: #888;
             width: 100%;
             text-align: center;
             z-index: 1;
         }
         .image-box input[type="file"] { display: none; }
+        
+        /* 이미지 원본 비율 유지 및 휠 스케일 기준점 정중앙 고정 */
         .image-box img { 
             position: absolute; 
             top: 0; left: 0;
@@ -96,92 +106,178 @@
             -webkit-user-drag: none;
         }
 
-        /* 공통 스타일: 상단 가변 타이핑 영역 폰트 속성 제어 */
-        .transparent-input {
-            background: transparent;
-            border: none;
-            color: #000000;
-            font-family: 'Pretendard', sans-serif;
-            padding: 0; margin: 0;
-            box-sizing: border-box;
+        /* ==================== 좌표 기반 배치 및 커스텀 스타일 ==================== */
+        
+        /* [저장 뒤틀림 철저 방어] 이름 영역 정렬 안정화 배치 */
+        .header-name-zone {
+            position: absolute;
+            left: 45px;
+            top: 35px;
+            width: 290px;
+            height: 40px;
+            display: block; 
         }
-        .transparent-input:focus {
-            outline: 1px dashed #BED197;
+        .name-circle-wrapper {
+            position: absolute;
+            left: 0;
+            top: 2px;
+            width: 36px; height: 36px;
+            border-radius: 50%;
+            background-color: #000000; 
+            box-sizing: border-box;
+            border: 1px solid #000000;
+            text-align: center;
+        }
+        .name-circle-input {
+            width: 100%;
+            height: 100%;
+            border: none;
+            background: transparent;
+            font-size: 18px;
+            font-weight: 900;
+            color: #ffffff;
+            text-align: center;
+            padding: 0; margin: 0;
+            line-height: 34px; 
+            z-index: 2;
+            cursor: pointer;
+            font-family: 'Pretendard', sans-serif;
+            position: relative;
+        }
+        .name-circle-color-picker {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; z-index: 3;
         }
         
-        .transparent-textarea {
-            background: transparent;
-            border: none;
+        /* [Pretendard 통합] 한글 이름 인풋 스타일 세팅 - 굵고 강렬한 블랙 고딕 */
+        .name-main-input {
+            position: absolute;
+            left: 48px;
+            top: -2px;
+            width: 110px;
+            height: 40px;
+            font-family: 'Pretendard', sans-serif; 
+            font-size: 24px;
             color: #000000;
-            font-family: 'Pretendard', sans-serif;
+            border: none;
+            background: none;
+            font-weight: 800;
+            line-height: 40px;
             padding: 0; margin: 0;
-            box-sizing: border-box;
-            resize: none;
         }
-        .transparent-textarea:focus {
-            outline: 1px dashed #BED197;
-        }
-
-        /* ==================== 좌표 구역 규격 픽셀 동기화 고정 ==================== */
-        .main-profile-img { left: 355px; top: 35px; width: 280px; height: 342px; border: 1px solid #000; }
-        .cloth-img-box { left: 660px; top: 35px; width: 295px; height: 375px; border: 1px solid #000; }
         
-        .mini-box-container-sd { position: absolute; left: 355px; top: 395px; width: 134px; height: 110px; }
-        .mini-box-container-sub { position: absolute; left: 501px; top: 395px; width: 134px; height: 110px; }
-        .sd-img-box { width: 100%; height: 100%; border: 1px solid #000; }
-        .sub-img-box { width: 100%; height: 100%; border: 1px solid #000; }
+        /* [Pretendard 통합] 영어 Name 인풋 스타일 세팅 - 시안과 동일한 크기의 부드러운 소프트 그레이 고딕 */
+        .name-sub-input {
+            position: absolute;
+            left: 165px;
+            top: 4px;
+            width: 125px;
+            height: 36px;
+            font-family: 'Pretendard', sans-serif; 
+            font-size: 18px;
+            color: #b0b0b0;
+            border: none;
+            background: none;
+            font-weight: 700;
+            line-height: 36px;
+            padding: 0; margin: 0;
+        }
 
-        .mini-badge-sd { position: absolute; top: -10px; left: 10px; background: #fff; border: 1px dashed #000; border-radius: 12px; font-size: 9px; padding: 2px 10px; font-weight: bold; z-index: 10; color: #000; }
-        .mini-badge-sub { position: absolute; top: -10px; left: 10px; background: #fff; border: 1px dashed #000; border-radius: 12px; font-size: 9px; padding: 2px 6px; z-index: 10; display: inline-flex; }
-        .mini-badge-sub-input { width: 75px; text-align: center; font-size: 9px; font-weight: bold; font-family: inherit; }
-        .cloth-badge { position: absolute; top: -15px; left: -15px; background: #fff; border: 1px dashed #000; border-radius: 50%; width: 38px; height: 38px; text-align: center; line-height: 38px; font-size: 11px; font-weight: bold; z-index: 10; color: #000; }
+        /* SKIN / EYES / HAIR 컬러 그룹 */
+        .color-group {
+            position: absolute; left: 45px; top: 132px; width: 285px; display: flex; gap: 7px;
+        }
+        .color-item-wrapper {
+            position: relative; width: 90px; height: 60px; border: 1px solid #000000; cursor: pointer; display: flex; align-items: center; justify-content: center; box-sizing: border-box;
+        }
+        .color-input {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer;
+        }
+        .color-label {
+            font-size: 11px; font-weight: bold; pointer-events: none; z-index: 2; color: #444444; font-family: 'Pretendard', sans-serif;
+        }
 
-        /* 상단 네임텍 레이어 컴포넌트 */
-        .header-name-zone { position: absolute; left: 45px; top: 35px; width: 290px; height: 40px; }
-        .name-circle-wrapper { position: absolute; left: 0; top: 2px; width: 36px; height: 36px; border-radius: 50%; background-color: #000000; border: 1px solid #000000; text-align: center; }
-        .name-circle-input { width: 100%; height: 100%; font-size: 18px; font-weight: 900; color: #ffffff; text-align: center; line-height: 34px; cursor: pointer; }
-        .name-circle-color-picker { position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; z-index: 3; }
-        .name-main-input { position: absolute; left: 48px; top: -2px; width: 110px; height: 40px; font-size: 24px; color: #000000; font-weight: 800; line-height: 40px; }
-        .name-sub-input { position: absolute; left: 165px; top: 4px; width: 125px; height: 36px; font-size: 18px; color: #b0b0b0; font-weight: 700; line-height: 36px; }
+        /* 좌측 키워드 3개 */
+        .keyword-group {
+            position: absolute; left: 45px; top: 98px; width: 285px; display: flex; gap: 7px;
+        }
+        .keyword-box-wrapper {
+            position: relative; width: 90px; height: 26px; border: 1px solid #000000; background-color: #000000; display: flex; align-items: center; justify-content: center; cursor: pointer; box-sizing: border-box;
+        }
+        .keyword-box-input {
+            width: 100%; height: 100%; border: none; background: transparent; text-align: center; font-size: 10px; font-weight: bold; color: #ffffff; cursor: pointer; z-index: 2; font-family: 'Pretendard', sans-serif;
+            padding: 0; margin: 0; line-height: 24px;
+        }
+        .keyword-bg-picker {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer;
+        }
 
-        /* 키워드 블록 패널 */
-        .keyword-group { position: absolute; left: 45px; top: 98px; width: 285px; display: flex; gap: 7px; }
-        .keyword-box-wrapper { position: relative; width: 90px; height: 26px; background-color: #000000; border: 1px solid #000000; display: flex; align-items: center; justify-content: center; cursor: pointer; box-sizing: border-box; }
-        .keyword-box-input { width: 100%; height: 100%; text-align: center; font-size: 10px; font-weight: bold; color: #ffffff; cursor: pointer; z-index: 2; line-height: 24px; }
-        .keyword-bg-picker { position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; }
+        /* 스탯 입력 및 안내문구 */
+        .info-text { position: absolute; left: 45px; top: 198px; font-size: 9px; color: #666; font-family: 'Pretendard', sans-serif; }
+        .stat-input { 
+            position: absolute; left: 45px; top: 215px; width: 285px; height: 28px; border: 1px solid #000; text-align: center; font-weight: bold; box-sizing: border-box; padding: 0 5px;
+            font-family: 'Pretendard', sans-serif; line-height: 26px;
+        }
+        
+        .main-desc-box { position: absolute; left: 45px; top: 252px; width: 285px; height: 125px; background-color: #F5F5F5; }
 
-        /* 컬러 픽커 칩 세트 */
-        .color-group { position: absolute; left: 45px; top: 132px; width: 285px; display: flex; gap: 7px; }
-        .color-item-wrapper { position: relative; width: 90px; height: 60px; border: 1px solid #000000; cursor: pointer; display: flex; align-items: center; justify-content: center; box-sizing: border-box; }
-        .color-input { position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; }
-        .color-label { font-size: 11px; font-weight: bold; pointer-events: none; z-index: 2; color: #444444; }
+        .bottom-desc-group { position: absolute; left: 45px; top: 395px; width: 285px; height: 110px; display: flex; gap: 12px; }
+        .bottom-desc-box { flex: 1; height: 100%; border-radius: 16px; padding: 12px; }
 
-        /* 서술형 박스 오버레이 영역 */
-        .stat-input { position: absolute; left: 45px; top: 215px; width: 285px; height: 28px; text-align: center; font-weight: bold; line-height: 28px; font-size: 14px; }
-        .main-desc-box { position: absolute; left: 45px; top: 252px; width: 285px; height: 125px; font-size: 12px; padding: 10px 12px; line-height: 1.6; font-weight: 500; }
-        .bottom-desc-left { position: absolute; left: 45px; top: 395px; width: 136px; height: 110px; font-size: 12px; padding: 12px; line-height: 1.6; }
-        .bottom-desc-right { position: absolute; left: 194px; top: 395px; width: 136px; height: 110px; font-size: 12px; padding: 12px; line-height: 1.6; }
-        .cloth-desc-box { position: absolute; left: 660px; top: 425px; width: 295px; height: 80px; font-size: 12px; padding: 10px 12px; line-height: 1.6; }
+        /* 이미지 컨테이너 공간 레이아웃 */
+        .main-profile-img { position: absolute; left: 355px; top: 35px; width: 280px; height: 342px; }
+        .mini-img-group { position: absolute; left: 355px; top: 395px; width: 280px; display: flex; justify-content: space-between; }
+        
+        .mini-box-container { width: 134px; height: 110px; position: relative; }
+        .mini-img-box { width: 100%; height: 100%; }
+        
+        .mini-badge { 
+            position: absolute; top: -10px; left: 10px; background-color: #ffffff; border: 1px dashed #000000; border-radius: 12px; font-size: 9px; padding: 2px 10px; z-index: 10; font-weight: bold; display: inline-flex; align-items: center; justify-content: center; font-family: 'Pretendard', sans-serif;
+        }
+        .mini-badge-input { 
+            border: none; background: transparent; font-size: 9px; font-weight: bold; width: 75px; text-align: center; font-family: 'Pretendard', sans-serif; padding: 0; margin: 0;
+        }
 
-        .credit-line { position: absolute; left: 45px; bottom: 12px; width: 910px; display: flex; justify-content: space-between; font-size: 9px; color: #999; font-weight: bold; align-items: center; }
-        .credit-input { border: none; background: transparent; font-size: 9px; font-weight: bold; color: #999; text-align: right; width: 100px; padding: 0; font-family: inherit; }
+        /* 우측 의상 프레임 */
+        .cloth-container { position: absolute; left: 660px; top: 35px; width: 295px; height: 375px; }
+        .cloth-img-box { width: 100%; height: 100%; }
+        .cloth-badge { 
+            position: absolute; top: -15px; left: -15px; background-color: #ffffff; border: 1px dashed #000000; border-radius: 50%; width: 38px; height: 38px; text-align: center; line-height: 38px; font-size: 11px; font-weight: bold; z-index: 10; font-family: 'Pretendard', sans-serif;
+        }
 
-        /* 하단 컨트롤러 액션 인터페이스 */
+        .cloth-desc-box { position: absolute; left: 660px; top: 425px; width: 295px; height: 80px; background-color: #F5F5F5; }
+        
+        /* 크레딧 스타일 */
+        .credit-line { position: absolute; left: 45px; bottom: 12px; width: 910px; display: flex; justify-content: space-between; font-size: 9px; color: #999; font-weight: bold; align-items: center; font-family: 'Pretendard', sans-serif;}
+        .credit-input { border: none; background: transparent; font-size: 9px; font-weight: bold; color: #999; text-align: right; width: 100px; padding: 0; font-family: 'Pretendard', sans-serif; }
+
         .bottom-action-panel { margin-top: 30px; margin-bottom: 50px; text-align: center; width: 1000px; }
         #downloadBtn { 
-            background-color: #BED197; color: #ffffff; font-weight: bold; padding: 14px 35px; border-radius: 30px; border: none; font-size: 16px; cursor: pointer; transition: all 0.2s;
-            box-shadow: 0 4px 15px rgba(190, 209, 151, 0.4);
+            background-color: #BED197; 
+            color: #ffffff; 
+            font-weight: bold; 
+            padding: 14px 35px; 
+            border-radius: 30px; 
+            border: none; 
+            font-size: 16px; 
+            cursor: pointer; 
+            transition: all 0.2s;
+            box-shadow: 0 4px 15px rgba(190, 209, 151, 0.4); 
+            font-family: 'Pretendard', sans-serif;
         }
-        #downloadBtn:hover { background-color: #CDDEA8; transform: translateY(-1px); }
+        #downloadBtn:hover {
+            background-color: #CDDEA8; 
+            transform: translateY(-1px);
+        }
 
-        /* 알림창 팝업 박스 레이아웃 사양 */
+        /* 팝업 스타일 시스템 (#BED197 테마 매칭형) */
         .popup-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(74, 83, 60, 0.3); backdrop-filter: blur(3px); display: flex; justify-content: center; align-items: center; z-index: 9999; }
-        .popup-content { background-color: #fff; width: 90%; max-width: 420px; padding: 40px 25px 30px 25px; border-radius: 16px; text-align: center; border: 1px solid #EBF2DF; position: relative; box-sizing: border-box; color: #333; }
-        .popup-close-btn { position: absolute; top: 15px; right: 20px; background: none; border: none; font-size: 28px; cursor: pointer; color: #ccc; line-height: 1; padding: 0; }
+        .popup-content { background-color: #fff; width: 90%; max-width: 420px; padding: 40px 25px 30px 25px; border-radius: 16px; text-align: center; border: 1px solid #EBF2DF; position: relative; box-sizing: border-box; }
+        .popup-close-btn { position: absolute; top: 15px; right: 20px; background: none; border: none; font-size: 28px; cursor: pointer; color: #ccc; line-height: 1; z-index: 10005; padding: 0; }
         .popup-close-btn:hover { color: #BED197; }
         .popup-badge { background-color: #BED197; color: #fff; padding: 4px 10px; border-radius: 20px; font-weight: bold; font-size: 11px; }
         .popup-body h2 { font-size: 20px; margin: 18px 0 10px 0; color: #4A533C; }
         .popup-body a { color: #BED197; text-decoration: none; font-weight: bold; }
+        .popup-body a:hover { text-decoration: underline; }
         .popup-sub-text { font-size: 12px; color: #69735A; background-color: #F8FAF5; padding: 12px; border-radius: 8px; margin-top: 15px; text-align: left; line-height: 1.6; border: 1px dashed #D9E5C3; }
     </style>
 </head>
@@ -203,29 +299,30 @@
         </div>
     </div>
 
-    <h1>🍩소솜 간단 자료틀 메이커 (파스텔 그린 테마)🍩</h1>
+    <h1>🍩소솜 간단 자료틀 메이커🍩</h1>
 
     <div class="capture-area" id="captureArea">
+        
         <div class="header-name-zone">
             <div class="name-circle-wrapper" id="nameCircleWrapper">
-                <input type="text" class="transparent-input name-circle-input" id="nameLetterInput" value="A">
+                <input type="text" class="name-circle-input" id="nameLetterInput" value="A">
                 <input type="color" class="name-circle-color-picker" id="nameCircleColor" value="#000000">
             </div>
-            <input type="text" class="transparent-input name-main-input" id="nameMainTxt" value="이름" placeholder="이름">
-            <input type="text" class="transparent-input name-sub-input" id="nameSubTxt" value="Name" placeholder="Name">
+            <input type="text" class="name-main-input" id="nameMainTxt" value="이름" placeholder="이름">
+            <input type="text" class="name-sub-input" id="nameSubTxt" value="Name" placeholder="Name">
         </div>
 
         <div class="keyword-group">
             <div class="keyword-box-wrapper" id="keyWrapper1">
-                <input type="text" class="transparent-input keyword-box-input" value="#키워드">
+                <input type="text" class="keyword-box-input" value="#키워드">
                 <input type="color" class="keyword-bg-picker" id="keyColor1" value="#000000">
             </div>
             <div class="keyword-box-wrapper" id="keyWrapper2">
-                <input type="text" class="transparent-input keyword-box-input" value="#키워드">
+                <input type="text" class="keyword-box-input" value="#키워드">
                 <input type="color" class="keyword-bg-picker" id="keyColor2" value="#000000">
             </div>
             <div class="keyword-box-wrapper" id="keyWrapper3">
-                <input type="text" class="transparent-input keyword-box-input" value="#키워드">
+                <input type="text" class="keyword-box-input" value="#키워드">
                 <input type="color" class="keyword-bg-picker" id="keyColor3" value="#000000">
             </div>
         </div>
@@ -245,26 +342,32 @@
             </div>
         </div>
 
-        <input type="text" class="transparent-input stat-input" value="성별 | 나이 | 키 | 몸무게">
-        <textarea class="transparent-textarea main-desc-box">□ 캐릭터의 주요 특징을 간략 서술&#10;□ 캐릭터의 주요 특징을 간략 서술&#10;□ 캐릭터의 주요 특징을 간략 서술</textarea>
+        <div class="info-text">※ 모든 방향은 보는 사람(모니터) 기준입니다. ※</div>
+        <input type="text" class="stat-input" value="성별 | 나이 | 키 | 몸무게">
+        
+        <textarea class="input-box main-desc-box">□ 캐릭터의 주요 특징을 간략 서술</textarea>
 
-        <textarea class="transparent-textarea bottom-desc-left">캐해 참고&#10;캐해 참고</textarea>
-        <textarea class="transparent-textarea bottom-desc-right">이건 안 됩니다...&#10;이건 안 됩니다...</textarea>
+        <div class="bottom-desc-group">
+            <textarea class="input-box bottom-desc-box" style="background-color: #F5F5F5;">캐해 참고</textarea>
+            <textarea class="input-box bottom-desc-box" style="background-color: #ffffff;">이건 안 됩니다...</textarea>
+        </div>
 
         <div class="image-box placeholder main-profile-img" id="mainImgBox">
             <div class="img-container"><img src="" alt=""></div>
         </div>
 
-        <div class="mini-box-container-sd">
-            <span class="mini-badge-sd">SD</span>
-            <div class="image-box placeholder sd-img-box" id="sdImgBox">
-                <div class="img-container"><img src="" alt=""></div>
+        <div class="mini-img-group">
+            <div class="mini-box-container">
+                <span class="mini-badge">SD</span>
+                <div class="image-box placeholder mini-img-box" id="sdImgBox">
+                    <div class="img-container"><img src="" alt=""></div>
+                </div>
             </div>
-        </div>
-        <div class="mini-box-container-sub">
-            <span class="mini-badge-sub"><input type="text" class="transparent-input mini-badge-input" value="동물화 : 종류"></span>
-            <div class="image-box placeholder sub-img-box" id="subImgBox">
-                <div class="img-container"><img src="" alt=""></div>
+            <div class="mini-box-container">
+                <span class="mini-badge"><input type="text" class="mini-badge-input" value="동물화 : 종류"></span>
+                <div class="image-box placeholder mini-img-box" id="subImgBox">
+                    <div class="img-container"><img src="" alt=""></div>
+                </div>
             </div>
         </div>
 
@@ -274,7 +377,7 @@
                 <div class="img-container"><img src="" alt=""></div>
             </div>
         </div>
-        <textarea class="transparent-textarea cloth-desc-box">+ 의상에 대한 부가적인 설명을 기입합니다.&#10;의상에 대한 부가적인 설명을 기입합니다.</textarea>
+        <textarea class="input-box cloth-desc-box">+ 의상에 대한 부가적인 설명을 기입합니다.</textarea>
 
         <div class="credit-line">
             <div>DESIGNED BY XOXOME | @DARL1N9__</div>
@@ -287,11 +390,13 @@
     </div>
 
     <script>
+        // 팝업 닫기 기능 완벽화
         function closePopup() { 
             const popup = document.getElementById('noticePopup');
             if(popup) popup.style.display = 'none'; 
         }
 
+        // 컬러 픽커 제어 함수 (글씨 반전 최적화)
         function setupColorPicker(inputId, wrapperId, textElementQuery) {
             const input = document.getElementById(inputId);
             const wrapper = document.getElementById(wrapperId);
@@ -313,6 +418,7 @@
             }
         }
 
+        // 각 구역 컬러 픽커 작동
         setupColorPicker('skinColor', 'skinWrapper', '.color-label');
         setupColorPicker('eyesColor', 'eyesWrapper', '.color-label');
         setupColorPicker('hairColor', 'hairWrapper', '.color-label');
@@ -321,6 +427,7 @@
         setupColorPicker('keyColor3', 'keyWrapper3', '.keyword-box-input');
         setupColorPicker('nameCircleColor', 'nameCircleWrapper', '.name-circle-input');
 
+        // 드래그 및 휠 줌 스케일 보정 함수
         function setupInteractiveImageBox(boxId) {
             const box = document.getElementById(boxId);
             if(!box) return;
@@ -409,7 +516,7 @@
         setupInteractiveImageBox('sdImgBox');
         setupInteractiveImageBox('subImgBox');
 
-        // 이미지 저장 처리 연동 마감
+        // 이미지 저장 및 캡처 제어 (잘린 코드 완벽하게 마감 조치 완료)
         const downloadBtn = document.getElementById('downloadBtn');
         if(downloadBtn) {
             downloadBtn.addEventListener('click', () => {
@@ -430,7 +537,7 @@
             html2canvas(target, {
                 useCORS: true,
                 allowTaint: true,
-                scale: 2, 
+                scale: 2,
                 logging: false,
                 onclone: (clonedDoc) => {
                     const inputs = clonedDoc.querySelectorAll('input, textarea');
@@ -445,7 +552,7 @@
                 link.href = canvas.toDataURL('image/png');
                 link.click();
             }).catch(err => {
-                console.error("저장 중 에러 발생:", err);
+                console.error("캡처 중 오류 발생:", err);
             });
         }
     </script>
