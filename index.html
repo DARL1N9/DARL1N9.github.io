@@ -104,7 +104,7 @@
 
         /* ==================== 좌표 기반 배치 및 커스텀 스타일 ==================== */
         
-        /* [2번 기능 패치] 캡처 도구가 텍스트 수직 라인을 오해하지 않도록 위치 정교화 및 height 구조 칼정렬 */
+        /* [크기 보정 완료] 글자가 위로 잘리거나 흔들리지 않도록 정밀 축소 정돈 */
         .header-name-zone {
             position: absolute; left: 45px; top: 35px; width: 330px; height: 40px; display: block; 
         }
@@ -112,16 +112,17 @@
             position: absolute; left: 0; top: 2px; width: 36px; height: 36px; border-radius: 50%; background-color: #000000; box-sizing: border-box; border: 1px solid #000000; text-align: center;
         }
         .name-circle-input {
-            width: 100%; height: 34px; border: none; background: transparent; font-size: 18px; font-weight: 900; color: #ffffff; text-align: center; padding: 0; margin: 0; line-height: 34px; z-index: 2; cursor: pointer; font-family: 'Pretendard', sans-serif; position: relative;
+            width: 100%; height: 34px; border: none; background: transparent; font-size: 16px; font-weight: 900; color: #ffffff; text-align: center; padding: 0; margin: 0; line-height: 34px; z-index: 2; cursor: pointer; font-family: 'Pretendard', sans-serif; position: relative;
         }
         .name-circle-color-picker {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; z-index: 3;
         }
         .name-main-input {
-            position: absolute; left: 48px; top: 0; width: 110px; height: 40px; font-family: 'Pretendard', sans-serif; font-size: 24px; color: #000000; border: none; background: none; font-weight: 800; line-height: 40px; padding: 0; margin: 0; box-sizing: border-box;
+            position: absolute; left: 48px; top: 0; width: 110px; height: 40px; font-family: 'Pretendard', sans-serif; font-size: 20px; color: #000000; border: none; background: none; font-weight: 800; line-height: 40px; padding: 0; margin: 0; box-sizing: border-box;
         }
+        /* [두께 감량 패치] Name 부분을 이름보다 훨씬 얇고 여유롭게 Regular(400)로 세팅 */
         .name-sub-input {
-            position: absolute; left: 165px; top: 0; width: 150px; height: 40px; font-family: 'Pretendard', sans-serif; font-size: 18px; color: #b0b0b0; border: none; background: none; font-weight: 700; line-height: 40px; padding: 0; margin: 0; box-sizing: border-box;
+            position: absolute; left: 165px; top: 0; width: 150px; height: 40px; font-family: 'Pretendard', sans-serif; font-size: 15px; color: #b0b0b0; border: none; background: none; font-weight: 400; line-height: 40px; padding: 0; margin: 0; box-sizing: border-box;
         }
 
         /* SKIN / EYES / HAIR 컬러 그룹 */
@@ -154,8 +155,6 @@
 
         /* 스탯 입력 및 안내문구 */
         .info-text { position: absolute; left: 45px; top: 198px; font-size: 9px; color: #666; font-family: 'Pretendard', sans-serif; }
-        
-        /* [1번 기능 패치] 글자 크기를 아담한 11px로 조율하고 박스 내부 수직 정렬 정돈 */
         .stat-input { 
             position: absolute; left: 45px; top: 215px; width: 285px; height: 28px; border: 1px solid #000; text-align: center; font-weight: bold; box-sizing: border-box; padding: 0 5px; font-family: 'Pretendard', sans-serif; 
             font-size: 11px; line-height: 26px;
@@ -191,8 +190,6 @@
             box-shadow: 0 2px 4px rgba(0,0,0,0.05);
             box-sizing: border-box;
         }
-        
-        /* [4번 기능 패치] 동물화 종류 인풋 창이 수직 연산에서 뒤틀리지 않도록 픽셀 패딩 제거 락 바인딩 */
         .mini-badge-input { 
             border: none; 
             background: transparent; 
@@ -215,11 +212,11 @@
         }
         .cloth-desc-box { position: absolute; left: 660px; top: 425px; width: 295px; height: 80px; background-color: #F5F5F5; }
         
-        /* [3번 기능 패치] 크레딧 라인 컨테이너 위치를 원본 템플릿 마진 가이드에 맞춰 위로 전면 상향 조정 */
+        /* 크레딧 라인 공간 레이아웃 고정 */
         .credit-line { 
             position: absolute; 
             left: 45px; 
-            top: 532px; /* 위치를 위로 정교하게 올림 (기존 535px -> 532px 격차 마감) */
+            top: 532px; 
             width: 910px; 
             height: 18px; 
             display: flex; 
@@ -584,7 +581,6 @@
                         const inputs = clonedDoc.querySelectorAll('input, textarea');
                         inputs.forEach(input => {
                             input.style.fontFamily = 'Pretendard, sans-serif';
-                            // [긴급 보완] 가상 돔 복제본 캡처 시 패딩 마스킹 유실로 인한 수직 뒤틀림 전면 방어
                             if (input.tagName === 'INPUT' && input.type === 'text') {
                                 input.style.paddingTop = '0px';
                                 input.style.paddingBottom = '0px';
