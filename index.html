@@ -31,11 +31,11 @@
 
         .header-name-zone { position: absolute; left: 45px; top: 35px; width: 330px; height: 40px; pointer-events: none; }
         .name-circle-wrapper { position: absolute; left: 0; top: 2px; width: 36px; height: 36px; border-radius: 50%; background-color: #000000; box-sizing: border-box; border: 1px solid #000000; text-align: center; pointer-events: auto; }
-        .name-circle-input { width: 24px; height: 24px; border: none; background: transparent; font-size: 16px; font-weight: 900; color: #ffffff; text-align: center; padding: 0; margin: 0; z-index: 4; font-family: 'Pretendard', sans-serif; position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); cursor: text; }
+        /* [패치] A 글자 폰트 사이즈 16px -> 20px 확대 */
+        .name-circle-input { width: 24px; height: 24px; border: none; background: transparent; font-size: 20px; font-weight: 900; color: #ffffff; text-align: center; padding: 0; margin: 0; z-index: 4; font-family: 'Pretendard', sans-serif; position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); cursor: text; }
         .name-circle-color-picker { position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; z-index: 3; }
-        
-        /* [패치] A 글자 정중앙 고정 (line-height) */
-        .name-circle-render { display: none; width: 100%; height: 34px; line-height: 34px; text-align: center; font-size: 16px; font-weight: 900; color: #ffffff; font-family: 'Pretendard', sans-serif; position: absolute; left: 0; top: 0; z-index: 2; margin: 0; padding: 0; pointer-events: none; }
+        /* [패치] 캡처용 렌더 텍스트도 20px로 동일하게 확대 */
+        .name-circle-render { display: none; width: 100%; height: 34px; line-height: 34px; text-align: center; font-size: 20px; font-weight: 900; color: #ffffff; font-family: 'Pretendard', sans-serif; position: absolute; left: 0; top: 0; z-index: 2; margin: 0; padding: 0; pointer-events: none; }
         
         .name-main-input, .name-main-render { position: absolute; left: 48px; top: 0; width: 110px; height: 40px; font-family: 'Pretendard', sans-serif; font-size: 20px; color: #000000; border: none; background: none; font-weight: 800; line-height: 40px; padding: 0; margin: 0; box-sizing: border-box; pointer-events: auto; word-break: break-all; }
         .name-sub-input, .name-sub-render { position: absolute; left: 165px; top: 0; width: 150px; height: 40px; font-family: 'Pretendard', sans-serif; font-size: 15px; color: #b0b0b0; border: none; background: none; font-weight: 400; line-height: 40px; padding: 0; margin: 0; box-sizing: border-box; pointer-events: auto; word-break: break-all; }
@@ -44,24 +44,17 @@
         .color-group { position: absolute; left: 45px; top: 132px; width: 285px; display: flex; gap: 7px; }
         .color-item-wrapper { position: relative; flex: 1; height: 60px; border: 1px solid #000000; cursor: pointer; display: flex; align-items: center; justify-content: center; box-sizing: border-box; }
         .color-input { position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; }
-        
-        /* [패치] SKIN, EYES, HAIR 라벨 정중앙 고정 */
         .color-label { font-size: 11px; font-weight: bold; pointer-events: none; z-index: 2; color: #444444; font-family: 'Pretendard', sans-serif; position: absolute; left: 0; top: 0; width: 100%; height: 58px; line-height: 58px; text-align: center; margin: 0; padding: 0; }
 
         .keyword-group { position: absolute; left: 45px; top: 98px; width: 285px; display: flex; gap: 7px; }
         .keyword-box-wrapper { position: relative; width: 90px; height: 26px; border: 1px solid #000000; background-color: #000000; display: flex; align-items: center; justify-content: center; cursor: pointer; box-sizing: border-box; }
         .keyword-box-input { width: 100%; height: 24px; border: none; background: transparent; text-align: center; font-size: 10px; font-weight: bold; color: #ffffff; cursor: pointer; z-index: 2; font-family: 'Pretendard', sans-serif; padding: 0 2px; margin: 0; line-height: 1.2; display: flex; align-items: center; justify-content: center; word-break: break-all; }
-        
-        /* [패치] 키워드 텍스트 정중앙 고정 */
         .keyword-box-render { display: none; width: 100%; height: 24px; line-height: 24px; text-align: center; font-size: 10px; font-weight: bold; font-family: 'Pretendard', sans-serif; padding: 0 2px; margin: 0; word-break: break-all; z-index: 2; pointer-events: none; }
-        
         .keyword-bg-picker { position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; }
 
         .info-text { position: absolute; left: 45px; top: 198px; font-size: 9px; color: #666; font-family: 'Pretendard', sans-serif; }
         
         .stat-input { position: absolute; left: 45px; top: 215px; width: 285px; height: 28px; border: 1px solid #000; background-color: #ffffff; text-align: center; font-weight: bold; box-sizing: border-box; padding: 0; font-family: 'Pretendard', sans-serif; font-size: 11px; line-height: 26px; resize: none; overflow: hidden; white-space: nowrap; border-radius: 6px; }
-        
-        /* [패치] 스탯창 정중앙 고정 (flex 제거, block 및 line-height 적용) */
         .stat-render { position: absolute; left: 45px; top: 215px; width: 285px; height: 28px; border: 1px solid #000; border-radius: 6px; display: none; text-align: center; line-height: 26px; font-weight: bold; font-family: 'Pretendard', sans-serif; font-size: 11px; background-color: #ffffff; box-sizing: border-box; }
 
         .main-desc-box { position: absolute; left: 45px; top: 252px; width: 285px; height: 125px; background-color: #F5F5F5; }
@@ -73,7 +66,6 @@
         .mini-box-container { width: 134px; height: 110px; position: relative; }
         .mini-img-box { width: 100%; height: 100%; }
         
-        /* [패치] 미니 배지(SD, 동물화) 정중앙 고정 */
         .mini-badge { position: absolute; top: -12px; left: 10px; background-color: #ffffff; border: 1px dashed #000000; border-radius: 14px; font-size: 11px; padding: 0 14px; height: 24px; z-index: 10; font-weight: bold; display: block; text-align: center; line-height: 22px; white-space: nowrap; font-family: 'Pretendard', sans-serif; box-shadow: 0 2px 4px rgba(0,0,0,0.05); box-sizing: border-box; }
         .mini-badge-input { border: none; background: transparent; font-size: 11px; font-weight: bold; width: 85px; height: 22px; line-height: 22px; text-align: center; font-family: 'Pretendard', sans-serif; padding: 0; margin: 0; box-sizing: border-box; word-break: break-all; }
         .mini-badge-render { display: none; width: 100%; height: 22px; line-height: 22px; text-align: center; font-size: 11px; font-weight: bold; font-family: 'Pretendard', sans-serif; padding: 0; margin: 0; box-sizing: border-box; }
@@ -501,7 +493,6 @@
         setupInteractiveImageBox('sdImgBox');
         setupInteractiveImageBox('subImgBox');
 
-        // [완벽 방어 패치] 캡처 시 강제 컬러 주입(흑/백) 동기화 시스템으로 화이트 박제 오류 해결
         function transformInputsForCapture(clonedDoc) {
             const mappings = [
                 { in: 'nameLetterInput', out: 'nameCircleRender', display: 'block' },
@@ -528,7 +519,6 @@
                     clonedRender.innerText = liveInput.value;
                     clonedRender.style.display = m.display;
                     
-                    // [핵심 패치] 실제 사용자가 보고 있는 실시간 글자 색상을 가상 레이어에 강제로 주입!
                     if (liveInput.style.color) {
                         clonedRender.style.color = liveInput.style.color;
                     }
@@ -697,7 +687,9 @@
             });
         }
 
+        // [핵심 패치] 초기 시작 시 라벨명 세팅 및 기본 색상(밝기에 따른 흑/백 글자) 동기화를 강제 실행하여 이미지 캡처 시 글자 증발 현상을 원천 방어합니다.
         updateSlotLabels();
+        triggerColorPickerUpdate();
 
         document.getElementById('previewBtn').addEventListener('click', () => {
             const target = document.getElementById('captureArea');
