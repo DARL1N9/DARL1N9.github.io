@@ -9,6 +9,7 @@
     <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" />
     
     <style>
+        /* [1. 전체 레이아웃 스타일] */
         body { font-family: 'Pretendard', 'Arial', sans-serif; background-color: #F4F7EE; color: #333333; display: flex; flex-direction: column; align-items: center; padding: 40px 20px; margin: 0; }
         h1 { margin-bottom: 30px; font-size: 24px; color: #4A533C; }
         input, select, button { padding: 10px; border-radius: 4px; border: 1px solid #cccccc; font-size: 16px; }
@@ -50,7 +51,6 @@
 
         .info-text { position: absolute; left: 45px; top: 198px; font-size: 9px; color: #666; font-family: 'Pretendard', sans-serif; }
         
-        /* [수정] 스탯 인풋 정가운데 정렬 (line-height와 box-sizing 세밀 조정) */
         .stat-input { position: absolute; left: 45px; top: 215px; width: 285px; height: 28px; border: 1px solid #000; background-color: #ffffff; text-align: center; font-weight: bold; box-sizing: border-box; padding: 0; font-family: 'Pretendard', sans-serif; font-size: 11px; line-height: 26px; resize: none; overflow: hidden; white-space: nowrap; border-radius: 6px; }
         .stat-render { position: absolute; left: 45px; top: 215px; width: 285px; height: 28px; border: 1px solid #000; border-radius: 6px; display: none; align-items: center; justify-content: center; font-weight: bold; font-family: 'Pretendard', sans-serif; font-size: 11px; background-color: #ffffff; box-sizing: border-box; }
 
@@ -62,6 +62,7 @@
         .mini-img-group { position: absolute; left: 355px; top: 406px; width: 280px; display: flex; justify-content: space-between; }
         .mini-box-container { width: 134px; height: 110px; position: relative; }
         .mini-img-box { width: 100%; height: 100%; }
+        
         .mini-badge { position: absolute; top: -12px; left: 10px; background-color: #ffffff; border: 1px dashed #000000; border-radius: 14px; font-size: 11px; padding: 0 14px; height: 24px; z-index: 10; font-weight: bold; display: inline-flex; align-items: center; justify-content: center; font-family: 'Pretendard', sans-serif; box-shadow: 0 2px 4px rgba(0,0,0,0.05); box-sizing: border-box; }
         .mini-badge-input { border: none; background: transparent; font-size: 11px; font-weight: bold; width: 85px; height: 22px; line-height: 1.2; text-align: center; font-family: 'Pretendard', sans-serif; padding: 2px 0; margin: 0; box-sizing: border-box; word-break: break-all; }
 
@@ -82,7 +83,6 @@
         .btn-save-slot:hover { background-color: #69784E; }
         .btn-load-slot { background-color: #4A533C; color: #ffffff; }
         .btn-load-slot:hover { background-color: #383F2E; }
-        /* [추가] 삭제 버튼 스타일 */
         .btn-delete-slot { background-color: #D36C6C; color: #ffffff; }
         .btn-delete-slot:hover { background-color: #B55A5A; }
 
@@ -187,10 +187,14 @@
         <div class="stat-render" id="statRender"></div>
         
         <textarea class="input-box main-desc-box" id="mainDescForm">□ 캐릭터의 주요 특징을 간략 서술&#10;□ 캐릭터의 주요 특징을 간략 서술&#10;□ 캐릭터의 주요 특징을 간략 서술&#10;□ 캐릭터의 주요 특징을 간략 서술</textarea>
+        <div class="input-box main-desc-box" id="mainDescRender" style="display:none; white-space:pre-wrap;"></div>
 
         <div class="bottom-desc-group">
             <textarea class="input-box bottom-desc-box" id="leftDescForm" style="background-color: #ffffff;">[O] 캐해 참고</textarea>
+            <div class="input-box bottom-desc-box" id="leftDescRender" style="background-color: #ffffff; display:none; white-space:pre-wrap;"></div>
+            
             <textarea class="input-box bottom-desc-box" id="rightDescForm" style="background-color: #ffffff;">[X] 이건 안 됩니다...</textarea>
+            <div class="input-box bottom-desc-box" id="rightDescRender" style="background-color: #ffffff; display:none; white-space:pre-wrap;"></div>
         </div>
 
         <div class="image-box placeholder main-profile-img" id="mainImgBox">
@@ -205,7 +209,10 @@
                 </div>
             </div>
             <div class="mini-box-container">
-                <span class="mini-badge"><input type="text" class="mini-badge-input" id="animalBadgeInput" value="동물화 : 종류"></span>
+                <span class="mini-badge">
+                    <input type="text" class="mini-badge-input" id="animalBadgeInput" value="동물화 : 종류">
+                    <div class="mini-badge-input" id="animalBadgeRender" style="display:none; align-items:center; justify-content:center;"></div>
+                </span>
                 <div class="image-box placeholder mini-img-box" id="subImgBox">
                     <div class="img-container"><img src="" alt=""></div>
                 </div>
@@ -219,11 +226,13 @@
             </div>
         </div>
         <textarea class="input-box cloth-desc-box" id="clothDescForm">+ 의상에 대한 부가적인 설명을 기입합니다.</textarea>
+        <div class="input-box cloth-desc-box" id="clothDescRender" style="display:none; white-space:pre-wrap;"></div>
 
         <div class="credit-line">
             <div>DESIGNED BY XOXOME | @DARL1N9__</div>
             <div class="credit-right-zone">
                 <input type="text" class="credit-input" id="creditIllustInput" value="ILLUST BY 이름">
+                <div class="credit-input" id="creditIllustRender" style="display:none; text-align:right;"></div>
             </div>
         </div>
     </div>
@@ -445,63 +454,28 @@
         setupInteractiveImageBox('sdImgBox');
         setupInteractiveImageBox('subImgBox');
 
-        // [동적 노드 스와핑 유틸리티] 캡처용 가상 돔 생성 시 줄바꿈과 중앙정렬 완벽 보존 치환
+        // [완벽 방어 패치] 캡처용 가상 돔 생성 시 모든 줄바꿈과 폰트를 예쁘게 보존하는 div 치환 스크립트
         function transformInputsForCapture(clonedDoc) {
-            const circleInput = clonedDoc.getElementById('nameLetterInput');
-            const circleRender = clonedDoc.getElementById('nameCircleRender');
-            if (circleInput && circleRender) {
-                circleRender.innerText = circleInput.value;
-                circleRender.style.display = 'block';
-                circleInput.style.display = 'none';
-            }
+            const mappings = [
+                { in: 'nameLetterInput', out: 'nameCircleRender', display: 'block' },
+                { in: 'nameMainTxt', out: 'nameMainRender', display: 'block' },
+                { in: 'nameSubTxt', out: 'nameSubRender', display: 'block' },
+                { in: 'statInputForm', out: 'statRender', display: 'flex' },
+                { in: 'mainDescForm', out: 'mainDescRender', display: 'block' },
+                { in: 'leftDescForm', out: 'leftDescRender', display: 'block' },
+                { in: 'rightDescForm', out: 'rightDescRender', display: 'block' },
+                { in: 'animalBadgeInput', out: 'animalBadgeRender', display: 'flex' },
+                { in: 'clothDescForm', out: 'clothDescRender', display: 'block' },
+                { in: 'creditIllustInput', out: 'creditIllustRender', display: 'block' }
+            ];
 
-            const mainTxtInput = clonedDoc.getElementById('nameMainTxt');
-            const mainRenderDiv = clonedDoc.getElementById('nameMainRender');
-            if (mainTxtInput && mainRenderDiv) {
-                mainRenderDiv.innerText = mainTxtInput.value;
-                mainRenderDiv.style.display = 'block';
-                mainTxtInput.style.display = 'none';
-            }
-
-            const subTxtInput = clonedDoc.getElementById('nameSubTxt');
-            const subRenderDiv = clonedDoc.getElementById('nameSubRender');
-            if (subTxtInput && subRenderDiv) {
-                subRenderDiv.innerText = subTxtInput.value;
-                subRenderDiv.style.display = 'block';
-                subTxtInput.style.display = 'none';
-            }
-
-            // [패치] 스탯창 정가운데 정렬 고정을 위한 가상 Div 치환 렌더링
-            const statInput = clonedDoc.getElementById('statInputForm');
-            const statRender = clonedDoc.getElementById('statRender');
-            if (statInput && statRender) {
-                statRender.innerText = statInput.value;
-                statRender.style.display = 'flex';
-                statInput.style.display = 'none';
-            }
-
-            const allInputs = clonedDoc.querySelectorAll('input, textarea');
-            allInputs.forEach(input => {
-                input.style.fontFamily = 'Pretendard, sans-serif';
-                if (input.tagName === 'INPUT' && input.type === 'text') {
-                    if(!input.classList.contains('stat-input') && input.id !== 'creditIllustInput' && !input.classList.contains('mini-badge-input')) {
-                        input.style.padding = '0px';
-                        input.style.margin = '0px';
-                        input.style.border = 'none';
-                    }
-                }
-                if (input.tagName === 'TEXTAREA') {
-                    // 테두리가 보존되어야 하는 클래스명 지정
-                    if (input.classList.contains('stat-input') || input.classList.contains('main-desc-box') || input.classList.contains('bottom-desc-box') || input.classList.contains('cloth-desc-box')) {
-                        input.style.border = '1px solid #000000';
-                        input.style.backgroundColor = window.getComputedStyle(input).backgroundColor;
-                    } else {
-                        input.style.border = 'none';
-                    }
-                    input.style.overflow = 'hidden';
-                    
-                    // [패치] 줄바꿈과 띄어쓰기 여백을 캡처 화면에 그대로 유지시키는 속성 주입
-                    input.style.whiteSpace = 'pre-wrap';
+            mappings.forEach(m => {
+                const inputEl = clonedDoc.getElementById(m.in);
+                const renderEl = clonedDoc.getElementById(m.out);
+                if (inputEl && renderEl) {
+                    renderEl.innerText = inputEl.value;
+                    renderEl.style.display = m.display;
+                    inputEl.style.display = 'none';
                 }
             });
         }
