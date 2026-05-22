@@ -40,7 +40,7 @@
         .name-main-render, .name-sub-render { display: none; pointer-events: none; text-align: left; }
 
         .color-group { position: absolute; left: 45px; top: 132px; width: 285px; display: flex; gap: 7px; }
-        .color-item-wrapper { position: relative; width: 90px; height: 60px; border: 1px solid #000000; cursor: pointer; display: flex; align-items: center; justify-content: center; box-sizing: border-box; }
+        .color-item-wrapper { position: relative; flex: 1; height: 60px; border: 1px solid #000000; cursor: pointer; display: flex; align-items: center; justify-content: center; box-sizing: border-box; }
         .color-input { position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; }
         .color-label { font-size: 11px; font-weight: bold; pointer-events: none; z-index: 2; color: #444444; font-family: 'Pretendard', sans-serif; }
 
@@ -240,9 +240,13 @@
                 <span class="color-label">SKIN</span>
                 <input type="color" class="color-input" id="skinColor" value="#D6D6D6">
             </div>
-            <div class="color-item-wrapper" id="eyesWrapper" style="background-color: #D6D6D6;">
-                <span class="color-label">EYES</span>
-                <input type="color" class="color-input" id="eyesColor" value="#D6D6D6">
+            <div class="color-item-wrapper" id="eyesLeftWrapper" style="background-color: #D6D6D6;">
+                <span class="color-label">L-EYE</span>
+                <input type="color" class="color-input" id="eyesLeftColor" value="#D6D6D6">
+            </div>
+            <div class="color-item-wrapper" id="eyesRightWrapper" style="background-color: #D6D6D6;">
+                <span class="color-label">R-EYE</span>
+                <input type="color" class="color-input" id="eyesRightColor" value="#D6D6D6">
             </div>
             <div class="color-item-wrapper" id="hairWrapper" style="background-color: #D6D6D6;">
                 <span class="color-label">HAIR</span>
@@ -379,7 +383,8 @@
         }
 
         setupColorPicker('skinColor', 'skinWrapper', '.color-label');
-        setupColorPicker('eyesColor', 'eyesWrapper', '.color-label');
+        setupColorPicker('eyesLeftColor', 'eyesLeftWrapper', '.color-label');
+        setupColorPicker('eyesRightColor', 'eyesRightWrapper', '.color-label');
         setupColorPicker('hairColor', 'hairWrapper', '.color-label');
         setupColorPicker('keyColor1', 'keyWrapper1', '.keyword-box-input');
         setupColorPicker('keyColor2', 'keyWrapper2', '.keyword-box-input');
@@ -571,7 +576,8 @@
                 k3Color: document.getElementById('keyColor3').value,
                 
                 skin: document.getElementById('skinColor').value,
-                eyes: document.getElementById('eyesColor').value,
+                eyesLeft: document.getElementById('eyesLeftColor').value,
+                eyesRight: document.getElementById('eyesRightColor').value,
                 hair: document.getElementById('hairColor').value,
                 
                 stats: document.getElementById('statInputForm').value,
@@ -618,7 +624,8 @@
             document.getElementById('keyColor3').value = data.k3Color || '#000000';
 
             document.getElementById('skinColor').value = data.skin || '#D6D6D6';
-            document.getElementById('eyesColor').value = data.eyes || '#D6D6D6';
+            document.getElementById('eyesLeftColor').value = data.eyesLeft || '#D6D6D6';
+            document.getElementById('eyesRightColor').value = data.eyesRight || '#D6D6D6';
             document.getElementById('hairColor').value = data.hair || '#D6D6D6';
 
             document.getElementById('statInputForm').value = data.stats || '';
@@ -702,7 +709,7 @@
         }
 
         function triggerColorPickerUpdate() {
-            const pickerIds = ['nameCircleColor', 'skinColor', 'eyesColor', 'hairColor', 'keyColor1', 'keyColor2', 'keyColor3'];
+            const pickerIds = ['nameCircleColor', 'skinColor', 'eyesLeftColor', 'eyesRightColor', 'hairColor', 'keyColor1', 'keyColor2', 'keyColor3'];
             pickerIds.forEach(id => {
                 const el = document.getElementById(id);
                 if(el) el.dispatchEvent(new Event('input'));
