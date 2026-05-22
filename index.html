@@ -551,6 +551,11 @@
                 if (inputEl && renderEl) {
                     renderEl.innerText = inputEl.value;
                     renderEl.style.display = m.display;
+                    
+                    // [컬러 복사 기능 추가] 입력창의 글자 색상(밝기에 따른 흑/백 전환)을 캡처용 렌더 요소에도 동일하게 적용
+                    if (inputEl.style.color) {
+                        renderEl.style.color = inputEl.style.color;
+                    }
                     inputEl.style.display = 'none';
                 }
             });
