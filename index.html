@@ -47,6 +47,7 @@
         .keyword-group { position: absolute; left: 45px; top: 98px; width: 285px; display: flex; gap: 7px; }
         .keyword-box-wrapper { position: relative; width: 90px; height: 26px; border: 1px solid #000000; background-color: #000000; display: flex; align-items: center; justify-content: center; cursor: pointer; box-sizing: border-box; }
         .keyword-box-input { width: 100%; height: 24px; border: none; background: transparent; text-align: center; font-size: 10px; font-weight: bold; color: #ffffff; cursor: pointer; z-index: 2; font-family: 'Pretendard', sans-serif; padding: 0 2px; margin: 0; line-height: 1.2; display: flex; align-items: center; justify-content: center; word-break: break-all; }
+        .keyword-box-render { display: none; width: 100%; height: 100%; align-items: center; justify-content: center; font-size: 10px; font-weight: bold; font-family: 'Pretendard', sans-serif; padding: 0 2px; margin: 0; line-height: 1.2; word-break: break-all; z-index: 2; pointer-events: none; }
         .keyword-bg-picker { position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; }
 
         .info-text { position: absolute; left: 45px; top: 198px; font-size: 9px; color: #666; font-family: 'Pretendard', sans-serif; }
@@ -88,7 +89,7 @@
 
         .bottom-action-panel { display: flex; gap: 15px; justify-content: center; }
         .panel-btn { color: #ffffff; font-weight: bold; padding: 14px 35px; border-radius: 30px; border: none; font-size: 16px; cursor: pointer; transition: all 0.2s; font-family: 'Pretendard', sans-serif; }
-        #previewBtn { background-color: #7a8b5c; box-shadow: 0 4px 15px rgba(190, 209, 151, 0.4); }
+        #previewBtn { background-color: #BED197; box-shadow: 0 4px 15px rgba(190, 209, 151, 0.4); }
         #previewBtn:hover { background-color: #CDDEA8; transform: translateY(-1px); }
         #downloadBtn { background-color: #4A533C; box-shadow: 0 4px 15px rgba(74, 83, 60, 0.3); }
         #downloadBtn:hover { background-color: #383F2E; transform: translateY(-1px); }
@@ -105,61 +106,12 @@
         .preview-content { max-width: 1050px; width: 95%; padding: 40px 25px; border-radius: 20px; }
         #previewCanvasContainer { width: 100%; max-height: 70vh; overflow-y: auto; display: flex; justify-content: center; margin-top: 15px; }
         #previewCanvasContainer canvas { max-width: 100%; height: auto; border: 1px solid #dddddd; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
-       
-        /* 모달 팝업 스타일 */
-        .popup-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(74, 83, 60, 0.3); backdrop-filter: blur(3px); display: flex; justify-content: center; align-items: center; z-index: 9999; }
-        .popup-content { background-color: #fff; padding: 40px 25px; border-radius: 16px; text-align: center; position: relative; }
-        .popup-close-btn { position: absolute; top: 15px; right: 20px; background: none; border: none; font-size: 28px; cursor: pointer; color: #ccc; line-height: 1; }
         
-        /* 💡 [신규] 우측 상단 사용 설명서 호버 UI 스타일 (자료틀 우측 끝 라인에 딱 맞게 정렬) */
-        .manual-container {
-            position: absolute;
-            top: 25px;
-            left: 50%;
-            margin-left: 500px;
-            transform: translateX(-100%);
-            z-index: 9999;
-        }
-        .manual-btn {
-            background-color: #7A8B5C;
-            color: white;
-            padding: 8px 16px;
-            border-radius: 20px;
-            font-size: 14px;
-            font-weight: bold;
-            cursor: default;
-            box-shadow: 0 4px 10px rgba(74,83,60,0.2);
-            transition: background-color 0.3s;
-        }
-        .manual-container:hover .manual-btn {
-            background-color: #4A533C;
-        }
-        .manual-tooltip {
-            position: absolute;
-            top: 100%;
-            right: 0;
-            margin-top: 10px;
-            width: 280px;
-            background-color: #ffffff;
-            border: 1px solid #EBF2DF;
-            border-radius: 12px;
-            padding: 15px;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
-            font-size: 13px;
-            color: #4A533C;
-            line-height: 1.6;
-            word-break: keep-all;
-            opacity: 0;
-            visibility: hidden;
-            transform: translateY(-10px);
-            transition: all 0.3s ease;
-            pointer-events: none;
-        }
-        .manual-container:hover .manual-tooltip {
-            opacity: 1;
-            visibility: visible;
-            transform: translateY(0);
-        }
+        .manual-container { position: absolute; top: 25px; left: 50%; margin-left: 500px; transform: translateX(-100%); z-index: 9999; }
+        .manual-btn { background-color: #7A8B5C; color: white; padding: 8px 16px; border-radius: 20px; font-size: 14px; font-weight: bold; cursor: default; box-shadow: 0 4px 10px rgba(74,83,60,0.2); transition: background-color 0.3s; }
+        .manual-container:hover .manual-btn { background-color: #4A533C; }
+        .manual-tooltip { position: absolute; top: 100%; right: 0; margin-top: 10px; width: 280px; background-color: #ffffff; border: 1px solid #EBF2DF; border-radius: 12px; padding: 15px; box-shadow: 0 8px 20px rgba(0,0,0,0.1); font-size: 13px; color: #4A533C; line-height: 1.6; word-break: keep-all; opacity: 0; visibility: hidden; transform: translateY(-10px); transition: all 0.3s ease; pointer-events: none; }
+        .manual-container:hover .manual-tooltip { opacity: 1; visibility: visible; transform: translateY(0); }
     </style>
 </head>
 <body>
@@ -211,7 +163,7 @@
     <div class="capture-area" id="captureArea">
         <div class="header-name-zone">
             <div class="name-circle-wrapper" id="nameCircleWrapper">
-                <input type="text" class="name-circle-input" id="nameLetterInput" value="A">
+                <input type="text" class="name-circle-input" id="nameLetterInput" value="A" maxlength="1">
                 <div class="name-circle-render" id="nameCircleRender"></div>
                 <input type="color" class="name-circle-color-picker" id="nameCircleColor" value="#000000">
             </div>
@@ -224,15 +176,18 @@
 
         <div class="keyword-group">
             <div class="keyword-box-wrapper" id="keyWrapper1">
-                <input type="text" class="keyword-box-input" value="#키워드">
+                <input type="text" class="keyword-box-input" id="keyInput1" value="#키워드">
+                <div class="keyword-box-render" id="keyRender1"></div>
                 <input type="color" class="keyword-bg-picker" id="keyColor1" value="#000000">
             </div>
             <div class="keyword-box-wrapper" id="keyWrapper2">
-                <input type="text" class="keyword-box-input" value="#키워드">
+                <input type="text" class="keyword-box-input" id="keyInput2" value="#키워드">
+                <div class="keyword-box-render" id="keyRender2"></div>
                 <input type="color" class="keyword-bg-picker" id="keyColor2" value="#000000">
             </div>
             <div class="keyword-box-wrapper" id="keyWrapper3">
-                <input type="text" class="keyword-box-input" value="#키워드">
+                <input type="text" class="keyword-box-input" id="keyInput3" value="#키워드">
+                <div class="keyword-box-render" id="keyRender3"></div>
                 <input type="color" class="keyword-bg-picker" id="keyColor3" value="#000000">
             </div>
         </div>
@@ -346,16 +301,24 @@
             circlePicker.addEventListener('input', (e) => {
                 const syncColor = e.target.value;
                 const targetWrappers = ['keyWrapper1', 'keyWrapper2', 'keyWrapper3'];
+                
+                // 원형 배경색 동기화
+                document.getElementById('nameCircleWrapper').style.backgroundColor = syncColor;
+                
+                // 원형 안의 텍스트 색상 실시간 동기화
+                const r = parseInt(syncColor.substr(1,2), 16);
+                const g = parseInt(syncColor.substr(3,2), 16);
+                const b = parseInt(syncColor.substr(5,2), 16);
+                const brightness = (r * 299 + g * 587 + b * 114) / 1000;
+                document.getElementById('nameLetterInput').style.color = brightness < 128 ? '#ffffff' : '#444444';
+
+                // 키워드 박스 동기화
                 targetWrappers.forEach(id => {
                     const el = document.getElementById(id);
                     if(el) {
                         el.style.backgroundColor = syncColor;
                         const input = el.querySelector('.keyword-box-input');
                         if(input) {
-                            const r = parseInt(syncColor.substr(1,2), 16);
-                            const g = parseInt(syncColor.substr(3,2), 16);
-                            const b = parseInt(syncColor.substr(5,2), 16);
-                            const brightness = (r * 299 + g * 587 + b * 114) / 1000;
                             input.style.color = brightness < 128 ? '#ffffff' : '#444444';
                         }
                     }
@@ -388,10 +351,10 @@
         setupColorPicker('eyesLeftColor', 'eyesLeftWrapper', '.color-label');
         setupColorPicker('eyesRightColor', 'eyesRightWrapper', '.color-label');
         setupColorPicker('hairColor', 'hairWrapper', '.color-label');
+        
         setupColorPicker('keyColor1', 'keyWrapper1', '.keyword-box-input');
         setupColorPicker('keyColor2', 'keyWrapper2', '.keyword-box-input');
         setupColorPicker('keyColor3', 'keyWrapper3', '.keyword-box-input');
-        setupColorPicker('nameCircleColor', 'nameCircleWrapper', '.name-circle-input');
 
         const globalImgRegistry = {
             mainImgBox: { src: '', origWidth: 0, origHeight: 0, width: 0, height: 0, left: 0, top: 0, scale: 1.0 },
@@ -530,7 +493,7 @@
         setupInteractiveImageBox('sdImgBox');
         setupInteractiveImageBox('subImgBox');
 
-        // [완벽 방어 패치] 캡처용 가상 돔 생성 시 모든 줄바꿈과 폰트를 예쁘게 보존하는 div 치환 스크립트
+        // [완벽 방어 패치] 캡처용 가상 돔 생성 시 실시간 컬러값을 덮어씌워 보존하는 스크립트
         function transformInputsForCapture(clonedDoc) {
             const mappings = [
                 { in: 'nameLetterInput', out: 'nameCircleRender', display: 'flex' },
@@ -542,21 +505,28 @@
                 { in: 'rightDescForm', out: 'rightDescRender', display: 'block' },
                 { in: 'animalBadgeInput', out: 'animalBadgeRender', display: 'flex' },
                 { in: 'clothDescForm', out: 'clothDescRender', display: 'block' },
-                { in: 'creditIllustInput', out: 'creditIllustRender', display: 'block' }
+                { in: 'creditIllustInput', out: 'creditIllustRender', display: 'block' },
+                { in: 'keyInput1', out: 'keyRender1', display: 'flex' },
+                { in: 'keyInput2', out: 'keyRender2', display: 'flex' },
+                { in: 'keyInput3', out: 'keyRender3', display: 'flex' }
             ];
 
             mappings.forEach(m => {
-                const inputEl = clonedDoc.getElementById(m.in);
-                const renderEl = clonedDoc.getElementById(m.out);
-                if (inputEl && renderEl) {
-                    renderEl.innerText = inputEl.value;
-                    renderEl.style.display = m.display;
+                const liveInput = document.getElementById(m.in);
+                const clonedInput = clonedDoc.getElementById(m.in);
+                const clonedRender = clonedDoc.getElementById(m.out);
+                
+                if (liveInput && clonedInput && clonedRender) {
+                    clonedRender.innerText = liveInput.value;
+                    clonedRender.style.display = m.display;
                     
-                    // [컬러 복사 기능 추가] 입력창의 글자 색상(밝기에 따른 흑/백 전환)을 캡처용 렌더 요소에도 동일하게 적용
-                    if (inputEl.style.color) {
-                        renderEl.style.color = inputEl.style.color;
+                    // [핵심 해결] 실제 화면(live)의 색상 값을 캡처 가상 렌더 요소에 강제 주입!
+                    const liveColor = window.getComputedStyle(liveInput).color;
+                    if (liveColor) {
+                        clonedRender.style.color = liveColor;
                     }
-                    inputEl.style.display = 'none';
+                    
+                    clonedInput.style.display = 'none';
                 }
             });
         }
@@ -684,7 +654,6 @@
             alert(`[${data.characterName || '이름 없음'}] 정보를 불러왔습니다!`);
         }
 
-        // [신규 기능 추가] 선택한 슬롯의 로컬 데이터를 완전히 지우고 UI 라벨 갱신
         function deleteFromSlot() {
             const activeSlot = document.getElementById('slotSelect').value;
             const savedRaw = localStorage.getItem(activeSlot);
@@ -701,7 +670,6 @@
             }
         }
 
-        // [패치] 슬롯 라벨을 페이지 시작 시점과 저장/삭제 직후에 즉시 갱신
         function updateSlotLabels() {
             SLOT_KEYS.forEach((key, index) => {
                 const option = document.querySelectorAll('#slotSelect option')[index];
