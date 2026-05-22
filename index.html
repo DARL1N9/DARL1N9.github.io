@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>소솜 간단 자료틀 메이커 - 커스텀 버전</title>
+    <title>🍩소솜 간단 자료틀 메이커🍩</title>
     <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
     
     <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" />
@@ -690,7 +690,7 @@
                 }
             }).then(canvas => {
                 const link = document.createElement('a');
-                link.download = 'custom-자료틀.png';
+                link.download = '자료틀.png';
                 link.href = canvas.toDataURL('image/png');
                 link.click();
             }).catch(err => {
