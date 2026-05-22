@@ -31,9 +31,9 @@
 
         .header-name-zone { position: absolute; left: 45px; top: 35px; width: 330px; height: 40px; pointer-events: none; }
         .name-circle-wrapper { position: absolute; left: 0; top: 2px; width: 36px; height: 36px; border-radius: 50%; background-color: #000000; box-sizing: border-box; border: 1px solid #000000; text-align: center; pointer-events: auto; }
-        .name-circle-input, .name-circle-render { width: 100%; height: 34px; border: none; background: transparent; font-size: 16px; font-weight: 900; color: #ffffff; text-align: center; padding: 0; margin: 0; line-height: 34px; z-index: 2; cursor: pointer; font-family: 'Pretendard', sans-serif; position: relative; }
+        .name-circle-input { width: 24px; height: 24px; border: none; background: transparent; font-size: 16px; font-weight: 900; color: #ffffff; text-align: center; padding: 0; margin: 0; z-index: 4; font-family: 'Pretendard', sans-serif; position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); cursor: text; }
         .name-circle-color-picker { position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; z-index: 3; }
-        .name-circle-render { display: none; pointer-events: none; }
+        .name-circle-render { display: none; width: 100%; height: 100%; align-items: center; justify-content: center; font-size: 16px; font-weight: 900; color: #ffffff; font-family: 'Pretendard', sans-serif; position: absolute; left: 0; top: 0; z-index: 2; margin: 0; padding: 0; pointer-events: none; }
         
         .name-main-input, .name-main-render { position: absolute; left: 48px; top: 0; width: 110px; height: 40px; font-family: 'Pretendard', sans-serif; font-size: 20px; color: #000000; border: none; background: none; font-weight: 800; line-height: 40px; padding: 0; margin: 0; box-sizing: border-box; pointer-events: auto; word-break: break-all; }
         .name-sub-input, .name-sub-render { position: absolute; left: 165px; top: 0; width: 150px; height: 40px; font-family: 'Pretendard', sans-serif; font-size: 15px; color: #b0b0b0; border: none; background: none; font-weight: 400; line-height: 40px; padding: 0; margin: 0; box-sizing: border-box; pointer-events: auto; word-break: break-all; }
@@ -111,11 +111,13 @@
         .popup-content { background-color: #fff; padding: 40px 25px; border-radius: 16px; text-align: center; position: relative; }
         .popup-close-btn { position: absolute; top: 15px; right: 20px; background: none; border: none; font-size: 28px; cursor: pointer; color: #ccc; line-height: 1; }
         
-        /* 💡 [신규] 우측 상단 사용 설명서 호버 UI 스타일 */
+        /* 💡 [신규] 우측 상단 사용 설명서 호버 UI 스타일 (자료틀 우측 끝 라인에 딱 맞게 정렬) */
         .manual-container {
-            position: fixed;
+            position: absolute;
             top: 25px;
-            right: 30px;
+            left: 50%;
+            margin-left: 500px;
+            transform: translateX(-100%);
             z-index: 9999;
         }
         .manual-btn {
@@ -165,12 +167,17 @@
     <div class="manual-container">
         <div class="manual-btn">✔ 사용 설명서</div>
         <div class="manual-tooltip">
-            <strong>💡 알아두면 좋은 꿀팁!</strong><br><br>
-            컬러 입력 시 R G B 옆에 있는 작은 기호를 두 번 누르면 <strong>HEX코드 입력 창</strong>으로 바꿀 수 있습니다.
-            <br>
-            <br> + 저장한 슬롯을 불러올 시 <strong>#키워드 칸의 색이 까맣게 바뀝니다.</strong> 해결 법 찾는 중... 이름 옆의 컬러 픽커를 다시 만져주세요ㅠ.ㅠ
+            <strong>💡 제작 전 알아두면 좋은 팁!</strong><br><br>
+            1. 컬러 입력 시 R G B 옆에 있는 작은 기호를 두 번 누르면 <strong>HEX코드 입력 창</strong>으로 바꿀 수 있습니다.<br><br>
+            2. 좌측 상단의 <strong>'A' 글자 정중앙을 클릭</strong>하면 다른 알파벳이나 숫자로 수정할 수 있습니다. (글자 주변의 원형 바탕을 누르면 색상이 변경됩니다.)
         </div>
     </div>
+    
+    <div class="name-circle-wrapper" id="nameCircleWrapper">
+                <input type="text" class="name-circle-input" id="nameLetterInput" value="A" maxlength="1">
+                <div class="name-circle-render" id="nameCircleRender"></div>
+                <input type="color" class="name-circle-color-picker" id="nameCircleColor" value="#000000">
+            </div>
     
     <div id="noticePopup" class="popup-overlay">
         <div class="popup-content">
@@ -531,7 +538,7 @@
         // [완벽 방어 패치] 캡처용 가상 돔 생성 시 모든 줄바꿈과 폰트를 예쁘게 보존하는 div 치환 스크립트
         function transformInputsForCapture(clonedDoc) {
             const mappings = [
-                { in: 'nameLetterInput', out: 'nameCircleRender', display: 'block' },
+                { in: 'nameLetterInput', out: 'nameCircleRender', display: 'flex' },
                 { in: 'nameMainTxt', out: 'nameMainRender', display: 'block' },
                 { in: 'nameSubTxt', out: 'nameSubRender', display: 'block' },
                 { in: 'statInputForm', out: 'statRender', display: 'flex' },
