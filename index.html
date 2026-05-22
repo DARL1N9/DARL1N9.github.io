@@ -9,7 +9,6 @@
     <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" />
     
     <style>
-        /* [1. 전체 레이아웃 스타일] */
         body { font-family: 'Pretendard', 'Arial', sans-serif; background-color: #F4F7EE; color: #333333; display: flex; flex-direction: column; align-items: center; padding: 40px 20px; margin: 0; }
         h1 { margin-bottom: 30px; font-size: 24px; color: #4A533C; }
         input, select, button { padding: 10px; border-radius: 4px; border: 1px solid #cccccc; font-size: 16px; }
@@ -19,14 +18,16 @@
         .capture-area {
             width: 1000px; height: 563px; background-color: #ffffff; position: relative; box-sizing: border-box; color: black; border: 1px solid #000000; box-shadow: 0 8px 16px rgba(74,83,60,0.06);
         }
-        .input-box { border: 1px solid #000000; font-size: 12px; font-family: 'Pretendard', sans-serif; padding: 8px; box-sizing: border-box; resize: none; overflow: hidden; }
+
+        /* 텍스트 박스 스타일 - 줄바꿈 및 잘림 완벽 제어 */
+        .input-box { border: 1px solid #000000; font-size: 12px; font-family: 'Pretendard', sans-serif; padding: 8px; box-sizing: border-box; resize: none; overflow: hidden; word-wrap: break-word; white-space: pre-wrap; line-height: 1.5; }
+        
         .image-box { border: 1px solid #000000; background-color: #ffffff; position: relative; cursor: pointer; box-sizing: border-box; }
         .img-container { width: 100%; height: 100%; overflow: hidden; position: relative; pointer-events: none; }
         .image-box.placeholder .img-container::before { content: '클릭하여 이미지 업로드 \A (마우스 드래그: 이동 / 휠: 확대)'; white-space: pre-wrap; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 11px; color: #888; width: 100%; text-align: center; z-index: 1; }
         .image-box input[type="file"] { display: none; }
         .image-box img { position: absolute; display: none; z-index: 2; user-select: none; -webkit-user-drag: none; }
 
-        /* [좌표 세팅] */
         .header-name-zone { position: absolute; left: 45px; top: 35px; width: 330px; height: 40px; pointer-events: none; }
         .name-circle-wrapper { position: absolute; left: 0; top: 2px; width: 36px; height: 36px; border-radius: 50%; background-color: #000000; box-sizing: border-box; border: 1px solid #000000; text-align: center; pointer-events: auto; }
         .name-circle-input, .name-circle-render { width: 100%; height: 34px; border: none; background: transparent; font-size: 16px; font-weight: 900; color: #ffffff; text-align: center; padding: 0; margin: 0; line-height: 34px; z-index: 2; cursor: pointer; font-family: 'Pretendard', sans-serif; position: relative; }
@@ -48,10 +49,14 @@
         .keyword-bg-picker { position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; }
 
         .info-text { position: absolute; left: 45px; top: 198px; font-size: 9px; color: #666; font-family: 'Pretendard', sans-serif; }
-        .stat-input { position: absolute; left: 45px; top: 215px; width: 285px; height: 28px; border: 1px solid #000; background-color: #ffffff; text-align: center; font-weight: bold; box-sizing: border-box; padding: 4px 5px 0 5px; font-family: 'Pretendard', sans-serif; font-size: 11px; line-height: 1.4; resize: none; overflow: hidden; word-break: break-all; border-radius: 6px; white-space: nowrap; }
-        .main-desc-box { position: absolute; left: 45px; top: 252px; width: 285px; height: 125px; background-color: #F5F5F5; word-break: break-all; line-height: 1.5; }
+        
+        /* [수정] 스탯 인풋 정가운데 정렬 (line-height와 box-sizing 세밀 조정) */
+        .stat-input { position: absolute; left: 45px; top: 215px; width: 285px; height: 28px; border: 1px solid #000; background-color: #ffffff; text-align: center; font-weight: bold; box-sizing: border-box; padding: 0; font-family: 'Pretendard', sans-serif; font-size: 11px; line-height: 26px; resize: none; overflow: hidden; white-space: nowrap; border-radius: 6px; }
+        .stat-render { position: absolute; left: 45px; top: 215px; width: 285px; height: 28px; border: 1px solid #000; border-radius: 6px; display: none; align-items: center; justify-content: center; font-weight: bold; font-family: 'Pretendard', sans-serif; font-size: 11px; background-color: #ffffff; box-sizing: border-box; }
+
+        .main-desc-box { position: absolute; left: 45px; top: 252px; width: 285px; height: 125px; background-color: #F5F5F5; }
         .bottom-desc-group { position: absolute; left: 45px; top: 406px; width: 285px; height: 110px; display: flex; gap: 12px; }
-        .bottom-desc-box { flex: 1; height: 100%; border-radius: 16px; padding: 12px; word-break: break-all; line-height: 1.5; }
+        .bottom-desc-box { flex: 1; height: 100%; border-radius: 16px; padding: 12px; }
 
         .main-profile-img { position: absolute; left: 355px; top: 35px; width: 280px; height: 342px; }
         .mini-img-group { position: absolute; left: 355px; top: 406px; width: 280px; display: flex; justify-content: space-between; }
@@ -63,7 +68,7 @@
         .cloth-container { position: absolute; left: 660px; top: 35px; width: 295px; height: 375px; }
         .cloth-img-box { width: 100%; height: 100%; }
         .cloth-badge { position: absolute; top: -15px; left: -15px; background-color: #ffffff; border: 1px dashed #000000; border-radius: 50%; width: 38px; height: 38px; text-align: center; line-height: 38px; font-size: 11px; font-weight: bold; z-index: 10; font-family: 'Pretendard', sans-serif; }
-        .cloth-desc-box { position: absolute; left: 660px; top: 436px; width: 295px; height: 80px; background-color: #F5F5F5; word-break: break-all; line-height: 1.5; border: 1px solid #000000; }
+        .cloth-desc-box { position: absolute; left: 660px; top: 436px; width: 295px; height: 80px; background-color: #F5F5F5; border: 1px solid #000000; }
         
         .credit-line { position: absolute; left: 45px; top: 538px; width: 910px; height: 18px; display: flex; justify-content: space-between; font-size: 9px; color: #999999; font-weight: bold; align-items: center; font-family: 'Pretendard', sans-serif; box-sizing: border-box; }
         .credit-right-zone { display: inline-flex; align-items: center; justify-content: flex-end; width: 300px; height: 18px; line-height: 18px; }
@@ -77,6 +82,9 @@
         .btn-save-slot:hover { background-color: #69784E; }
         .btn-load-slot { background-color: #4A533C; color: #ffffff; }
         .btn-load-slot:hover { background-color: #383F2E; }
+        /* [추가] 삭제 버튼 스타일 */
+        .btn-delete-slot { background-color: #D36C6C; color: #ffffff; }
+        .btn-delete-slot:hover { background-color: #B55A5A; }
 
         .bottom-action-panel { display: flex; gap: 15px; justify-content: center; }
         .panel-btn { color: #ffffff; font-weight: bold; padding: 14px 35px; border-radius: 30px; border: none; font-size: 16px; cursor: pointer; transition: all 0.2s; font-family: 'Pretendard', sans-serif; }
@@ -176,6 +184,7 @@
         <div class="info-text">※ 모든 방향은 보는 사람(모니터) 기준입니다. ※</div>
         
         <textarea class="stat-input" id="statInputForm">성별 | 나이 | 키 | 몸무게</textarea>
+        <div class="stat-render" id="statRender"></div>
         
         <textarea class="input-box main-desc-box" id="mainDescForm">□ 캐릭터의 주요 특징을 간략 서술&#10;□ 캐릭터의 주요 특징을 간략 서술&#10;□ 캐릭터의 주요 특징을 간략 서술&#10;□ 캐릭터의 주요 특징을 간략 서술</textarea>
 
@@ -227,8 +236,9 @@
                 <option value="slot_2">슬롯 2 (비어있음)</option>
                 <option value="slot_3">슬롯 3 (비어있음)</option>
             </select>
-            <button class="slot-btn btn-save-slot" onclick="saveToSlot()">현재 상태 슬롯에 임시저장</button>
-            <button class="slot-btn btn-load-slot" onclick="loadFromSlot()">선택한 슬롯 불러오기</button>
+            <button class="slot-btn btn-save-slot" onclick="saveToSlot()">현재 상태 저장</button>
+            <button class="slot-btn btn-load-slot" onclick="loadFromSlot()">슬롯 불러오기</button>
+            <button class="slot-btn btn-delete-slot" onclick="deleteFromSlot()">슬롯 지우기</button>
         </div>
 
         <div class="bottom-action-panel">
@@ -247,7 +257,6 @@
             document.getElementById('previewModal').style.display = 'none';
         }
 
-        // [마스터 연동 패치] A 서클의 색상 변화에 반응하여 아래 키워드 3종 상자 배경까지 실시간 동기화
         const circlePicker = document.getElementById('nameCircleColor');
         if(circlePicker) {
             circlePicker.addEventListener('input', (e) => {
@@ -344,12 +353,15 @@
                             img.onload = function() {
                                 box.classList.remove('placeholder');
                                 img.style.display = 'block';
+                                
                                 const boxWidth = box.clientWidth;
                                 const boxHeight = box.clientHeight;
                                 imgState.origWidth = img.naturalWidth;
                                 imgState.origHeight = img.naturalHeight;
+                                
                                 const boxRatio = boxWidth / boxHeight;
                                 const imgRatio = imgState.origWidth / imgState.origHeight;
+                                
                                 if (imgRatio > boxRatio) {
                                     imgState.height = boxHeight;
                                     imgState.width = boxHeight * imgRatio;
@@ -357,9 +369,11 @@
                                     imgState.width = boxWidth;
                                     imgState.height = boxWidth / imgRatio;
                                 }
+                                
                                 imgState.scale = 1.0;
                                 imgState.left = (boxWidth - imgState.width) / 2;
                                 imgState.top = (boxHeight - imgState.height) / 2;
+                                
                                 applyPhysicalTransform();
                             };
                         }
@@ -399,16 +413,20 @@
                 const rect = box.getBoundingClientRect();
                 const mouseX = e.clientX - rect.left;
                 const mouseY = e.clientY - rect.top;
+                
                 const prevScale = imgState.scale;
                 const zoomFactor = 0.05;
+                
                 if (e.deltaY < 0) {
                     imgState.scale += zoomFactor;
                 } else {
                     imgState.scale = Math.max(0.1, imgState.scale - zoomFactor);
                 }
+                
                 const ratio = imgState.scale / prevScale;
                 imgState.left = mouseX - (mouseX - imgState.left) * ratio;
                 imgState.top = mouseY - (mouseY - imgState.top) * ratio;
+                
                 applyPhysicalTransform();
             });
 
@@ -427,6 +445,7 @@
         setupInteractiveImageBox('sdImgBox');
         setupInteractiveImageBox('subImgBox');
 
+        // [동적 노드 스와핑 유틸리티] 캡처용 가상 돔 생성 시 줄바꿈과 중앙정렬 완벽 보존 치환
         function transformInputsForCapture(clonedDoc) {
             const circleInput = clonedDoc.getElementById('nameLetterInput');
             const circleRender = clonedDoc.getElementById('nameCircleRender');
@@ -435,6 +454,7 @@
                 circleRender.style.display = 'block';
                 circleInput.style.display = 'none';
             }
+
             const mainTxtInput = clonedDoc.getElementById('nameMainTxt');
             const mainRenderDiv = clonedDoc.getElementById('nameMainRender');
             if (mainTxtInput && mainRenderDiv) {
@@ -442,12 +462,22 @@
                 mainRenderDiv.style.display = 'block';
                 mainTxtInput.style.display = 'none';
             }
+
             const subTxtInput = clonedDoc.getElementById('nameSubTxt');
             const subRenderDiv = clonedDoc.getElementById('nameSubRender');
             if (subTxtInput && subRenderDiv) {
                 subRenderDiv.innerText = subTxtInput.value;
                 subRenderDiv.style.display = 'block';
                 subTxtInput.style.display = 'none';
+            }
+
+            // [패치] 스탯창 정가운데 정렬 고정을 위한 가상 Div 치환 렌더링
+            const statInput = clonedDoc.getElementById('statInputForm');
+            const statRender = clonedDoc.getElementById('statRender');
+            if (statInput && statRender) {
+                statRender.innerText = statInput.value;
+                statRender.style.display = 'flex';
+                statInput.style.display = 'none';
             }
 
             const allInputs = clonedDoc.querySelectorAll('input, textarea');
@@ -461,6 +491,7 @@
                     }
                 }
                 if (input.tagName === 'TEXTAREA') {
+                    // 테두리가 보존되어야 하는 클래스명 지정
                     if (input.classList.contains('stat-input') || input.classList.contains('main-desc-box') || input.classList.contains('bottom-desc-box') || input.classList.contains('cloth-desc-box')) {
                         input.style.border = '1px solid #000000';
                         input.style.backgroundColor = window.getComputedStyle(input).backgroundColor;
@@ -468,112 +499,90 @@
                         input.style.border = 'none';
                     }
                     input.style.overflow = 'hidden';
+                    
+                    // [패치] 줄바꿈과 띄어쓰기 여백을 캡처 화면에 그대로 유지시키는 속성 주입
+                    input.style.whiteSpace = 'pre-wrap';
                 }
             });
         }
 
-        document.getElementById('previewBtn').addEventListener('click', () => {
-            const target = document.getElementById('captureArea');
-            if (!target) return;
-            document.fonts.ready.then(() => {
-                html2canvas(target, {
-                    useCORS: true,
-                    allowTaint: true,
-                    scale: 2, 
-                    logging: false,
-                    onclone: (clonedDoc) => {
-                        transformInputsForCapture(clonedDoc);
-                    }
-                }).then(canvas => {
-                    const container = document.getElementById('previewCanvasContainer');
-                    container.innerHTML = ''; 
-                    container.appendChild(canvas); 
-                    document.getElementById('previewModal').style.display = 'flex'; 
-                });
-            });
-        });
+        // ==================== [핵심 보정 완료] 슬롯 세이브 / 지연 복원 로드 / 삭제 시스템 ====================
+        const SLOT_KEYS = ['slot_1', 'slot_2', 'slot_3'];
 
-        document.getElementById('downloadBtn').addEventListener('click', () => {
-            const target = document.getElementById('captureArea');
-            if (!target) return;
-            document.fonts.ready.then(() => {
-                executeCapture(target);
-            });
-        });
-
-        function executeCapture(target) {
-            html2canvas(target, {
-                useCORS: true,
-                allowTaint: true,
-                scale: 2,
-                logging: false,
-                onclone: (clonedDoc) => {
-                    transformInputsForCapture(clonedDoc);
-                }
-            }).then(canvas => {
-                const link = document.createElement('a');
-                link.download = 'custom-자료틀.png';
-                link.href = canvas.toDataURL('image/png');
-                link.click();
-            });
-        }
-
-        // 로컬 슬롯 저장/로드 및 초기화
         function saveToSlot() {
             const select = document.getElementById('slotSelect');
             const activeSlot = select.value;
             const charName = document.getElementById('nameMainTxt').value || '이름 없음';
+            
             const dataToSave = {
                 characterName: charName,
                 letter: document.getElementById('nameLetterInput').value,
                 circleColor: document.getElementById('nameCircleColor').value,
                 subName: document.getElementById('nameSubTxt').value,
+                
                 k1: document.querySelectorAll('.keyword-box-input')[0].value,
                 k1Color: document.getElementById('keyColor1').value,
                 k2: document.querySelectorAll('.keyword-box-input')[1].value,
                 k2Color: document.getElementById('keyColor2').value,
                 k3: document.querySelectorAll('.keyword-box-input')[2].value,
                 k3Color: document.getElementById('keyColor3').value,
+                
                 skin: document.getElementById('skinColor').value,
                 eyes: document.getElementById('eyesColor').value,
                 hair: document.getElementById('hairColor').value,
+                
                 stats: document.getElementById('statInputForm').value,
                 mainDesc: document.getElementById('mainDescForm').value,
                 leftDesc: document.getElementById('leftDescForm').value,
                 rightDesc: document.getElementById('rightDescForm').value,
+                
                 animalBadge: document.getElementById('animalBadgeInput').value,
                 clothDesc: document.getElementById('clothDescForm').value,
                 creditIllust: document.getElementById('creditIllustInput').value,
                 images: JSON.parse(JSON.stringify(globalImgRegistry))
             };
-            localStorage.setItem(activeSlot, JSON.stringify(dataToSave));
-            alert(`[${charName}] 데이터와 사진 구도가 슬롯에 저장되었습니다.`);
-            updateSlotLabels();
+
+            try {
+                localStorage.setItem(activeSlot, JSON.stringify(dataToSave));
+                alert(`[${charName}] 캐릭터 데이터가 성공적으로 저장되었습니다!`);
+                updateSlotLabels();
+            } catch(e) {
+                alert("이미지 용량이 브라우저 임시저장 한도를 초과했습니다. 이미지를 약간 축소하여 올려주세요.");
+            }
         }
 
         function loadFromSlot() {
             const activeSlot = document.getElementById('slotSelect').value;
             const savedRaw = localStorage.getItem(activeSlot);
-            if(!savedRaw) { alert("슬롯이 비어있습니다."); return; }
+
+            if(!savedRaw) {
+                alert("선택하신 슬롯은 비어있습니다. 먼저 저장을 진행해 주세요.");
+                return;
+            }
+
             const data = JSON.parse(savedRaw);
 
             document.getElementById('nameMainTxt').value = data.characterName || '';
             document.getElementById('nameLetterInput').value = data.letter || 'A';
             document.getElementById('nameCircleColor').value = data.circleColor || '#000000';
             document.getElementById('nameSubTxt').value = data.subName || '';
+
             document.querySelectorAll('.keyword-box-input')[0].value = data.k1 || '';
             document.getElementById('keyColor1').value = data.k1Color || '#000000';
             document.querySelectorAll('.keyword-box-input')[1].value = data.k2 || '';
             document.getElementById('keyColor2').value = data.k2Color || '#000000';
             document.querySelectorAll('.keyword-box-input')[2].value = data.k3 || '';
             document.getElementById('keyColor3').value = data.k3Color || '#000000';
+
             document.getElementById('skinColor').value = data.skin || '#D6D6D6';
             document.getElementById('eyesColor').value = data.eyes || '#D6D6D6';
             document.getElementById('hairColor').value = data.hair || '#D6D6D6';
+
             document.getElementById('statInputForm').value = data.stats || '';
             document.getElementById('mainDescForm').value = data.mainDesc || '';
             document.getElementById('leftDescForm').value = data.leftDesc || '';
             document.getElementById('rightDescForm').value = data.rightDesc || '';
+
             document.getElementById('animalBadgeInput').value = data.animalBadge || '';
             document.getElementById('clothDescForm').value = data.clothDesc || '';
             document.getElementById('creditIllustInput').value = data.creditIllust || '';
@@ -582,6 +591,7 @@
                 Object.keys(data.images).forEach(boxId => {
                     const savedImgState = data.images[boxId];
                     const targetBox = document.getElementById(boxId);
+                    
                     if(targetBox && savedImgState && savedImgState.src) {
                         globalImgRegistry[boxId] = JSON.parse(JSON.stringify(savedImgState));
                         const imgTag = targetBox.querySelector('img');
@@ -597,13 +607,44 @@
                             };
                             if(imgTag.complete) imgTag.onload();
                         }
+                    } else if(targetBox) {
+                        targetBox.classList.add('placeholder');
+                        const imgTag = targetBox.querySelector('img');
+                        if(imgTag) {
+                            imgTag.src = '';
+                            imgTag.style.display = 'none';
+                        }
+                        globalImgRegistry[boxId] = { src: '', origWidth: 0, origHeight: 0, width: 0, height: 0, left: 0, top: 0, scale: 1.0 };
                     }
                 });
             }
-            triggerColorPickerUpdate();
-            alert(`[${data.characterName || '이름 없음'}] 데이터 로드 완료!`);
+
+            // [패치] 색상 동기화 함수 지연 실행을 통해 까만색 덮어씌움 방지
+            setTimeout(() => {
+                triggerColorPickerUpdate();
+            }, 100);
+            
+            alert(`[${data.characterName || '이름 없음'}] 정보를 불러왔습니다!`);
         }
 
+        // [신규 기능 추가] 선택한 슬롯의 로컬 데이터를 완전히 지우고 UI 라벨 갱신
+        function deleteFromSlot() {
+            const activeSlot = document.getElementById('slotSelect').value;
+            const savedRaw = localStorage.getItem(activeSlot);
+            
+            if(!savedRaw) {
+                alert("이미 비어있는 슬롯입니다.");
+                return;
+            }
+
+            if(confirm("정말로 이 슬롯의 저장 데이터를 삭제하시겠습니까?")) {
+                localStorage.removeItem(activeSlot);
+                updateSlotLabels();
+                alert("슬롯이 초기화되었습니다.");
+            }
+        }
+
+        // [패치] 슬롯 라벨을 페이지 시작 시점과 저장/삭제 직후에 즉시 갱신
         function updateSlotLabels() {
             SLOT_KEYS.forEach((key, index) => {
                 const option = document.querySelectorAll('#slotSelect option')[index];
@@ -624,7 +665,64 @@
                 if(el) el.dispatchEvent(new Event('input'));
             });
         }
+
+        // 초기 시작 시 라벨명 세팅
         updateSlotLabels();
+
+        // 미리보기 모달 작동 바인딩
+        document.getElementById('previewBtn').addEventListener('click', () => {
+            const target = document.getElementById('captureArea');
+            if (!target) return;
+
+            document.fonts.ready.then(() => {
+                html2canvas(target, {
+                    useCORS: true,
+                    allowTaint: true,
+                    scale: 2, 
+                    logging: false,
+                    onclone: (clonedDoc) => {
+                        transformInputsForCapture(clonedDoc);
+                    }
+                }).then(canvas => {
+                    const container = document.getElementById('previewCanvasContainer');
+                    container.innerHTML = ''; 
+                    container.appendChild(canvas); 
+                    document.getElementById('previewModal').style.display = 'flex'; 
+                }).catch(err => {
+                    alert("미리보기를 생성하는 과정에서 에러가 일어났습니다.");
+                    console.error(err);
+                });
+            });
+        });
+
+        // 다운로드 캡처 실행 제어
+        document.getElementById('downloadBtn').addEventListener('click', () => {
+            const target = document.getElementById('captureArea');
+            if (!target) return;
+
+            document.fonts.ready.then(() => {
+                executeCapture(target);
+            });
+        });
+
+        function executeCapture(target) {
+            html2canvas(target, {
+                useCORS: true,
+                allowTaint: true,
+                scale: 2,
+                logging: false,
+                onclone: (clonedDoc) => {
+                    transformInputsForCapture(clonedDoc);
+                }
+            }).then(canvas => {
+                const link = document.createElement('a');
+                link.download = 'custom-자료틀.png';
+                link.href = canvas.toDataURL('image/png');
+                link.click();
+            }).catch(err => {
+                console.error("캡처 중 오류 발생:", err);
+            });
+        }
     </script>
 </body>
 </html>
