@@ -32,20 +32,24 @@
         .header-name-zone { position: absolute; left: 45px; top: 35px; width: 330px; height: 40px; pointer-events: none; }
         .name-circle-wrapper { position: absolute; left: 0; top: 2px; width: 36px; height: 36px; border-radius: 50%; background-color: #000000; box-sizing: border-box; border: 1px solid #000000; text-align: center; pointer-events: auto; }
         .name-circle-input { width: 24px; height: 24px; border: none; background: transparent; font-size: 20px; font-weight: 900; color: #ffffff; text-align: center; padding: 0; margin: 0; z-index: 4; font-family: 'Pretendard', sans-serif; position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); cursor: text; }
-        .name-circle-color-picker { position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; z-index: 3; }
+       .name-circle-color-picker { position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; z-index: 3; }
         
-        /* [패치] A 글자 정중앙 강제 고정 */
-        /* [패치] A 글자 정중앙 강제 고정 (위로 3px 밀어 올림) */
-.name-circle-render { display: none; align-items: center; justify-content: center; width: 100%; height: 100%; font-size: 20px; font-weight: 900; color: #ffffff; font-family: 'Pretendard', sans-serif; position: absolute; left: 0; top: 0; z-index: 2; margin: 0; pointer-events: none; padding-bottom: 3px; box-sizing: border-box; }
+        /* [패치] A 글자 정중앙 강제 고정 (위로 2px 끌어올림) */
+        .name-circle-render { display: none; width: 100%; height: 100%; font-size: 20px; font-weight: 900; color: #ffffff; font-family: 'Pretendard', sans-serif; position: absolute; left: 0; top: 0; z-index: 2; margin: 0; padding: 0; pointer-events: none; line-height: 36px; text-align: center; transform: translateY(-2px); }
 
-/* [패치] 키워드 1pt 확대 및 정중앙 캡처 고정 (위로 2px 밀어 올림) */
-.keyword-box-render { display: none; position: absolute; left: 0; top: 0; width: 100%; height: 100%; align-items: center; justify-content: center; font-size: 11px; font-weight: bold; font-family: 'Pretendard', sans-serif; padding: 0 2px 2px 2px; margin: 0; word-break: break-all; z-index: 2; pointer-events: none; box-sizing: border-box; }
+        /* [복구] 삭제되었던 이름과 Name 위치 코드 */
+        .name-main-input, .name-main-render { position: absolute; left: 48px; top: 0; width: 110px; height: 40px; font-family: 'Pretendard', sans-serif; font-size: 20px; color: #000000; border: none; background: none; font-weight: 800; line-height: 40px; padding: 0; margin: 0; box-sizing: border-box; pointer-events: auto; word-break: break-all; }
+        .name-sub-input, .name-sub-render { position: absolute; left: 165px; top: 0; width: 150px; height: 40px; font-family: 'Pretendard', sans-serif; font-size: 15px; color: #b0b0b0; border: none; background: none; font-weight: 400; line-height: 40px; padding: 0; margin: 0; box-sizing: border-box; pointer-events: auto; word-break: break-all; }
+        .name-main-render, .name-sub-render { display: none; pointer-events: none; text-align: left; }
 
-/* [패치] 스탯칸 정중앙 캡처 고정 (위로 2px 밀어 올림) */
-.stat-render { position: absolute; left: 45px; top: 215px; width: 285px; height: 28px; border: 1px solid #000; border-radius: 6px; display: none; align-items: center; justify-content: center; font-weight: bold; font-family: 'Pretendard', sans-serif; font-size: 11px; background-color: #ffffff; box-sizing: border-box; margin: 0; padding-bottom: 2px; }
+        /* [패치] 키워드 캡처 고정 (위로 1px 끌어올림) */
+        .keyword-box-render { display: none; position: absolute; left: 0; top: 0; width: 100%; height: 100%; text-align: center; line-height: 26px; font-size: 11px; font-weight: bold; font-family: 'Pretendard', sans-serif; padding: 0 2px; margin: 0; word-break: break-all; z-index: 2; pointer-events: none; transform: translateY(-1px); }
 
-/* [패치] 미니 배지 (SD, 동물화) 정중앙 캡처 고정 (위로 2px 밀어 올림) */
-.mini-badge-render { display: none; align-items: center; justify-content: center; width: 100%; height: 100%; font-size: 11px; font-weight: bold; font-family: 'Pretendard', sans-serif; margin: 0; padding-bottom: 2px; box-sizing: border-box; }
+        /* [패치] 스탯칸 캡처 고정 (위로 1px 끌어올림) */
+        .stat-render { position: absolute; left: 45px; top: 215px; width: 285px; height: 28px; border: 1px solid #000; border-radius: 6px; display: none; font-weight: bold; font-family: 'Pretendard', sans-serif; font-size: 11px; background-color: #ffffff; box-sizing: border-box; margin: 0; padding: 0; line-height: 26px; text-align: center; transform: translateY(-1px); }
+
+        /* [패치] 미니 배지 (SD, 동물화) 캡처 고정 (위로 1px 끌어올림) */
+        .mini-badge-render { display: none; width: 100%; height: 100%; font-size: 11px; font-weight: bold; font-family: 'Pretendard', sans-serif; padding: 0; margin: 0; box-sizing: border-box; line-height: 24px; text-align: center; transform: translateY(-1px); }
 
         .color-group { position: absolute; left: 45px; top: 132px; width: 285px; display: flex; gap: 7px; }
         .color-item-wrapper { position: relative; flex: 1; height: 60px; border: 1px solid #000000; cursor: pointer; display: flex; align-items: center; justify-content: center; box-sizing: border-box; }
@@ -508,22 +512,22 @@
 
         // [핵심 패치] 캡처용 가상 돔 생성 시 스탯창 및 키워드의 정렬 보존을 위해 강제 'flex' 속성으로 치환합니다!
         function transformInputsForCapture(clonedDoc) {
-            // [핵심 패치] 캡처용 가상 돔 생성 배열
-const mappings = [
-    { in: 'nameLetterInput', out: 'nameCircleRender', display: 'flex' },
-    { in: 'nameMainTxt', out: 'nameMainRender', display: 'block' },
-    { in: 'nameSubTxt', out: 'nameSubRender', display: 'block' },
-    { in: 'statInputForm', out: 'statRender', display: 'flex' },
-    { in: 'mainDescForm', out: 'mainDescRender', display: 'block' },
-    { in: 'leftDescForm', out: 'leftDescRender', display: 'block' },
-    { in: 'rightDescForm', out: 'rightDescRender', display: 'block' },
-    { in: 'animalBadgeInput', out: 'animalBadgeRender', display: 'flex' },
-    { in: 'clothDescForm', out: 'clothDescRender', display: 'block' },
-    { in: 'creditIllustInput', out: 'creditIllustRender', display: 'block' },
-    { in: 'keyInput1', out: 'keyRender1', display: 'flex' },
-    { in: 'keyInput2', out: 'keyRender2', display: 'flex' },
-    { in: 'keyInput3', out: 'keyRender3', display: 'flex' }
-];
+           // [핵심 패치] 캡처용 가상 돔 생성 배열 (절대 flex 금지)
+        const mappings = [
+            { in: 'nameLetterInput', out: 'nameCircleRender', display: 'block' },
+            { in: 'nameMainTxt', out: 'nameMainRender', display: 'block' },
+            { in: 'nameSubTxt', out: 'nameSubRender', display: 'block' },
+            { in: 'statInputForm', out: 'statRender', display: 'block' },
+            { in: 'mainDescForm', out: 'mainDescRender', display: 'block' },
+            { in: 'leftDescForm', out: 'leftDescRender', display: 'block' },
+            { in: 'rightDescForm', out: 'rightDescRender', display: 'block' },
+            { in: 'animalBadgeInput', out: 'animalBadgeRender', display: 'block' },
+            { in: 'clothDescForm', out: 'clothDescRender', display: 'block' },
+            { in: 'creditIllustInput', out: 'creditIllustRender', display: 'block' },
+            { in: 'keyInput1', out: 'keyRender1', display: 'block' },
+            { in: 'keyInput2', out: 'keyRender2', display: 'block' },
+            { in: 'keyInput3', out: 'keyRender3', display: 'block' }
+        ];
 
             mappings.forEach(m => {
                 const liveInput = document.getElementById(m.in);
