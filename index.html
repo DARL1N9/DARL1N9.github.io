@@ -82,8 +82,8 @@
         .mini-box-container { width: 134px; height: 110px; position: relative; }
         .mini-img-box { width: 100%; height: 100%; }
         
-        /* [패치] 미니 배지 (SD, 동물화) 정중앙 고정 (flex 제거, 하단 패딩 2px로 위로 밀어 올림) */
-        .mini-badge { position: absolute; top: -12px; left: 10px; background-color: #ffffff; border: 1px dashed #000000; border-radius: 14px; font-size: 11px; padding: 0 14px; padding-bottom: 2px; height: 24px; z-index: 10; font-weight: bold; display: block; line-height: 20px; text-align: center; white-space: nowrap; font-family: 'Pretendard', sans-serif; box-shadow: 0 2px 4px rgba(0,0,0,0.05); box-sizing: border-box; }
+        /* [패치] 미니 배지 (SD, 동물화) 정중앙 고정 (위에서 1px 띄워서 아래로 내림) */
+        .mini-badge { position: absolute; top: -12px; left: 10px; background-color: #ffffff; border: 1px dashed #000000; border-radius: 14px; font-size: 11px; padding: 1px 14px 1px 14px; height: 24px; z-index: 10; font-weight: bold; display: block; line-height: 20px; text-align: center; white-space: nowrap; font-family: 'Pretendard', sans-serif; box-shadow: 0 2px 4px rgba(0,0,0,0.05); box-sizing: border-box; }
         
         .mini-badge-input { border: none; background: transparent; font-size: 11px; font-weight: bold; width: 85px; height: 20px; line-height: 20px; text-align: center; font-family: 'Pretendard', sans-serif; padding: 0; margin: 0; box-sizing: border-box; word-break: break-all; vertical-align: top; }
         
@@ -92,10 +92,9 @@
         .cloth-container { position: absolute; left: 660px; top: 35px; width: 295px; height: 375px; }
         .cloth-img-box { width: 100%; height: 100%; }
         
-        /* [패치] 의상 배지 정중앙 고정 (flex 제거, 하단 패딩 2px로 위로 밀어 올림) */
-        .cloth-badge { position: absolute; top: -15px; left: -15px; background-color: #ffffff; border: 1px dashed #000000; border-radius: 50%; width: 38px; height: 38px; display: block; line-height: 34px; padding-bottom: 2px; text-align: center; font-size: 11px; font-weight: bold; z-index: 10; font-family: 'Pretendard', sans-serif; box-sizing: border-box; }
+        /* [패치] 의상 배지 정중앙 고정 (위에서 1px 띄워서 아래로 내림) */
+        .cloth-badge { position: absolute; top: -15px; left: -15px; background-color: #ffffff; border: 1px dashed #000000; border-radius: 50%; width: 38px; height: 38px; display: block; line-height: 34px; padding-top: 1px; padding-bottom: 1px; text-align: center; font-size: 11px; font-weight: bold; z-index: 10; font-family: 'Pretendard', sans-serif; box-sizing: border-box; }
         
-        .cloth-desc-box { position: absolute; left: 660px; top: 436px; width: 295px; height: 80px; background-color: #F5F5F5; border: 1px solid #000000; }
         .cloth-desc-box { position: absolute; left: 660px; top: 436px; width: 295px; height: 80px; background-color: #F5F5F5; border: 1px solid #000000; }
         
         .credit-line { position: absolute; left: 45px; top: 538px; width: 910px; height: 18px; display: flex; justify-content: space-between; font-size: 9px; color: #999999; font-weight: bold; align-items: center; font-family: 'Pretendard', sans-serif; box-sizing: border-box; }
