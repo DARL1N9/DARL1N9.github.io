@@ -35,8 +35,7 @@
         .name-circle-color-picker { position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; z-index: 3; }
         
         /* [패치] A 글자 정중앙 강제 고정 */
-        .name-circle-render { display: none; align-items: center; justify-content: center; width: 100%; height: 100%; font-size: 20px; font-weight: 900; color: #ffffff; font-family: 'Pretendard', sans-serif; position: absolute; left: 0; top: 0; z-index: 2; margin: 0; padding: 0; pointer-events: none; }
-        
+        .name-circle-render { display: none; width: 100%; height: 100%; font-size: 20px; font-weight: 900; color: #ffffff; font-family: 'Pretendard', sans-serif; position: absolute; left: 0; top: 0; z-index: 2; margin: 0; padding: 0; pointer-events: none; line-height: 36px; text-align: center; }
         .name-main-input, .name-main-render { position: absolute; left: 48px; top: 0; width: 110px; height: 40px; font-family: 'Pretendard', sans-serif; font-size: 20px; color: #000000; border: none; background: none; font-weight: 800; line-height: 40px; padding: 0; margin: 0; box-sizing: border-box; pointer-events: auto; word-break: break-all; }
         .name-sub-input, .name-sub-render { position: absolute; left: 165px; top: 0; width: 150px; height: 40px; font-family: 'Pretendard', sans-serif; font-size: 15px; color: #b0b0b0; border: none; background: none; font-weight: 400; line-height: 40px; padding: 0; margin: 0; box-sizing: border-box; pointer-events: auto; word-break: break-all; }
         .name-main-render, .name-sub-render { display: none; pointer-events: none; text-align: left; }
@@ -53,7 +52,7 @@
         
         /* [패치] 키워드 1pt 확대 및 정중앙 캡처 고정 */
         .keyword-box-input { display: flex; align-items: center; justify-content: center; width: 100%; height: 100%; border: none; background: transparent; text-align: center; font-size: 11px; font-weight: bold; color: #ffffff; cursor: pointer; z-index: 2; font-family: 'Pretendard', sans-serif; padding: 0 2px; margin: 0; word-break: break-all; }
-        .keyword-box-render { display: none; position: absolute; left: 0; top: 0; width: 100%; height: 100%; align-items: center; justify-content: center; line-height: 1.2; text-align: center; font-size: 11px; font-weight: bold; font-family: 'Pretendard', sans-serif; padding: 0 2px; margin: 0; word-break: break-all; z-index: 2; pointer-events: none; }
+        .keyword-box-render { display: none; position: absolute; left: 0; top: 0; width: 100%; height: 100%; text-align: center; line-height: 26px; font-size: 11px; font-weight: bold; font-family: 'Pretendard', sans-serif; padding: 0 2px; margin: 0; word-break: break-all; z-index: 2; pointer-events: none; }
         
         .keyword-bg-picker { position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; }
 
@@ -62,8 +61,7 @@
         .stat-input { position: absolute; left: 45px; top: 215px; width: 285px; height: 28px; border: 1px solid #000; background-color: #ffffff; text-align: center; font-weight: bold; box-sizing: border-box; padding: 0; font-family: 'Pretendard', sans-serif; font-size: 11px; line-height: 26px; resize: none; overflow: hidden; white-space: nowrap; border-radius: 6px; }
         
         /* [패치] 스탯칸 정중앙 캡처 고정 */
-        .stat-render { position: absolute; left: 45px; top: 215px; width: 285px; height: 28px; border: 1px solid #000; border-radius: 6px; display: none; align-items: center; justify-content: center; font-weight: bold; font-family: 'Pretendard', sans-serif; font-size: 11px; background-color: #ffffff; box-sizing: border-box; margin: 0; padding: 0; }
-
+        .stat-render { position: absolute; left: 45px; top: 215px; width: 285px; height: 28px; border: 1px solid #000; border-radius: 6px; display: none; font-weight: bold; font-family: 'Pretendard', sans-serif; font-size: 11px; background-color: #ffffff; box-sizing: border-box; margin: 0; padding: 0; line-height: 26px; text-align: center; }
         .main-desc-box { position: absolute; left: 45px; top: 252px; width: 285px; height: 125px; background-color: #F5F5F5; }
         .bottom-desc-group { position: absolute; left: 45px; top: 406px; width: 285px; height: 110px; display: flex; gap: 12px; }
         .bottom-desc-box { flex: 1; height: 100%; border-radius: 16px; padding: 12px; }
@@ -76,7 +74,7 @@
         /* [패치] 미니 배지 (SD, 동물화) 정중앙 캡처 고정 */
         .mini-badge { position: absolute; top: -12px; left: 10px; background-color: #ffffff; border: 1px dashed #000000; border-radius: 14px; font-size: 11px; padding: 0 14px; height: 24px; z-index: 10; font-weight: bold; display: flex; align-items: center; justify-content: center; white-space: nowrap; font-family: 'Pretendard', sans-serif; box-shadow: 0 2px 4px rgba(0,0,0,0.05); box-sizing: border-box; }
         .mini-badge-input { border: none; background: transparent; font-size: 11px; font-weight: bold; width: 85px; height: 22px; line-height: 22px; text-align: center; font-family: 'Pretendard', sans-serif; padding: 0; margin: 0; box-sizing: border-box; word-break: break-all; }
-        .mini-badge-render { display: none; align-items: center; justify-content: center; width: 100%; height: 100%; font-size: 11px; font-weight: bold; font-family: 'Pretendard', sans-serif; padding: 0; margin: 0; box-sizing: border-box; }
+        .mini-badge-render { display: none; width: 100%; height: 100%; font-size: 11px; font-weight: bold; font-family: 'Pretendard', sans-serif; padding: 0; margin: 0; box-sizing: border-box; line-height: 24px; text-align: center; }
 
         .cloth-container { position: absolute; left: 660px; top: 35px; width: 295px; height: 375px; }
         .cloth-img-box { width: 100%; height: 100%; }
@@ -504,20 +502,20 @@
         // [핵심 패치] 캡처용 가상 돔 생성 시 스탯창 및 키워드의 정렬 보존을 위해 강제 'flex' 속성으로 치환합니다!
         function transformInputsForCapture(clonedDoc) {
             const mappings = [
-                { in: 'nameLetterInput', out: 'nameCircleRender', display: 'flex' },
-                { in: 'nameMainTxt', out: 'nameMainRender', display: 'block' },
-                { in: 'nameSubTxt', out: 'nameSubRender', display: 'block' },
-                { in: 'statInputForm', out: 'statRender', display: 'flex' },
-                { in: 'mainDescForm', out: 'mainDescRender', display: 'block' },
-                { in: 'leftDescForm', out: 'leftDescRender', display: 'block' },
-                { in: 'rightDescForm', out: 'rightDescRender', display: 'block' },
-                { in: 'animalBadgeInput', out: 'animalBadgeRender', display: 'flex' },
-                { in: 'clothDescForm', out: 'clothDescRender', display: 'block' },
-                { in: 'creditIllustInput', out: 'creditIllustRender', display: 'block' },
-                { in: 'keyInput1', out: 'keyRender1', display: 'flex' },
-                { in: 'keyInput2', out: 'keyRender2', display: 'flex' },
-                { in: 'keyInput3', out: 'keyRender3', display: 'flex' }
-            ];
+    { in: 'nameLetterInput', out: 'nameCircleRender', display: 'block' },
+    { in: 'nameMainTxt', out: 'nameMainRender', display: 'block' },
+    { in: 'nameSubTxt', out: 'nameSubRender', display: 'block' },
+    { in: 'statInputForm', out: 'statRender', display: 'block' },
+    { in: 'mainDescForm', out: 'mainDescRender', display: 'block' },
+    { in: 'leftDescForm', out: 'leftDescRender', display: 'block' },
+    { in: 'rightDescForm', out: 'rightDescRender', display: 'block' },
+    { in: 'animalBadgeInput', out: 'animalBadgeRender', display: 'block' },
+    { in: 'clothDescForm', out: 'clothDescRender', display: 'block' },
+    { in: 'creditIllustInput', out: 'creditIllustRender', display: 'block' },
+    { in: 'keyInput1', out: 'keyRender1', display: 'block' },
+    { in: 'keyInput2', out: 'keyRender2', display: 'block' },
+    { in: 'keyInput3', out: 'keyRender3', display: 'block' }
+];
 
             mappings.forEach(m => {
                 const liveInput = document.getElementById(m.in);
